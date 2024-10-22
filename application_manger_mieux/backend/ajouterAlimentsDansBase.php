@@ -41,7 +41,5 @@
                     $request = "INSERT INTO `a_comme_caracteristiques` (Id_aliment,Id_caracteristique,Pourcentage) VALUES($id_aliment,(SELECT caracteristiques_de_sante.id_caracteristique FROM caracteristiques_de_sante WHERE designation=$matrice[0][$indexLigne),$value)";
                 }
             }
-
-            $request = "INSERT INTO `a_comme_caracteristiques` (Id_aliment,Id_caracteristique,Pourcentage) VALUES()";
         }
     }

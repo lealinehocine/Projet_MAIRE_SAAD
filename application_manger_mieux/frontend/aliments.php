@@ -1,0 +1,1 @@
+<!-- Base affichant les aliments : CRUD + datatables -->

@@ -1,6 +1,8 @@
 /* Barre de menu à corriger : centrer texte + disposition et taille des "cases" + couleurs et police */
 /* Disposition générale de la page à faire */
 
+/*ou alors utiliser un theme bootstrap?*/
+
 body{
     display: flex;
     flex-direction: column;

@@ -9,4 +9,4 @@ tableau de bord synthétique à l’utilisateur afin de l’alerter sur les reco
 pas. -->
 
 
-<p>A faire</p>
+<p>TEST</p>

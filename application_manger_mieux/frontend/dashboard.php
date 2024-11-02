@@ -1,8 +1,3 @@
-<h1>Mes statistiques</h1>
-
-
-<p>blablabla</p>
-
 <!-- Indicateurs OMS + stats affichées dashboard -->
 
 
@@ -12,3 +7,6 @@ par jours sur les 7 jours, ... possibilité de changer la période ... vous pouv
 graphiques à l’aide bibliothèques JS (cf. TP4 exo 6) L’idée est de proposer un
 tableau de bord synthétique à l’utilisateur afin de l’alerter sur les recommandations qu’il ne suivrait
 pas. -->
+
+
+<p>A faire</p>

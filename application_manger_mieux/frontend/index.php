@@ -8,7 +8,28 @@
         }
 ?>
 
-
+<?php 
+    switch($currentPageId){
+        case "dashboard":
+            echo('<h1>Mes statistiques</h1>');
+            break;
+        case "profil":
+            echo('<h1>Mon profil</h1>');
+            break;
+        case "aliments":
+            echo('<h1>Aliments</h1>');
+            break;
+        case "journal":
+            echo('<h1>Mon journal</h1>');
+            break;
+        case "login":
+            echo('<h1>Connexion</h1>');
+            break;
+        default:
+            echo('<h1>iMieuxManger</h1>');
+            break;
+    }
+?>
 
 <?php
 renderMenuToHTML($currentPageId);

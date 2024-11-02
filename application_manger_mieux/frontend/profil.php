@@ -31,8 +31,8 @@
 </div>
 
 
-<!-- DANS UN 1ER TEMPS : les infos par defaut doivent venir d'un GET sur les infos du user -->
-<!-- La requete POST se trouvera dans le login -->
+<!-- DANS UN 1ER TEMPS : les infos par defaut doivent venir d'un GET sur une BDD de users (ou voir avec sessions) -->
+<!-- La requete POST se trouvera dans le login si il y a une option "s'inscrire"-->
 <!-- DANS UN 2ND TPS : faire un JS pour que Edit transforme les td en input comme dans TD5 exo2 -->
 <!-- Save doit envoyer un PUT pour modifier user meme dans la base de données : jQuery/ajax?-->
 

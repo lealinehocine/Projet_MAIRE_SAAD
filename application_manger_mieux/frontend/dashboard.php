@@ -8,5 +8,5 @@ graphiques à l’aide bibliothèques JS (cf. TP4 exo 6) L’idée est de propos
 tableau de bord synthétique à l’utilisateur afin de l’alerter sur les recommandations qu’il ne suivrait
 pas. -->
 
-
+<!-- Choisir Stats à afficher -->
 <p>TEST</p>

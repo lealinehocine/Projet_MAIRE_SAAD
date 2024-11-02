@@ -1,0 +1,50 @@
+/* Barre de menu à corriger : centrer texte + disposition et taille des "cases" + couleurs et police */
+/* Disposition générale de la page à faire */
+
+body{
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    justify-content: space-between; /*Ne pas garder ça à terme*/
+    height: 100vh;
+    }
+
+a{
+    text-decoration: none;  
+    width: 100%; 
+    height: 100%; 
+    padding: 15px 0; 
+
+} 
+    
+.menu ul{
+    display: flex;
+    list-style:none;
+    justify-content: space-between;
+    margin: 0;
+    padding: 0;
+} 
+
+.menu li {
+    display: flex;
+    margin: 0 ; 
+    border: 1px solid #fff; /*Couleur à définir*/
+    align-items: center;
+}
+
+.menu{
+    background-color: #137C8B; /*Couleur à définir*/
+    color: #344D59; /*Couleur à définir*/
+    font-weight: 700;
+
+}
+
+.menu li:hover {
+    background-color: #B8CBD0; /*Couleur à définir*/
+    color: #344D59; /*Couleur à définir*/
+    border-color: #344D59; /*Couleur à définir*/
+}
+
+#currentpage{
+    background-color: #709CA7; /*Couleur à définir*/
+}

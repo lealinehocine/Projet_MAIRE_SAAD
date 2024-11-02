@@ -1,34 +1,34 @@
-<table>
-
-        <tr>
-            <th>Login</th>
-            <td><span class="info" id="login">userdefault</span></td>
-        </tr>
-        <tr>
-            <th>Nom</th>
-            <td><span class="info" id="nom">Nomdefaut</span></td>
-        </tr>
-        <tr>
-            <th>Prénom</th>
-            <td><span class="info" id="prenom">Prenomdefaut</span></td>
-        </tr>
-        <tr>
-            <th>Sexe</th>
-            <td><span class="info" id="sexe">homme, femme</span></td>
-        </tr>
-        <tr>
-            <th>Tranche d'âge</th>
-            <td><span class="info" id="age"> -40, -60, 60+ ans</span></td>
-        </tr>
-        <tr>
-            <th>Pratique sportive</th>
-            <td><span class="info" id="sport">bas, moyen, élevé</span></td>
-        </tr>
+<div class="content">
+    <table>
+            <tr>
+                <th>Login</th>
+                <td><span class="info" id="login">userdefault</span></td>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <td><span class="info" id="nom">Nomdefaut</span></td>
+            </tr>
+            <tr>
+                <th>Prénom</th>
+                <td><span class="info" id="prenom">Prenomdefaut</span></td>
+            </tr>
+            <tr>
+                <th>Sexe</th>
+                <td><span class="info" id="sexe">homme, femme</span></td>
+            </tr>
+            <tr>
+                <th>Tranche d'âge</th>
+                <td><span class="info" id="age"> -40, -60, 60+ ans</span></td>
+            </tr>
+            <tr>
+                <th>Pratique sportive</th>
+                <td><span class="info" id="sport">bas, moyen, élevé</span></td>
+            </tr>
     </table>
 
-<!-- Lorsqu'on appuie sur Edit, les champs deviennent des input (sauf login (et noms?)) et le bouton devient Save -->
-<button>Edit</button>
-
+    <!-- Lorsqu'on appuie sur Edit, les champs deviennent des input (sauf login (et noms?)) et le bouton devient Save -->
+    <button>Edit</button>
+</div>
 
 
 <!-- DANS UN 1ER TEMPS : les infos par defaut doivent venir d'un GET sur les infos du user -->

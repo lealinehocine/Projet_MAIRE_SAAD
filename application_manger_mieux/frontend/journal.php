@@ -6,3 +6,5 @@ sous la forme d’un tableau. Il doit être possible de filtrer ce tableau :
 — sur une période donnée (jour, semaine, mois, tout)
 — par type d’aliment
 — ... -->
+
+<p>test</p>

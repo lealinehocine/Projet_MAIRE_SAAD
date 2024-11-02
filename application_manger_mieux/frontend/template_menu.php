@@ -3,7 +3,7 @@
 
     $mymenu = array(
 
-        'index' => array( 'Mes statistiques' ), //voir si index fichier à part comme projet précédent
+        'dashboard' => array('Mes statistiques'), 
         'profil' => array( 'Mon profil' ),
         'aliments' => array('Aliments'),
         'journal' => array('Mon journal'),

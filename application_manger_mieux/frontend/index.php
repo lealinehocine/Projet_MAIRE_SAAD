@@ -23,7 +23,7 @@
             echo('<h1>Mon journal</h1>');
             break;
         case "login":
-            echo('<h1>Connexion</h1>');
+            echo('<h1>Connexion</h1>'); //doit se transformer en déconnexion quand on est connecté!
             break;
         default:
             echo('<h1>iMieuxManger</h1>');

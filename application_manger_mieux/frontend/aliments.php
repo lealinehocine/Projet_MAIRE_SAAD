@@ -1,7 +1,7 @@
 <!-- page affichant les aliments de la base avec la possibilité d’en ajouter, d’en supprimer, de les modifier : 
 CRUD + datatables (avec pagination car bcp d'aliments dans la base)-->
 
-<table>
+<table id="tableAliments">
     <thead>
         <tr>
             <th scope="col">Aliment</th>
@@ -94,6 +94,8 @@ function onFormSubmit() {
         let proteines = $("#inputProtéines").val();
         let alcool = $("#inputAlcool").val();
 
+//GET est testable normalement
+
         if(nomAliment){ // ne pas créer un aliment déjà existant : se fait dans le back
             //FAIRE 2 requetes? car nomAliment et caractéristiques dans 2 API différentes
             $.ajax({
@@ -104,27 +106,28 @@ function onFormSubmit() {
                         name: nomAliment,
                     },
                     success: function(response) {
-                        // Une fois l'utilisateur ajouté, on l'affiche dans le tableau
-                        $("#studentsTableBody").append(`
+/*créer tout le tableau mais vide?*/ 
+                        $("#tableAliments").append(`
                             <tr>
-                                <td>${nom}</td>
-                                <td>${email}</td>
-                                <td>
-                                    <button class="edit" data-id="${response.id}" onclick="editUser(this)">Edit</button>
-                                    <button class="delete" data-id="${response.id}" onclick="deleteUser(${response.id}, this)">Delete</button>
-                                </td>
+                                <td>${nomAliment}</td>
+                        
                             </tr>
                         `);
                     },
                     error: function(xhr, status, error) {
-                        alert("Erreur lors de l'ajout de l'utilisateur : " + error);
+                        alert("Erreur lors de l'ajout de l'aliment : " + error);
                     }
                 });
             }else{
                 alert("Le nom de l'aliment est obligatoire");
-            }
-        }
+            } // faut data = JSON.parse(reponse) et data[id]= pour recup l id pour faire la 2e requete POST
+        } 
 
-
+                                // <td>${email}</td>
+                                // <td>
+                                //     <button class="edit" data-id="${response.id}" onclick="editUser(this)">Edit</button>
+                                //     <button class="delete" data-id="${response.id}" onclick="deleteUser(${response.id}, this)">Delete</button>
+                                // </td>
+                            
 
 </script>

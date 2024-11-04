@@ -1,5 +1,5 @@
 <!-- Indicateurs OMS + stats affichées dashboard -->
-
+<!-- Faire une autre option d affichage quand déconnecté -->
 
 <!-- affiche un dashboard i.e. présente les indicateurs que vous aurez choisis : consommation
 de sel journalière sur les 7 derniers jours, de calories, ... combien de fruits et/ou légumes

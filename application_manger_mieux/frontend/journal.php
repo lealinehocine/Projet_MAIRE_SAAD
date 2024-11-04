@@ -7,4 +7,6 @@ sous la forme d’un tableau. Il doit être possible de filtrer ce tableau :
 — par type d’aliment
 — ... -->
 
+<!-- Faire une autre option d affichage quand déconnecté -->
+
 <p>test</p>

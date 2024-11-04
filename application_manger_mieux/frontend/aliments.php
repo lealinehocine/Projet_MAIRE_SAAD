@@ -1,6 +1,8 @@
 <!-- page affichant les aliments de la base avec la possibilité d’en ajouter, d’en supprimer, de les modifier : 
 CRUD + datatables (avec pagination car bcp d'aliments dans la base)-->
 
+
+
 <table id="tableAliments">
     <thead>
         <tr>

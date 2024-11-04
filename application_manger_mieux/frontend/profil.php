@@ -1,3 +1,4 @@
+<!-- Faire une autre option d affichage quand déconnecté -->
 <div class="content">
     <table>
             <tr>

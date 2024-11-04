@@ -7,19 +7,9 @@
         header('Content-type: application/json; charset=utf-8');
     }
 
-    /*aliment
-    a comme caractéristiques
-    caractéristiques de santé
-    contient
-    est_composé_de
-    mange
-    personne
-    pratique sportive
-    repas
-    sexe
-    tranche d age*/
-
-
+    function requete_get($pdo, $get) {
+        
+    }
 
     
     // ==============

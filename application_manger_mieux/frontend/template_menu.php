@@ -7,7 +7,7 @@
         'profil' => array( 'Mon profil' ),
         'aliments' => array('Aliments'),
         'journal' => array('Mon journal'),
-        'login'=> array('Déconnexion') 
+        'login'=> array('Déconnexion') //renvoyer vers la page de base?
         );
         
         echo ("<nav class=\"menu\"><ul>");

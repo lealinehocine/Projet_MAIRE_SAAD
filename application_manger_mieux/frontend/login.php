@@ -8,7 +8,7 @@ journal. Par contre, la liste des aliments sera partagée. -->
 <div class="contentLogin">
 
 <form id="login_form" action="" method="POST"> 
-<!-- action à compléter fichier.php -->
+<!-- action à compléter fichier.php : dans le back -->
     <table>
         <tr>
             <th>Login :</th>

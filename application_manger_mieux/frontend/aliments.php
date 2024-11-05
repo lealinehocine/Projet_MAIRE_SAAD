@@ -2,7 +2,7 @@
 CRUD + datatables (avec pagination car bcp d'aliments dans la base)-->
 
 
-
+<div class="contentAliments">
 <table id="tableAliments">
     <thead>
         <tr>
@@ -82,7 +82,7 @@ CRUD + datatables (avec pagination car bcp d'aliments dans la base)-->
     </div>
 
 </form>
-
+</div>
 
 <script>
 
@@ -144,6 +144,5 @@ function onFormSubmit() {
             } 
         } 
 
-                            
 
 </script>

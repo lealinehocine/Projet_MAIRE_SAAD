@@ -1,54 +1,78 @@
-/* Barre de menu à corriger : centrer texte + disposition et taille des "cases" + couleurs et police */
-/* Disposition générale de la page à faire */
-
-/*ou alors utiliser un theme bootstrap?*/
-
 body{
     display: flex;
     flex-direction: column;
     margin: 0;
-    justify-content: space-between; /*Ne pas garder ça à terme*/
-    height: 100vh;
+    height: 100%;
+    background-color: #dfe2db;
+    font-family: 'Courier Prime', monospace;
     }
+
+.footer, .header{
+    background-color: #2f5b4c;
+    color: white;
+    text-align: center;
+    margin: 0;
+    padding:5px 0;
+}
+
+.contentLogin, .contentAliments, .contentProfil{
+    display:flex;
+    min-height: 100vh; /* Hauteur totale de la fenêtre */
+    justify-content: center; 
+    align-items: center; 
+}
+
+.contentLogin{
+    justify-content: space-evenly;
+}
+
+.contentAliments, .contentProfil{
+flex-direction: column;
+}
+
+
+.header, .menu, .footer {
+    flex-shrink: 0;
+}
 
 a{
     text-decoration: none;  
     width: 100%; 
     height: 100%; 
-    padding: 15px 0; 
-
 } 
-    
+
+a:visited {
+    color: inherit; 
+}
+
 .menu ul{
     display: flex;
     list-style:none;
-    justify-content: space-between;
+    justify-content: space-evenly;
     margin: 0;
     padding: 0;
 } 
 
 .menu li {
     display: flex;
-    margin: 0 ; 
-    border: 1px solid #fff; /*Couleur à définir*/
-    align-items: center;
+    padding: 10px ; 
 }
 
 .menu{
-    background-color: #137C8B; /*Couleur à définir*/
-    color: #344D59; /*Couleur à définir*/
+    background-color: #2f5b4c;
+    color: #dfe2db;
+    font-family: 'Ovo', serif;
     font-weight: 700;
 
 }
 
 .menu li:hover {
-    background-color: #B8CBD0; /*Couleur à définir*/
-    color: #344D59; /*Couleur à définir*/
-    border-color: #344D59; /*Couleur à définir*/
+    color: #ae515f;
 }
 
 #currentpage{
-    background-color: #709CA7; /*Couleur à définir*/
+    background-color:  #dfe2db;
+    color : black;
 }
 
 
@@ -73,4 +97,13 @@ a{
 /* Largeur des inputs */
 .form-group input {
     width: 120px;
+}
+
+button, .bouton{
+    background-color: #2f5b4c;
+    color : white;
+    border-radius: 10px;
+    font-family: 'Courier Prime', monospace;
+    height: fit-content;
+    width: fit-content;
 }

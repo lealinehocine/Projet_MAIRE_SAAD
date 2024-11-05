@@ -1,5 +1,5 @@
 <!-- Faire une autre option d affichage quand déconnecté -->
-<div class="content">
+<div class="contentProfil">
     <table>
             <tr>
                 <th>Login</th>

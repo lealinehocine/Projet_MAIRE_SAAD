@@ -7,7 +7,7 @@
         'profil' => array( 'Mon profil' ),
         'aliments' => array('Aliments'),
         'journal' => array('Mon journal'),
-        'login'=> array('Connexion') //if connecté, logout --> Deconnexion, else login
+        'login'=> array('Déconnexion') 
         );
         
         echo ("<nav class=\"menu\"><ul>");

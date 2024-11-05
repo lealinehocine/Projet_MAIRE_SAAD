@@ -50,3 +50,27 @@ a{
 #currentpage{
     background-color: #709CA7; /*Couleur à définir*/
 }
+
+
+#addStudentForm {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+
+}
+
+.form-group {
+    display: flex;
+    align-items: center;
+}
+
+
+/* Alignement des labels et des champs */
+.form-group label {
+    margin-right: 5px;
+}
+
+/* Largeur des inputs */
+.form-group input {
+    width: 120px;
+}

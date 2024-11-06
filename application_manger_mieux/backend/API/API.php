@@ -7,9 +7,14 @@
         header('Content-type: application/json; charset=utf-8');
     }
 
-    function requete_get($pdo, $get) {
-        
+    function requete_get($db, $get) {
+        $sql = "SELECT * FROM `$get['table']` ORDER BY `id`";
+        $exe = $db->query($sql);
+        $res = $exe->fetchAll(PDO::FETCH_OBJ);
+        return $res;
     }
+
+    
 
     
     // ==============

@@ -96,9 +96,9 @@ $admin = false; //En attendant que ce soit fait dans le back
 
 //GET est testable normalement
 
-$(document).ready( function () {
-    $('#tableAliments').DataTable();
-} );
+// $(document).ready( function () {
+//     $('#tableAliments').DataTable();
+// } );
 
 
 //REQUETE POST : créer un aliment dans la base

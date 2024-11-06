@@ -75,6 +75,108 @@ sous la forme d’un tableau. Il doit être possible de filtrer ce tableau :
 
 </form>
 
-
-
 </div>
+
+<script>
+
+// $(document).ready( function () {
+//     $('#tableJournal').DataTable();
+// } );
+
+    //POUR GET la liste d'aliments et la mettre dans le menu déroulant
+    // Exécuter ce script après le chargement de la page
+    document.addEventListener("DOMContentLoaded", function() {
+        // Fonction pour récupérer les aliments et les ajouter à la liste déroulante
+        function fetchAliments() {
+            $.ajax({
+                url: `${prefix_api}Aliments.php`, 
+                type: 'GET',
+                success: function(response) {
+                    // Vérifier que la réponse est un tableau d'aliments
+                    let aliments = JSON.parse(response);
+                    
+                    // Sélectionner l'élément select
+                    let select = document.getElementById('inputNomAliment');
+                    
+                    // Vider les options existantes (si nécessaire)
+                    // select.innerHTML = '';
+
+                    // Ajouter chaque aliment en tant qu'option dans le select
+                    aliments.forEach(aliment => {
+                        let option = document.createElement('option');
+                        // option.value = aliment.id; 
+                        option.textContent = aliment.nom; // Affiche le nom dans l'option
+                        select.appendChild(option);
+                    });
+                },
+                error: function(xhr, status, error) {
+                    console.error("Erreur lors du chargement des aliments : ", error);
+                }
+            });
+        }
+
+        // Appeler la fonction pour charger les aliments au démarrage
+        fetchAliments();
+    });
+
+
+
+
+    function onFormSubmit() {
+        event.preventDefault();
+        let nomAliment = $("#inputNomAliment").val();
+        let quantite = $("#inputEnergie").val();
+        let date = $("#inputLipides").val();
+        let repas = $("#inputGlucose").val();
+
+
+        if(nomAliment){ // ne pas créer un aliment déjà existant : se fait dans le back
+
+            $.ajax({
+                    url: `${prefix_api}API.php`, //A MODIFIER
+
+                    type: 'POST',
+                    data: {
+                        name: nomAliment,
+                    },
+                    success: function(response) { 
+
+                        let repRequete = JSON.parse(response);
+                        let alimentId = repRequete.id;
+
+                        //mettre ici l'autre/les autres requetes ajax, qui permettent de rajouter au back les différents caractéristiques de sante
+
+//ne pas afficher les boutons si pas admin
+                        $("#tableAliments").append(`
+                            <tr>
+                                <td>${nomAliment}</td>
+                                <td>${energie}</td>
+                                <td>${lipides}</td>
+                                <td>${glucose}</td>
+                                <td>${sucre}</td>
+                                <td>${proteines}</td>
+                                <td>${alcool}</td>
+                                <td>
+                                    <button class="edit" data-id="${response.id}" onclick="editUser(this)">Edit</button>
+                                    <button class="delete" data-id="${response.id}" onclick="deleteUser(${response.id}, this)">Delete</button>
+                                </td>
+                            </tr>
+                        `);
+                    },
+                    error: function(xhr, status, error) {
+                        alert("Erreur lors de l'ajout de l'aliment : " + error);
+                    }
+                });
+            
+//edituser et delete user à faire
+
+            }else{
+                alert("Le nom de l'aliment est obligatoire");
+            } 
+        } 
+
+
+
+
+
+</script>

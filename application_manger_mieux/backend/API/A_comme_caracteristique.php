@@ -1,5 +1,5 @@
 <?php
-    require_once("init_pdo.php");
+    require_once("../init_pdo.php");
     
     function setHeaders() {
         // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Origin
@@ -25,7 +25,7 @@
         $res = $exe->fetchAll(PDO::FETCH_OBJ);
         return $res;
     }
-
+/*
     function requete_post($db, $post, $login) {//post contient date, et midi/soir/matin
         
         $requete = "INSERT INTO `A_comme_caracteristiques` (`id_aliment`,`id_caracteristique`,`pourcentage`) VALUES ('".$post['id_aliment']."','".$post['id_caracteristique']."','"$post['pourcentage']")";
@@ -43,7 +43,7 @@
         http_response_code(201);
         return $res;
     }
-
+*/
 
     /* Requetes put et delete pas encore fonctionnelles 
     function requete_put($db, $params) {
@@ -101,17 +101,11 @@
     // ==============
     switch($_SERVER["REQUEST_METHOD"]) {
         case 'GET':
-            if(!isset($_GET['table'])){
-                setHeaders();
-                http_response_code(400);
-                exit(json_encode("Table non précisée"));
-            }
-            else{
-                $reponse = requete_get($pdo, $_GET);
-                setHeaders();
-                http_response_code(200);
-                exit(json_encode($reponse));
-            }
+            $reponse = requete_get($pdo, $_GET);
+            setHeaders();
+            http_response_code(200);
+            exit(json_encode($reponse));
+            
         case 'POST':
             if(!isset($_POST['table'])){
                 setHeaders();
@@ -122,7 +116,7 @@
                 $reponse = requete_post($pdo, $_POST);
                 setHeaders();
                 http_response_code(201);
-                exit(json_encode($reponse))
+                exit(json_encode($reponse));
             }
         case 'PUT':
             $parameters = json_decode(file_get_contents('php://input'),true);

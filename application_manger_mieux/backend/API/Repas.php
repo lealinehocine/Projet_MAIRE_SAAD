@@ -1,5 +1,5 @@
 <?php
-    require_once("init_pdo.php");
+    require_once("../init_pdo.php");
     
     function setHeaders() {
         // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Origin
@@ -20,12 +20,12 @@
         if(count($params) == 0){
             $stringParams = "1";
         }
-        $sql = "SELECT * FROM `Repas` WHERE $stringParams ORDER BY `id`";
+        $sql = "SELECT * FROM `Repas` WHERE $stringParams ORDER BY `id_repas`";
         $exe = $db->query($sql);
         $res = $exe->fetchAll(PDO::FETCH_OBJ);
         return $res;
     }
-
+/*
     function requete_post($db, $post, $login) {//post contient date, et midi/soir/matin
         
         $requete = "INSERT INTO `Repas` (`login`,`date`,`matin_midi_soir`) VALUES ('".$login."','".$post['date']."','"$post['matin_midi_soir']")";
@@ -42,8 +42,8 @@
         $res = $requete->fetchAll(PDO::FETCH_OBJ);
         http_response_code(201);
         return $res;
-    }
-
+    }*/
+/*
     function requete_put($db, $params) {
         if(!isset($params['id'])||!isset($params['name'])||$params['name'] === "") {
             http_response_code(400);
@@ -52,7 +52,7 @@
         }
         else {
             $safeName = htmlspecialchars($params['name']);
-            $requete = "UPDATE `Aliments` SET `Aliments.name`=\"$safeName\" WHERE `Aliments.id`=$params['id']";
+            $requete = "UPDATE `Aliments` SET `Aliments.name`= \"$safeName\" WHERE `Aliments.id`=$params['id']";
             try{
                 $reponse = $db->query($requete);
             }
@@ -90,24 +90,18 @@
             http_response_code(201);
             return true;
         }
-    }
+    }*/
     
     // ==============
     // Responses
     // ==============
     switch($_SERVER["REQUEST_METHOD"]) {
         case 'GET':
-            if(!isset($_GET['table'])){
-                setHeaders();
-                http_response_code(400);
-                exit(json_encode("Table non précisée"));
-            }
-            else{
-                $reponse = requete_get($pdo, $_GET);
-                setHeaders();
-                http_response_code(200);
-                exit(json_encode($reponse));
-            }
+            $reponse = requete_get($pdo, $_GET);
+            setHeaders();
+            http_response_code(200);
+            exit(json_encode($reponse));
+            
         case 'POST':
             if(!isset($_POST['table'])){
                 setHeaders();
@@ -118,7 +112,7 @@
                 $reponse = requete_post($pdo, $_POST);
                 setHeaders();
                 http_response_code(201);
-                exit(json_encode($reponse))
+                exit(json_encode($reponse));
             }
         case 'PUT':
             $parameters = json_decode(file_get_contents('php://input'),true);

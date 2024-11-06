@@ -1,5 +1,5 @@
 <?php
-    require_once("init_pdo.php");
+    require_once("../init_pdo.php");
     
     function setHeaders() {
         // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Origin
@@ -13,7 +13,7 @@
         $res = $exe->fetchAll(PDO::FETCH_OBJ);
         return $res;
     }
-
+/*
     function requete_post($db, $post) {
         $safePost = htmlspecialchars($post['name']);
         if(distance($safePost)<2){
@@ -84,7 +84,7 @@
         }
     }
 
-    
+    */
 
     
     // ==============
@@ -92,7 +92,12 @@
     // ==============
     switch($_SERVER["REQUEST_METHOD"]) {
         case 'GET':
-            $reponse = requete_get($pdo, $_GET);
+            if(isset($_GET['login'])){
+                $reponse = requete_get($pdo, $_GET['login']);
+            }
+            else {
+                $reponse = "login not precised";
+            }
             setHeaders();
             http_response_code(200);
             exit(json_encode($reponse));
@@ -101,7 +106,7 @@
             $reponse = requete_post($pdo, $_POST);
             setHeaders();
             http_response_code(201);
-            exit(json_encode($reponse))
+            exit(json_encode($reponse));
             
         case 'PUT':
             $parameters = json_decode(file_get_contents('php://input'),true);

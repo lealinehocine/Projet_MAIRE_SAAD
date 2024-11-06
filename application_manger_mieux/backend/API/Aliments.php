@@ -27,7 +27,9 @@
         $sql = "SELECT 
             a.id_aliment,
             a.nom,
-            ARRAYAGG('quantite',ac.pourcentage,'caracteristique', c.designation) AS caracteristiques
+            JSON_ARRAYAGG(
+                JSON_OBJECT('quantite',ac.pourcentage,'caracteristique', c.designation)
+                ) AS caracteristiques
         FROM 
             `Aliment` a
         JOIN `a_comme_caracteristiques` ac ON ac.id_aliment = a.id_aliment
@@ -37,7 +39,7 @@
         ORDER BY a.nom;";
         $exe = $db->query($sql);
         $res = $exe->fetchAll(PDO::FETCH_OBJ);
-        return $res;
+        return json_encode($res);
     }
 
     function requete_get($db,$params) {
@@ -65,11 +67,11 @@
 
     function requete_post($db, $post) {
         $safePost = htmlspecialchars($post['name']);
-        if(distance($safePost)<2){
+        /*if(distance($safePost)<2){
             http_response_code(208);
             setHeaders();
             exit(json_encode("The aliment already exists in database. Please check again or try to modify the aliment instead"));
-        }
+        }*/
         $requete = "INSERT INTO `Aliment` (`nom`) VALUES ('".$post['name']."')";
         try{
             $reponse = $db->query($requete);

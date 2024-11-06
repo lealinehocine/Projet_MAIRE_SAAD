@@ -1,10 +1,47 @@
 <?php
-    require_once("init_pdo.php");
+    require_once("../init_pdo.php");
     
     function setHeaders() {
         // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Origin
         header("Access-Control-Allow-Origin: *");
         header('Content-type: application/json; charset=utf-8');
+    }
+
+    function get_caracteristics($db,$params) {
+        $stringParams = "";
+        $a_un_parametre_de_filtrage = false;
+        foreach($params as $key => $value) {
+            if($key!="caracteristiques"){
+                $a_un_parametre_de_filtrage = true;
+                if($stringParams == ""){
+                    $stringParams = $key."=".$value;
+                }
+                else {
+                    $stringParams = $stringParams." AND ".$key."=".$value;
+                }
+            }
+        }
+        if(!$a_un_parametre_de_filtrage){
+            $stringParams = "1";
+        }
+        $sql = "SELECT 
+    a.id_aliment,
+    a.nom,
+    CAST(
+        JSON_ARRAYAGG(
+            JSON_OBJECT('quantite', ac.pourcentage, 'caracteristique', c.designation)
+        ) AS JSON
+    ) AS caracteristiques
+FROM 
+    `Aliment` a
+JOIN `a_comme_caracteristiques` ac ON ac.id_aliment = a.id_aliment
+JOIN `caracteristiques_de_sante` c ON c.id_caracteristique = ac.id_caracteristique
+WHERE $stringParams
+GROUP BY a.id_aliment
+ORDER BY a.nom;";
+        $exe = $db->query($sql);
+        $res = $exe->fetchAll(PDO::FETCH_OBJ);
+        return $res;
     }
 
     function requete_get($db,$params) {
@@ -20,7 +57,7 @@
         if(count($params) == 0){
             $stringParams = "1";
         }
-        $sql = "SELECT * FROM `Aliments` WHERE $stringParams ORDER BY `id`";
+        $sql = "SELECT * FROM `Aliment` WHERE $stringParams ORDER BY `id_aliment`";
         $exe = $db->query($sql);
         $res = $exe->fetchAll(PDO::FETCH_OBJ);
         return $res;
@@ -37,7 +74,7 @@
             setHeaders();
             exit(json_encode("The aliment already exists in database. Please check again or try to modify the aliment instead"));
         }
-        $requete = "INSERT INTO `Aliments` (`nom`) VALUES ('".$post['name']."')";
+        $requete = "INSERT INTO `Aliment` (`nom`) VALUES ('".$post['name']."')";
         try{
             $reponse = $db->query($requete);
         }
@@ -47,12 +84,12 @@
             exit(json_encode("There has been an issue with the request"));
         }
         
-        $requete = $db->query("SELECT * FROM `Aliments` WHERE `nom`='".$post['name']."'");
+        $requete = $db->query("SELECT * FROM `Aliment` WHERE `nom`='".$post['name']."'");
         $res = $requete->fetchAll(PDO::FETCH_OBJ);
         http_response_code(201);
         return $res;
     }
-
+/*
     function requete_put($db, $params) {
         if(!isset($params['id'])||!isset($params['name'])||$params['name'] === "") {
             http_response_code(400);
@@ -60,8 +97,8 @@
             exit(json_encode("id or name not defined"));
         }
         else {
-            $safeName = htmlspecialchars($params['name']);
-            $requete = "UPDATE `Aliments` SET `Aliments.name`=\"$safeName\" WHERE `Aliments.id`=$params['id']";
+            //$safeName = htmlspecialchars($params['name']);
+            $requete = "UPDATE `Aliments` SET `Aliments.name`=\"$params['name']\" WHERE `Aliments.id`=$params['id']";
             try{
                 $reponse = $db->query($requete);
             }
@@ -100,13 +137,18 @@
             return true;
         }
     }
-
+*/
     // ==============
     // Responses
     // ==============
     switch($_SERVER["REQUEST_METHOD"]) {
         case 'GET':
-            $reponse = requete_get($pdo);
+            if(isset($_GET['caracteristiques']) && $_GET['caracteristiques']==true) {
+                $reponse = get_caracteristics($pdo, $_GET);
+            }
+            else {
+                $reponse = requete_get($pdo,$_GET);
+            }
             setHeaders();
             http_response_code(200);
             exit(json_encode($reponse));

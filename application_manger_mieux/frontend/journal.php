@@ -26,14 +26,14 @@ sous la forme d’un tableau. Il doit être possible de filtrer ce tableau :
 </table>
 
 <!-- enlever classe inutiles -->
-<form id="addStudentForm" action="" onsubmit="onFormSubmit();">
+<form id="addStudentForm" action="" onsubmit="onFormSubmit(event);">
 
     <div class="form-group row">
         <label for="inputNomAliment" class="col-sm-2 col-form-label">Aliment*</label>
         <div class="col-sm-3">
             <select class="form-control" id="inputNomAliment">
-                                    <!-- laisser la premiere option? -->
-                    <option value="">Sélectionner un aliment</option>
+                                    <!-- laisser la premiere option? Mettre value à 0 -->
+                    <option value="Sélectionner un aliment">Sélectionner un aliment</option>
                     <!-- Les options des aliments seront insérées ici -->
             </select>
         </div>
@@ -59,9 +59,9 @@ sous la forme d’un tableau. Il doit être possible de filtrer ce tableau :
             <select class="form-control" id="inputNomRepas">
                     <option value="">Sélectionner un repas</option> 
                     <!-- laisser la premiere option? -->
-                    <option value="">Matin</option>
-                    <option value="">Midi</option>
-                    <option value="">Soir</option>
+                    <option value="Matin">Matin</option>
+                    <option value="Midi">Midi</option>
+                    <option value="Soir">Soir</option>
             </select>
         </div>
     </div>
@@ -79,9 +79,9 @@ sous la forme d’un tableau. Il doit être possible de filtrer ce tableau :
 
 <script>
 
-// $(document).ready( function () {
-//     $('#tableJournal').DataTable();
-// } );
+$(document).ready( function () {
+    // $('#tableJournal').DataTable();
+
 
     //POUR GET la liste d'aliments et la mettre dans le menu déroulant
     // Exécuter ce script après le chargement de la page
@@ -104,7 +104,7 @@ sous la forme d’un tableau. Il doit être possible de filtrer ce tableau :
                     // Ajouter chaque aliment en tant qu'option dans le select
                     aliments.forEach(aliment => {
                         let option = document.createElement('option');
-                        // option.value = aliment.id; 
+                        option.value = aliment.nom; 
                         option.textContent = aliment.nom; // Affiche le nom dans l'option
                         select.appendChild(option);
                     });
@@ -120,25 +120,25 @@ sous la forme d’un tableau. Il doit être possible de filtrer ce tableau :
     });
 
 
+} );
 
-
-    function onFormSubmit() {
+    function onFormSubmit(event) {
         event.preventDefault();
         let nomAliment = $("#inputNomAliment").val();
-        let quantite = $("#inputEnergie").val();
-        let date = $("#inputLipides").val();
-        let repas = $("#inputGlucose").val();
+        let quantite = $("#inputQuantite").val();
+        let date = $("#inputDate").val();
+        let repas = $("#inputNomRepas").val();
 
 
-        console.log(nomAliment,quantite,date,repas);
+        // console.log(nomAliment,quantite,date,repas);
 
-//         if(nomAliment){ // ne pas créer un aliment déjà existant : se fait dans le back
+        if(nomAliment){ 
 
-//             $.ajax({
-//                     url: `${prefix_api}API.php`, //A MODIFIER
+            // $.ajax({
+            //     url: `${prefix_api}Repas.php`, 
 
-//                     type: 'POST',
-//                     data: {
+            //         type: 'POST',
+            //         data: {
 //                         name: nomAliment,
 //                     },
 //                     success: function(response) { 
@@ -146,24 +146,25 @@ sous la forme d’un tableau. Il doit être possible de filtrer ce tableau :
 //                         let repRequete = JSON.parse(response);
 //                         let alimentId = repRequete.id;
 
-//                         //mettre ici l'autre/les autres requetes ajax, qui permettent de rajouter au back les différents caractéristiques de sante
 
-// //ne pas afficher les boutons si pas admin
-//                         $("#tableAliments").append(`
-//                             <tr>
-//                                 <td>${nomAliment}</td>
-//                                 <td>${energie}</td>
-//                                 <td>${lipides}</td>
-//                                 <td>${glucose}</td>
-//                                 <td>${sucre}</td>
-//                                 <td>${proteines}</td>
-//                                 <td>${alcool}</td>
-//                                 <td>
-//                                     <button class="edit" data-id="${response.id}" onclick="editUser(this)">Edit</button>
-//                                     <button class="delete" data-id="${response.id}" onclick="deleteUser(${response.id}, this)">Delete</button>
-//                                 </td>
-//                             </tr>
-//                         `);
+
+
+                        $("#tableJournal").append(`
+                            <tr>
+                                <td>${nomAliment}</td>
+                                <td>${quantite}</td>
+                                <td>${date}</td>
+                                <td>${repas}</td>
+                                <td>
+                                    <button>Edit</button>
+                                    <button>Delete</button>
+
+                                </td>
+                            </tr>
+                        `);
+
+// <button class="edit" data-id="${response.id}" onclick="editUser(this)">Edit</button>
+// <button class="delete" data-id="${response.id}" onclick="deleteUser(${response.id}, this)">Delete</button>
 //                     },
 //                     error: function(xhr, status, error) {
 //                         alert("Erreur lors de l'ajout de l'aliment : " + error);
@@ -172,13 +173,10 @@ sous la forme d’un tableau. Il doit être possible de filtrer ce tableau :
             
 // //edituser et delete user à faire
 
-//             }else{
-//                 alert("Le nom de l'aliment est obligatoire");
-//             } 
+            }else{
+                alert("Le nom de l'aliment est obligatoire");
+            } 
         } 
-
-
-
 
 
 </script>

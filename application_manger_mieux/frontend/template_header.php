@@ -7,8 +7,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Courier+Prime&display=swap" rel="stylesheet"> 
 <link href="https://fonts.googleapis.com/css2?family=Ovo&display=swap" rel="stylesheet">
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <!-- datatable en download -->
 <!-- <link href="./css/datatables.min.css" rel="stylesheet">
 <script src="./js/datatables.min.js"></script> -->

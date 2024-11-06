@@ -9,13 +9,18 @@
 
     function requete_get($db,$params) {
         $stringParams = "";
-        for($i=0;i< count($params);i++){
-            $stringParams = $stringParams.','.$params[i];
+        foreach($params as $key => $value) {
+            if($stringParams == ""){
+                $stringParams = $key."=".$value;
+            }
+            else {
+                $stringParams = $stringParams." AND ".$key."=".$value;
+            }
         }
         if(count($params) == 0){
-            $stringParams = "*";
+            $stringParams = "1";
         }
-        $sql = "SELECT $stringParams FROM `Aliments` ORDER BY `id`";
+        $sql = "SELECT * FROM `Aliments` WHERE $stringParams ORDER BY `id`";
         $exe = $db->query($sql);
         $res = $exe->fetchAll(PDO::FETCH_OBJ);
         return $res;
@@ -56,7 +61,7 @@
         }
         else {
             $safeName = htmlspecialchars($params['name']);
-            $requete = "UPDATE `Aliments` SET `Aliments.name`=$safeName WHERE `Aliments.id`=$params['id']";
+            $requete = "UPDATE `Aliments` SET `Aliments.name`=\"$safeName\" WHERE `Aliments.id`=$params['id']";
             try{
                 $reponse = $db->query($requete);
             }
@@ -66,7 +71,7 @@
                 exit(json_encode("There has been an issue with the request"));
             }
             
-            $requete = $db->query("SELECT * FROM `Aliments` WHERE `nom`='".$post['name']."'");
+            $requete = $db->query("SELECT * FROM `Aliments` WHERE `nom`='".$params['name']."'");
             $res = $requete->fetchAll(PDO::FETCH_OBJ);
             http_response_code(201);
         return $res;
@@ -74,7 +79,28 @@
     }
     
 
-    
+    function requete_delete($db, $params){
+        if(!isset($params['id'])) {
+            http_response_code(400);
+            setHeaders();
+            exit(json_encode("id or name not defined"));
+        }
+        else {
+            $safeName = htmlspecialchars($params['name']);
+            $requete = "DELETE `Aliments` WHERE `Aliments.id`=$params['id']";
+            try{
+                $reponse = $db->query($requete);
+            }
+            catch(e){
+                http_response_code(500);
+                setHeaders();
+                exit(json_encode("There has been an issue with the request"));
+            }
+            http_response_code(201);
+            return true;
+        }
+    }
+
     // ==============
     // Responses
     // ==============
@@ -96,6 +122,9 @@
             
         case 'DELETE':
             $parameters = json_decode(file_get_contents('php://input'),true);
+            if(requete_delete($pdo, $parameters)){
+                exit(json_encode("Aliment has been successfully deleted"));
+            }
             
         default:
             http_response_code(501);

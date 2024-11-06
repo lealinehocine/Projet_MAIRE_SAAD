@@ -82,10 +82,9 @@ sous la forme d’un tableau. Il doit être possible de filtrer ce tableau :
 $(document).ready( function () {
     // $('#tableJournal').DataTable();
 
-
-    //POUR GET la liste d'aliments et la mettre dans le menu déroulant
+    //POUR GET 
     // Exécuter ce script après le chargement de la page
-    document.addEventListener("DOMContentLoaded", function() {
+
         // Fonction pour récupérer les aliments et les ajouter à la liste déroulante
         function fetchAliments() {
             $.ajax({
@@ -93,8 +92,8 @@ $(document).ready( function () {
                 type: 'GET',
                 success: function(response) {
                     // Vérifier que la réponse est un tableau d'aliments
-                    let aliments = JSON.parse(response);
-                    
+                    let aliments = response;
+                    // console.log(response);
                     // Sélectionner l'élément select
                     let select = document.getElementById('inputNomAliment');
                     
@@ -104,8 +103,8 @@ $(document).ready( function () {
                     // Ajouter chaque aliment en tant qu'option dans le select
                     aliments.forEach(aliment => {
                         let option = document.createElement('option');
-                        option.value = aliment.nom; 
-                        option.textContent = aliment.nom; // Affiche le nom dans l'option
+                        option.value = aliment["NOM"]; 
+                        option.textContent = aliment["NOM"]; // Affiche le nom dans l'option
                         select.appendChild(option);
                     });
                 },
@@ -120,7 +119,7 @@ $(document).ready( function () {
     });
 
 
-} );
+//} );
 
     function onFormSubmit(event) {
         event.preventDefault();

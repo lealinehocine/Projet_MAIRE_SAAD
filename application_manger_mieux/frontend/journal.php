@@ -130,49 +130,51 @@ sous la forme d’un tableau. Il doit être possible de filtrer ce tableau :
         let repas = $("#inputGlucose").val();
 
 
-        if(nomAliment){ // ne pas créer un aliment déjà existant : se fait dans le back
+        console.log(nomAliment,quantite,date,repas);
 
-            $.ajax({
-                    url: `${prefix_api}API.php`, //A MODIFIER
+//         if(nomAliment){ // ne pas créer un aliment déjà existant : se fait dans le back
 
-                    type: 'POST',
-                    data: {
-                        name: nomAliment,
-                    },
-                    success: function(response) { 
+//             $.ajax({
+//                     url: `${prefix_api}API.php`, //A MODIFIER
 
-                        let repRequete = JSON.parse(response);
-                        let alimentId = repRequete.id;
+//                     type: 'POST',
+//                     data: {
+//                         name: nomAliment,
+//                     },
+//                     success: function(response) { 
 
-                        //mettre ici l'autre/les autres requetes ajax, qui permettent de rajouter au back les différents caractéristiques de sante
+//                         let repRequete = JSON.parse(response);
+//                         let alimentId = repRequete.id;
 
-//ne pas afficher les boutons si pas admin
-                        $("#tableAliments").append(`
-                            <tr>
-                                <td>${nomAliment}</td>
-                                <td>${energie}</td>
-                                <td>${lipides}</td>
-                                <td>${glucose}</td>
-                                <td>${sucre}</td>
-                                <td>${proteines}</td>
-                                <td>${alcool}</td>
-                                <td>
-                                    <button class="edit" data-id="${response.id}" onclick="editUser(this)">Edit</button>
-                                    <button class="delete" data-id="${response.id}" onclick="deleteUser(${response.id}, this)">Delete</button>
-                                </td>
-                            </tr>
-                        `);
-                    },
-                    error: function(xhr, status, error) {
-                        alert("Erreur lors de l'ajout de l'aliment : " + error);
-                    }
-                });
+//                         //mettre ici l'autre/les autres requetes ajax, qui permettent de rajouter au back les différents caractéristiques de sante
+
+// //ne pas afficher les boutons si pas admin
+//                         $("#tableAliments").append(`
+//                             <tr>
+//                                 <td>${nomAliment}</td>
+//                                 <td>${energie}</td>
+//                                 <td>${lipides}</td>
+//                                 <td>${glucose}</td>
+//                                 <td>${sucre}</td>
+//                                 <td>${proteines}</td>
+//                                 <td>${alcool}</td>
+//                                 <td>
+//                                     <button class="edit" data-id="${response.id}" onclick="editUser(this)">Edit</button>
+//                                     <button class="delete" data-id="${response.id}" onclick="deleteUser(${response.id}, this)">Delete</button>
+//                                 </td>
+//                             </tr>
+//                         `);
+//                     },
+//                     error: function(xhr, status, error) {
+//                         alert("Erreur lors de l'ajout de l'aliment : " + error);
+//                     }
+//                 });
             
-//edituser et delete user à faire
+// //edituser et delete user à faire
 
-            }else{
-                alert("Le nom de l'aliment est obligatoire");
-            } 
+//             }else{
+//                 alert("Le nom de l'aliment est obligatoire");
+//             } 
         } 
 
 

@@ -1,6 +1,9 @@
 <!-- page affichant les aliments de la base avec la possibilité d’en ajouter, d’en supprimer, de les modifier : 
 CRUD + datatables (avec pagination car bcp d'aliments dans la base)-->
 
+<?php
+$admin = true; //En attendant que ce soit fait dans le back
+?>
 
 <div class="contentAliments">
 <table id="tableAliments">
@@ -13,8 +16,12 @@ CRUD + datatables (avec pagination car bcp d'aliments dans la base)-->
             <th scope="col">Sucre</th>
             <th scope="col">Protéines</th>
             <th scope="col">Alcool</th>
-            <th scope="col">Edit</th>
-            <th scope="col">Delete</th>
+            <?php
+                if($admin){
+                    echo '<th scope="col">Edit</th>',
+                    '<th scope="col">Delete</th>';
+                }
+            ?>
         </tr>
     </thead>
     <tbody>

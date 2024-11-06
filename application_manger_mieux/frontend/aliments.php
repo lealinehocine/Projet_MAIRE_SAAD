@@ -2,7 +2,7 @@
 CRUD + datatables (avec pagination car bcp d'aliments dans la base)-->
 
 <?php
-$admin = true; //En attendant que ce soit fait dans le back
+$admin = false; //En attendant que ce soit fait dans le back
 ?>
 
 <div class="contentAliments">
@@ -95,6 +95,11 @@ $admin = true; //En attendant que ce soit fait dans le back
 
 //GET est testable normalement
 
+$(document).ready( function () {
+    $('#tableAliments').DataTable();
+} );
+
+
 //REQUETE POST : créer un aliment dans la base
 function onFormSubmit() {
         event.preventDefault();
@@ -109,7 +114,7 @@ function onFormSubmit() {
         if(nomAliment){ // ne pas créer un aliment déjà existant : se fait dans le back
 
             $.ajax({
-                    url: `${prefix_api}backend/API.php`, //A MODIFIER
+                    url: `${prefix_api}API.php`, //A MODIFIER
 
                     type: 'POST',
                     data: {
@@ -122,7 +127,7 @@ function onFormSubmit() {
 
                         //mettre ici l'autre/les autres requetes ajax, qui permettent de rajouter au back les différents caractéristiques de sante
 
-
+//ne pas afficher les boutons si pas admin
                         $("#tableAliments").append(`
                             <tr>
                                 <td>${nomAliment}</td>

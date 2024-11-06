@@ -25,20 +25,16 @@
             $stringParams = "1";
         }
         $sql = "SELECT 
-    a.id_aliment,
-    a.nom,
-    CAST(
-        JSON_ARRAYAGG(
-            JSON_OBJECT('quantite', ac.pourcentage, 'caracteristique', c.designation)
-        ) AS JSON
-    ) AS caracteristiques
-FROM 
-    `Aliment` a
-JOIN `a_comme_caracteristiques` ac ON ac.id_aliment = a.id_aliment
-JOIN `caracteristiques_de_sante` c ON c.id_caracteristique = ac.id_caracteristique
-WHERE $stringParams
-GROUP BY a.id_aliment
-ORDER BY a.nom;";
+            a.id_aliment,
+            a.nom,
+            ARRAYAGG('quantite',ac.pourcentage,'caracteristique', c.designation) AS caracteristiques
+        FROM 
+            `Aliment` a
+        JOIN `a_comme_caracteristiques` ac ON ac.id_aliment = a.id_aliment
+        JOIN `caracteristiques_de_sante` c ON c.id_caracteristique = ac.id_caracteristique
+        WHERE $stringParams
+        GROUP BY a.id_aliment
+        ORDER BY a.nom;";
         $exe = $db->query($sql);
         $res = $exe->fetchAll(PDO::FETCH_OBJ);
         return $res;
@@ -60,7 +56,7 @@ ORDER BY a.nom;";
         $sql = "SELECT * FROM `Aliment` WHERE $stringParams ORDER BY `id_aliment`";
         $exe = $db->query($sql);
         $res = $exe->fetchAll(PDO::FETCH_OBJ);
-        return $res;
+        return json_encode($res);
     }
 
     function distance() {
@@ -151,7 +147,7 @@ ORDER BY a.nom;";
             }
             setHeaders();
             http_response_code(200);
-            exit(json_encode($reponse));
+            exit($reponse);
 
         case 'POST':
             $reponse = requete_post($pdo, $_POST);

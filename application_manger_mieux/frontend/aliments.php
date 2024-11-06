@@ -6,6 +6,7 @@ $admin = false; //En attendant que ce soit fait dans le back
 ?>
 
 <div class="contentAliments">
+
 <table id="tableAliments">
     <thead>
         <tr>
@@ -28,9 +29,9 @@ $admin = false; //En attendant que ce soit fait dans le back
     </tbody>
 </table>
 
-<form id="addStudentForm" action="" onsubmit="onFormSubmit();">
 
 <!-- Enlever les classes inutiles -->
+<form id="addStudentForm" action="" onsubmit="onFormSubmit();">
 
     <div class="form-group row">
         <label for="inputNomAliment" class="col-sm-2 col-form-label">Aliment*</label>

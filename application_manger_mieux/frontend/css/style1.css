@@ -15,18 +15,20 @@ body{
     padding:5px 0;
 }
 
-.contentLogin, .contentAliments, .contentProfil{
+/* rajouter .contentJournal */
+.contentLogin, .contentAliments, .contentProfil, .contentJournal{
     display:flex;
     min-height: 100vh; /* Hauteur totale de la fenêtre */
     justify-content: center; 
     align-items: center; 
+
 }
 
 .contentLogin{
     justify-content: space-evenly;
 }
 
-.contentAliments, .contentProfil{
+.contentAliments, .contentProfil, .contentJournal{
 flex-direction: column;
 }
 
@@ -112,3 +114,4 @@ button, .bouton{
     margin: 15px 0 0 0;
     text-align: center;
 }
+

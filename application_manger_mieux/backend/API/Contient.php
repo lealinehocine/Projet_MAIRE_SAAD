@@ -1,5 +1,5 @@
 <?php
-    require_once("init_pdo.php");
+    require_once("../init_pdo.php");
     
     function setHeaders() {
         // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Origin
@@ -20,12 +20,12 @@
         if(count($params) == 0){
             $stringParams = "1";
         }
-        $sql = "SELECT * FROM `Contient` WHERE $stringParams ORDER BY `id`";
+        $sql = "SELECT * FROM `Contient` WHERE $stringParams ORDER BY `id_repas`";
         $exe = $db->query($sql);
         $res = $exe->fetchAll(PDO::FETCH_OBJ);
         return $res;
     }
-
+/*
     function requete_post($db, $post) {
         
         $requete = "INSERT INTO `Contient` (`id_repas`,`id_aliment`,`quantite`) VALUES ('".$post['id_repas']."','".$post['id_aliment']."','"$post['quantite']")";
@@ -101,17 +101,11 @@
     // ==============
     switch($_SERVER["REQUEST_METHOD"]) {
         case 'GET':
-            if(!isset($_GET['table'])){
-                setHeaders();
-                http_response_code(400);
-                exit(json_encode("Table non précisée"));
-            }
-            else{
-                $reponse = requete_get($pdo, $_GET);
-                setHeaders();
-                http_response_code(200);
-                exit(json_encode($reponse));
-            }
+            $reponse = requete_get($pdo, $_GET);
+            setHeaders();
+            http_response_code(200);
+            exit(json_encode($reponse));
+            
         case 'POST':
             if(!isset($_POST['table'])){
                 setHeaders();
@@ -122,7 +116,7 @@
                 $reponse = requete_post($pdo, $_POST);
                 setHeaders();
                 http_response_code(201);
-                exit(json_encode($reponse))
+                exit(json_encode($reponse));
             }
         case 'PUT':
             $parameters = json_decode(file_get_contents('php://input'),true);

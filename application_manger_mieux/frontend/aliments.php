@@ -97,30 +97,27 @@ $admin = false; //En attendant que ce soit fait dans le back
 //GET 
 
 $(document).ready( function () {
-    // $('#tableAliments').DataTable();
+    // $('#tableAliment').DataTable();
 
-    document.addEventListener("DOMContentLoaded", function() {
+    //POUR GET : A FAIRE
+    // Exécuter ce script après le chargement de la page
+
         // Fonction pour récupérer les aliments et les ajouter à la liste déroulante
         function fetchAliments() {
             $.ajax({
-                url: `${prefix_api}Aliments.php`, 
+                url: `${prefix_api}Aliments.php?caracteristiques=true`, 
                 type: 'GET',
                 success: function(response) {
                     // Vérifier que la réponse est un tableau d'aliments
-                    let aliments = JSON.parse(response);
-                    
-                    // Sélectionner l'élément select
-                    let table = document.getElementById('tableAliments');
-                    
-                    // Vider les options existantes (si nécessaire)
-                    // select.innerHTML = '';
 
-                    // Ajouter chaque aliment en tant qu'option dans le select
-                    aliments.forEach(aliment => {
-                        let ligne = document.createElement('option');
-
-                        //valeur
-                        table.appendChild(ligne);
+                    let select = document.getElementById('inputNomAliment');
+                    
+                    // CETTE FOIS CI ON VEUT PAS DES OPTIONS ON VEUT UN TABLEAU : cf la reponse de la requete pour prendre les bons elements dans la bonne colonne
+                    response.forEach(aliment => {
+                        let option = document.createElement('option');
+                        option.value = aliment["NOM"]; 
+                        option.textContent = aliment["NOM"]; // Affiche le nom dans l'option
+                        select.appendChild(option);
                     });
                 },
                 error: function(xhr, status, error) {
@@ -132,9 +129,6 @@ $(document).ready( function () {
         // Appeler la fonction pour charger les aliments au démarrage
         fetchAliments();
     });
-
-
-} );
 
 
 

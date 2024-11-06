@@ -32,8 +32,7 @@ sous la forme d’un tableau. Il doit être possible de filtrer ce tableau :
         <label for="inputNomAliment" class="col-sm-2 col-form-label">Aliment*</label>
         <div class="col-sm-3">
             <select class="form-control" id="inputNomAliment">
-                                    <!-- laisser la premiere option? Mettre value à 0 -->
-                    <option value="Sélectionner un aliment">Sélectionner un aliment</option>
+                    <option value="">Sélectionner un aliment</option>
                     <!-- Les options des aliments seront insérées ici -->
             </select>
         </div>
@@ -92,16 +91,11 @@ $(document).ready( function () {
                 type: 'GET',
                 success: function(response) {
                     // Vérifier que la réponse est un tableau d'aliments
-                    let aliments = response;
-                    // console.log(response);
-                    // Sélectionner l'élément select
+
                     let select = document.getElementById('inputNomAliment');
                     
-                    // Vider les options existantes (si nécessaire)
-                    // select.innerHTML = '';
-
                     // Ajouter chaque aliment en tant qu'option dans le select
-                    aliments.forEach(aliment => {
+                    response.forEach(aliment => {
                         let option = document.createElement('option');
                         option.value = aliment["NOM"]; 
                         option.textContent = aliment["NOM"]; // Affiche le nom dans l'option
@@ -119,8 +113,7 @@ $(document).ready( function () {
     });
 
 
-//} );
-
+    //POST: à faire
     function onFormSubmit(event) {
         event.preventDefault();
         let nomAliment = $("#inputNomAliment").val();
@@ -131,7 +124,7 @@ $(document).ready( function () {
 
         // console.log(nomAliment,quantite,date,repas);
 
-        if(nomAliment){ 
+        if(nomAliment && quantite && date &&repas){ 
 
             // $.ajax({
             //     url: `${prefix_api}Repas.php`, 
@@ -144,8 +137,6 @@ $(document).ready( function () {
 
 //                         let repRequete = JSON.parse(response);
 //                         let alimentId = repRequete.id;
-
-
 
 
                         $("#tableJournal").append(`
@@ -173,7 +164,7 @@ $(document).ready( function () {
 // //edituser et delete user à faire
 
             }else{
-                alert("Le nom de l'aliment est obligatoire");
+                alert("Toutes les informations sont obligatoires");
             } 
         } 
 

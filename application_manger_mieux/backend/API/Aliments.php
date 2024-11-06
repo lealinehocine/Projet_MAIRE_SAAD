@@ -39,7 +39,7 @@
         ORDER BY a.nom;";
         $exe = $db->query($sql);
         $res = $exe->fetchAll(PDO::FETCH_OBJ);
-        return $res;
+        return json_encode($res);
     }
 
     function requete_get($db,$params) {

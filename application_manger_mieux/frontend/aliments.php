@@ -1,34 +1,8 @@
-<!-- page affichant les aliments de la base avec la possibilité d’en ajouter, d’en supprimer, de les modifier : 
-CRUD + datatables (avec pagination car bcp d'aliments dans la base)-->
-
 <?php
 $admin = false; //En attendant que ce soit fait dans le back
 ?>
 
 <div class="contentAliments">
-
-<table id="tableAliments">
-    <thead>
-        <tr>
-            <th scope="col">Aliment</th>
-            <th scope="col">Energie</th>
-            <th scope="col">Lipides</th>
-            <th scope="col">Glucose</th>
-            <th scope="col">Sucre</th>
-            <th scope="col">Protéines</th>
-            <th scope="col">Alcool</th>
-            <?php
-                if($admin){
-                    echo '<th scope="col">Edit</th>',
-                    '<th scope="col">Delete</th>';
-                }
-            ?>
-        </tr>
-    </thead>
-    <tbody>
-    </tbody>
-</table>
-
 
 <!-- Enlever les classes inutiles -->
 <form id="addStudentForm" action="" onsubmit="onFormSubmit();">
@@ -75,12 +49,6 @@ $admin = false; //En attendant que ce soit fait dans le back
         </div>
     </div>
 
-    <div class="form-group row">
-    <label for="inputAlcool" class="col-sm-2 col-form-label">Alcool</label>
-        <div class="col-sm-2">
-        <input type="text" class="form-control" id="inputAlcool" >
-        </div>
-    </div>
 
     <div class="form-group row">
         <span class="col-sm-2"></span>
@@ -90,50 +58,92 @@ $admin = false; //En attendant que ce soit fait dans le back
     </div>
 
 </form>
+
+
+<table id="tableAliments">
+    <thead>
+        <tr>
+            <th scope="col">Aliment</th>
+            <th scope="col">Energie</th>
+            <th scope="col">Lipides</th>
+            <th scope="col">Glucose</th>
+            <th scope="col">Sucre</th>
+            <th scope="col">Protéines</th>
+            <?php
+                if($admin){
+                    echo '<th scope="col">Edit</th>',
+                    '<th scope="col">Delete</th>';
+                }
+            ?>
+        </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
+
+
 </div>
 
 <script>
 
+
+function addRowToTable(response) {
+
+    let $ligne = $('<tr></tr>');
+    $ligne.append($('<td></td>').text(response.nom));
+
+    let caracteristiques = JSON.parse(response.caracteristiques);
+
+    let energie = getCharacteristic(caracteristiques, "Energie, Règlement UE N° 1169/2011 (kcal/100 g)");
+    let lipides = getCharacteristic(caracteristiques, "Lipides (g/100 g)");
+    let glucose = getCharacteristic(caracteristiques, "Glucose (g/100 g)");
+    let sucres = getCharacteristic(caracteristiques, "Sucres (g/100 g)");
+    let proteines = getCharacteristic(caracteristiques, "Protéines, N x 6.25 (g/100 g)");
+
+    // console.log(energie,lipides,glucose,sucres,proteines);
+
+    $ligne.append($('<td></td>').text(energie || "N/A"));
+    $ligne.append($('<td></td>').text(lipides || "N/A"));
+    $ligne.append($('<td></td>').text(glucose || "N/A"));
+    $ligne.append($('<td></td>').text(sucres || "N/A"));
+    $ligne.append($('<td></td>').text(proteines || "N/A"));
+
+    $('#tableAliments').append($ligne);
+
+    }
+
+function getCharacteristic(caracteristiques, nomCarac) {
+        let carac = caracteristiques.find(item => item.caracteristique === nomCarac);
+        return carac ? carac.quantite : null;
+    }
+
+
 //GET 
 
 $(document).ready( function () {
-    // $('#tableAliment').DataTable();
 
-    //POUR GET : A FAIRE
-    // Exécuter ce script après le chargement de la page
 
-        // Fonction pour récupérer les aliments et les ajouter à la liste déroulante
         function fetchAliments() {
             $.ajax({
                 url: `${prefix_api}Aliments.php?caracteristiques=true`, 
                 type: 'GET',
+                dataType: 'json',
                 success: function(response) {
-                    // Vérifier que la réponse est un tableau d'aliments
-
-                    let select = document.getElementById('inputNomAliment');
-                    
-                    // CETTE FOIS CI ON VEUT PAS DES OPTIONS ON VEUT UN TABLEAU : cf la reponse de la requete pour prendre les bons elements dans la bonne colonne
-                    response.forEach(aliment => {
-                        let option = document.createElement('option');
-                        option.value = aliment["NOM"]; 
-                        option.textContent = aliment["NOM"]; // Affiche le nom dans l'option
-                        select.appendChild(option);
-                    });
+                    response.forEach(aliment => addRowToTable(aliment));
+                    $('#tableAliments').DataTable();
                 },
                 error: function(xhr, status, error) {
                     console.error("Erreur lors du chargement des aliments : ", error);
                 }
             });
         }
-
-        // Appeler la fonction pour charger les aliments au démarrage
         fetchAliments();
+
     });
 
 
-
-
 //REQUETE POST : créer un aliment dans la base
+
 function onFormSubmit() {
         event.preventDefault();
         let nomAliment = $("#inputNomAliment").val();
@@ -142,26 +152,25 @@ function onFormSubmit() {
         let glucose = $("#inputGlucose").val();
         let sucre = $("#inputSucre").val();
         let proteines = $("#inputProtéines").val();
-        let alcool = $("#inputAlcool").val();
+
+        let listeCaracteristiques = [energie, lipides, glucose, sucre, proteines]; //liste des pourcentages de chaque caracteristique de l'aliment qu'on vient de créer
+
+
 
         if(nomAliment){ // ne pas créer un aliment déjà existant : se fait dans le back
-
+            let caracteristiquesId;
+            let alimentId;
             $.ajax({
-                    url: `${prefix_api}API.php`, //A MODIFIER
-
+                    url: `${prefix_api}Aliments.php`, 
                     type: 'POST',
                     data: {
                         name: nomAliment,
                     },
                     success: function(response) { 
+                        alimentId = response[0].ID_ALIMENT;
 
-                        let repRequete = JSON.parse(response);
-                        let alimentId = repRequete.id;
 
-                        //mettre ici l'autre/les autres requetes ajax, qui permettent de rajouter au back les différents caractéristiques de sante
-
-//ne pas afficher les boutons si pas admin
-                        $("#tableAliments").append(`
+                        $("#tableAliments").prepend(`
                             <tr>
                                 <td>${nomAliment}</td>
                                 <td>${energie}</td>
@@ -169,20 +178,63 @@ function onFormSubmit() {
                                 <td>${glucose}</td>
                                 <td>${sucre}</td>
                                 <td>${proteines}</td>
-                                <td>${alcool}</td>
-                                <td>
-                                    <button class="edit" data-id="${response.id}" onclick="editUser(this)">Edit</button>
-                                    <button class="delete" data-id="${response.id}" onclick="deleteUser(${response.id}, this)">Delete</button>
-                                </td>
                             </tr>
                         `);
-                    },
-                    error: function(xhr, status, error) {
-                        alert("Erreur lors de l'ajout de l'aliment : " + error);
-                    }
-                });
-            
-//edituser et delete user à faire
+
+        // Appel à Caracteristiques_de_sante pour récupérer les IDs des caractéristiques
+        $.ajax({
+            url: `${prefix_api}Caracteristiques_de_sante.php`, 
+            type: 'GET',
+            dataType: 'json',
+            success: function(response) {
+                function getIdByDesignation(designation) {
+                    const result = response.find(item => item.DESIGNATION === designation);
+                    return result ? result.ID_CARACTERISTIQUE : null;  
+                }
+                
+                caracteristiquesId = [
+                    getIdByDesignation("Energie, Règlement UE N° 1169/2011 (kcal/100 g)"),
+                    getIdByDesignation("Lipides (g/100 g)"),
+                    getIdByDesignation("Glucose (g/100 g)"),
+                    getIdByDesignation("Sucres (g/100 g)"),
+                    getIdByDesignation("Protéines, N x 6.25 (g/100 g)")
+                ];
+
+                // Maintenant que `alimentId` et `caracteristiquesId` sont définis, on exécute la boucle
+                for (let i = 0; i < 5; i++) {
+                    $.ajax({
+                        url: `${prefix_api}A_comme_caracteristique.php`, 
+                        type: 'POST',
+                        data: {
+                            id_aliment: alimentId,
+                            id_caracteristique: caracteristiquesId[i],
+                            pourcentage: listeCaracteristiques[i],
+                        },
+                        success: function(response) { 
+                            console.log("ID de l'aliment :", alimentId);
+                            console.log("liste ID carac :", caracteristiquesId);
+                        },
+                        error: function(xhr, status, error) {
+                            alert("Erreur lors de l'ajout de l'aliment : " + error);
+                        }
+                    });
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error("Erreur lors du chargement des caractéristiques : ", error);
+            }
+        });
+    },
+    error: function(xhr, status, error) {
+        alert("Erreur lors de l'ajout de l'aliment : " + error);
+    }
+});
+
+
+
+
+
+// //edituser et delete user à faire
 
             }else{
                 alert("Le nom de l'aliment est obligatoire");
@@ -191,3 +243,11 @@ function onFormSubmit() {
 
 
 </script>
+
+
+<!-- boutons pour les admins -->
+<!-- 
+                                <td>
+                                    <button class="edit" data-id="${response.id}" onclick="editUser(this)">Edit</button>
+                                    <button class="delete" data-id="${response.id}" onclick="deleteUser(${response.id}, this)">Delete</button>
+                                </td> -->

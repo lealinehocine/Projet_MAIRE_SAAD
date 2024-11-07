@@ -2,6 +2,16 @@
     require_once('template_header.php');
     require_once("template_menu.php");
 
+
+
+    // session_start(); 
+
+
+    // if (!isset($_SESSION['user'])) {
+    //     header("Location: login.php"); 
+    //     exit();
+    // }
+
 $succesfullyLogged = true; //A DEFINIR AVEC SESSION DANS LE BACK
 
 if($succesfullyLogged){

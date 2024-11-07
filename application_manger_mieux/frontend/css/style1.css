@@ -115,3 +115,6 @@ button, .bouton{
     text-align: center;
 }
 
+#addStudentForm{
+    margin: 30px;
+}

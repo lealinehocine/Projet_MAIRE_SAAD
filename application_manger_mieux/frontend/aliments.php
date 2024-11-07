@@ -16,7 +16,6 @@ $admin = false; //En attendant que ce soit fait dans le back
             <th scope="col">Glucose</th>
             <th scope="col">Sucre</th>
             <th scope="col">Protéines</th>
-            <th scope="col">Alcool</th>
             <?php
                 if($admin){
                     echo '<th scope="col">Edit</th>',
@@ -75,12 +74,6 @@ $admin = false; //En attendant que ce soit fait dans le back
         </div>
     </div>
 
-    <div class="form-group row">
-    <label for="inputAlcool" class="col-sm-2 col-form-label">Alcool</label>
-        <div class="col-sm-2">
-        <input type="text" class="form-control" id="inputAlcool" >
-        </div>
-    </div>
 
     <div class="form-group row">
         <span class="col-sm-2"></span>
@@ -99,34 +92,47 @@ $admin = false; //En attendant que ce soit fait dans le back
 $(document).ready( function () {
     // $('#tableAliment').DataTable();
 
-    //POUR GET : A FAIRE
-    // Exécuter ce script après le chargement de la page
-
-        // Fonction pour récupérer les aliments et les ajouter à la liste déroulante
         function fetchAliments() {
             $.ajax({
                 url: `${prefix_api}Aliments.php?caracteristiques=true`, 
                 type: 'GET',
+                dataType: 'json',
                 success: function(response) {
-                    // Vérifier que la réponse est un tableau d'aliments
+                    response.forEach(aliment => addRowToTable(aliment));
 
-                    let select = document.getElementById('inputNomAliment');
-                    
-                    // CETTE FOIS CI ON VEUT PAS DES OPTIONS ON VEUT UN TABLEAU : cf la reponse de la requete pour prendre les bons elements dans la bonne colonne
-                    response.forEach(aliment => {
-                        let option = document.createElement('option');
-                        option.value = aliment["NOM"]; 
-                        option.textContent = aliment["NOM"]; // Affiche le nom dans l'option
-                        select.appendChild(option);
-                    });
                 },
                 error: function(xhr, status, error) {
                     console.error("Erreur lors du chargement des aliments : ", error);
                 }
             });
         }
+        function addRowToTable(response) {
 
-        // Appeler la fonction pour charger les aliments au démarrage
+            let $ligne = $('<tr></tr>');
+            $ligne.append($('<td></td>').text(response.nom));
+
+            let caracteristiques = JSON.parse(response.caracteristiques);
+
+            let energie = getCharacteristic(caracteristiques, "Energie, Règlement UE N° 1169/2011 (kcal/100 g)");
+            let lipides = getCharacteristic(caracteristiques, "Lipides (g/100 g)");
+            let glucose = getCharacteristic(caracteristiques, "Glucose (g/100 g)");
+            let sucres = getCharacteristic(caracteristiques, "Sucres (g/100 g)");
+            let proteines = getCharacteristic(caracteristiques, "Protéines, N x 6.25 (g/100 g)");
+
+            $ligne.append($('<td></td>').text(energie || "N/A"));
+            $ligne.append($('<td></td>').text(lipides || "N/A"));
+            $ligne.append($('<td></td>').text(glucose || "N/A"));
+            $ligne.append($('<td></td>').text(sucres || "N/A"));
+            $ligne.append($('<td></td>').text(proteines || "N/A"));
+
+            $('#tableAliments').append($ligne);
+            }
+
+            function getCharacteristic(caracteristiques, nomCarac) {
+                    let carac = caracteristiques.find(item => item.caracteristique === nomCarac);
+                    return carac ? carac.quantite : null;
+                    }
+    
         fetchAliments();
     });
 
@@ -142,7 +148,6 @@ function onFormSubmit() {
         let glucose = $("#inputGlucose").val();
         let sucre = $("#inputSucre").val();
         let proteines = $("#inputProtéines").val();
-        let alcool = $("#inputAlcool").val();
 
         if(nomAliment){ // ne pas créer un aliment déjà existant : se fait dans le back
 
@@ -169,7 +174,6 @@ function onFormSubmit() {
                                 <td>${glucose}</td>
                                 <td>${sucre}</td>
                                 <td>${proteines}</td>
-                                <td>${alcool}</td>
                                 <td>
                                     <button class="edit" data-id="${response.id}" onclick="editUser(this)">Edit</button>
                                     <button class="delete" data-id="${response.id}" onclick="deleteUser(${response.id}, this)">Delete</button>

@@ -119,6 +119,7 @@
             if(requete_delete($pdo, $parameters)){
                 exit(json_encode("Contient has been successfully deleted"));
             }
+
         default:
             http_response_code(501);
             exit(-1);

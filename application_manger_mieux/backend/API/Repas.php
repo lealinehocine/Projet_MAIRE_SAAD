@@ -11,16 +11,16 @@
         $stringParams = "";
         foreach($params as $key => $value) {
             if($stringParams == ""){
-                $stringParams = $key."=".$value;
+                $stringParams = "`".$key."`=\"".$value."\"";
             }
             else {
-                $stringParams = $stringParams." AND ".$key."=".$value;
+                $stringParams = $stringParams." AND `".$key."`=\"".$value."\"";
             }
         }
         if(count($params) == 0){
             $stringParams = "1";
         }
-        $sql = "SELECT * FROM `Repas` WHERE $stringParams ORDER BY `id_repas`";
+        $sql = "SELECT * FROM `Repas` WHERE ".$stringParams." ORDER BY `id_repas`";
         $exe = $db->query($sql);
         $res = $exe->fetchAll(PDO::FETCH_OBJ);
         return $res;

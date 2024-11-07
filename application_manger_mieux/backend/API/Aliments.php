@@ -47,10 +47,10 @@
         if(isset($params)){
             foreach($params as $key => $value) {
                 if($stringParams == ""){
-                    $stringParams = $key."=".$value;
+                    $stringParams = "`".$key."`=\"".$value."\"";
                 }
                 else {
-                    $stringParams = $stringParams." AND ".$key."=".$value;
+                    $stringParams = $stringParams." AND `".$key."`=\"".$value."\"";
                 }
             }
         
@@ -61,7 +61,7 @@
         else {
             $stringParams = "1";
         }
-        $sql = "SELECT * FROM `Aliment` WHERE $stringParams ORDER BY `id_aliment`";
+        $sql = "SELECT * FROM `Aliment` WHERE ".$stringParams." ORDER BY `id_aliment`";
         $exe = $db->query($sql);
         $res = $exe->fetchAll(PDO::FETCH_OBJ);
         return $res;
@@ -98,28 +98,21 @@
     }
 
     function requete_put($db, $params) {
-        if(!isset($params['id_aliment'])||!isset($params['name'])||$params['name'] === "") {
-            http_response_code(400);
+        //$safeName = htmlspecialchars($params['name']);
+        $requete = "UPDATE `Aliment` SET `nom`=\"".$params['name']."\" WHERE `id_aliment`=\"".$params['id_aliment']."\"";
+        try{
+            $reponse = $db->query($requete);
+        }
+        catch(e){
+            http_response_code(500);
             setHeaders();
-            exit(json_encode("id or name not defined"));
+            exit(json_encode("There has been an issue with the request"));
         }
-        else {
-            //$safeName = htmlspecialchars($params['name']);
-            $requete = "UPDATE `Aliment` SET `nom`=\"".$params['name']."\" WHERE `id_aliment`=\"".$params['id_aliment']."\"";
-            try{
-                $reponse = $db->query($requete);
-            }
-            catch(e){
-                http_response_code(500);
-                setHeaders();
-                exit(json_encode("There has been an issue with the request"));
-            }
-            
-            $requete = $db->query("SELECT * FROM `Aliment` WHERE `nom`='".$params['name']."'");
-            $res = $requete->fetchAll(PDO::FETCH_OBJ);
-            http_response_code(201);
-            return $res;
-        }
+        
+        $requete = $db->query("SELECT * FROM `Aliment` WHERE `nom`='".$params['name']."'");
+        $res = $requete->fetchAll(PDO::FETCH_OBJ);
+        http_response_code(201);
+        return $res;   
     }
     
 

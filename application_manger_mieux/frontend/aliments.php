@@ -120,6 +120,7 @@ function getCharacteristic(caracteristiques, nomCarac) {
         return carac ? carac.quantite : null;
     }
 
+
 //GET 
 
 $(document).ready( function () {
@@ -154,7 +155,13 @@ function onFormSubmit() {
         let sucre = $("#inputSucre").val();
         let proteines = $("#inputProtéines").val();
 
+        let listeCaracteristiques = [energie, lipides, glucose, sucre, proteines]; //liste des pourcentages de chaque caracteristique de l'aliment qu'on vient de créer
+
+
+
         if(nomAliment){ // ne pas créer un aliment déjà existant : se fait dans le back
+            let caracteristiquesId;
+            let alimentId;
 
             $.ajax({
                 url: `${prefix_api}Aliments.php`, 
@@ -165,11 +172,11 @@ function onFormSubmit() {
                     },
                     success: function(response) { 
 
-                        console.log(response);
+                        //console.log(response);
 
-                        let alimentId = response[0].ID_ALIMENT;
+                        alimentId = response[0].ID_ALIMENT;
 
-                        console.log(alimentId);
+                        //console.log(alimentId);
 
 //ne pas afficher les boutons si pas admin
                         $("#tableAliments").prepend(`
@@ -188,6 +195,54 @@ function onFormSubmit() {
                     }
                 });
             
+
+        // GET : dans carac de sante pour recup les id carac
+        function getIdByDesignation(designation) {
+            const result = response.find(item => item.DESIGNATION === designation);
+            return result ? result.ID_CARACTERISTIQUE : null;  
+        }
+
+        let test = getIdByDesignation("Energie, Règlement UE N° 1169/2011 (kcal/100 g)");
+        console.log(test);
+
+            $.ajax({
+                url: `${prefix_api}Caracteristiques_de_sante.php`, 
+                type: 'GET',
+                dataType: 'json',
+                success: function(response) {
+                    // caracteristiquesId = [getIdByDesignation("Energie, Règlement UE N° 1169/2011 (kcal/100 g)"),
+                    // getIdByDesignation("Lipides (g/100 g)"),getIdByDesignation("Glucose (g/100 g)"),
+                    // getIdByDesignation("Sucres (g/100 g)"),getIdByDesignation("Protéines, N x 6.25 (g/100 g)")];
+
+                },
+                error: function(xhr, status, error) {
+                    console.error("Erreur lors du chargement des caractéristiques : ", error);
+                }
+            });
+
+           // console.log(caracteristiquesId);
+
+                // for(let i=0;i<5;i++){
+                //     $.ajax({
+                //     url: `${prefix_api}A_comme_caracteristique.php`, 
+
+                //         type: 'POST',
+                //         data: {
+                //             id_aliment : alimentId,
+                //             id_caracteristique : caracteristiquesId[i],
+                //             pourcentage : listeCaracteristiques[i] ,
+                //         },
+                //         success: function(response) { 
+
+                //         },
+                //         error: function(xhr, status, error) {
+                //             alert("Erreur lors de l'ajout de l'aliment : " + error);
+                //         }
+                //     });
+
+                // }   
+
+
 // //edituser et delete user à faire
 
             }else{

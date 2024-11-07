@@ -7,28 +7,6 @@ $admin = false; //En attendant que ce soit fait dans le back
 
 <div class="contentAliments">
 
-<table id="tableAliments">
-    <thead>
-        <tr>
-            <th scope="col">Aliment</th>
-            <th scope="col">Energie</th>
-            <th scope="col">Lipides</th>
-            <th scope="col">Glucose</th>
-            <th scope="col">Sucre</th>
-            <th scope="col">Protéines</th>
-            <?php
-                if($admin){
-                    echo '<th scope="col">Edit</th>',
-                    '<th scope="col">Delete</th>';
-                }
-            ?>
-        </tr>
-    </thead>
-    <tbody>
-    </tbody>
-</table>
-
-
 <!-- Enlever les classes inutiles -->
 <form id="addStudentForm" action="" onsubmit="onFormSubmit();">
 
@@ -83,9 +61,64 @@ $admin = false; //En attendant que ce soit fait dans le back
     </div>
 
 </form>
+
+
+<table id="tableAliments">
+    <thead>
+        <tr>
+            <th scope="col">Aliment</th>
+            <th scope="col">Energie</th>
+            <th scope="col">Lipides</th>
+            <th scope="col">Glucose</th>
+            <th scope="col">Sucre</th>
+            <th scope="col">Protéines</th>
+            <?php
+                if($admin){
+                    echo '<th scope="col">Edit</th>',
+                    '<th scope="col">Delete</th>';
+                }
+            ?>
+        </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
+
+
 </div>
 
 <script>
+
+
+function addRowToTable(response) {
+
+    let $ligne = $('<tr></tr>');
+    $ligne.append($('<td></td>').text(response.nom));
+
+    let caracteristiques = JSON.parse(response.caracteristiques);
+
+    let energie = getCharacteristic(caracteristiques, "Energie, Règlement UE N° 1169/2011 (kcal/100 g)");
+    let lipides = getCharacteristic(caracteristiques, "Lipides (g/100 g)");
+    let glucose = getCharacteristic(caracteristiques, "Glucose (g/100 g)");
+    let sucres = getCharacteristic(caracteristiques, "Sucres (g/100 g)");
+    let proteines = getCharacteristic(caracteristiques, "Protéines, N x 6.25 (g/100 g)");
+
+    // console.log(energie,lipides,glucose,sucres,proteines);
+
+    $ligne.append($('<td></td>').text(energie || "N/A"));
+    $ligne.append($('<td></td>').text(lipides || "N/A"));
+    $ligne.append($('<td></td>').text(glucose || "N/A"));
+    $ligne.append($('<td></td>').text(sucres || "N/A"));
+    $ligne.append($('<td></td>').text(proteines || "N/A"));
+
+    $('#tableAliments').append($ligne);
+
+    }
+
+function getCharacteristic(caracteristiques, nomCarac) {
+        let carac = caracteristiques.find(item => item.caracteristique === nomCarac);
+        return carac ? carac.quantite : null;
+    }
 
 //GET 
 
@@ -106,40 +139,12 @@ $(document).ready( function () {
                 }
             });
         }
-        function addRowToTable(response) {
-
-            let $ligne = $('<tr></tr>');
-            $ligne.append($('<td></td>').text(response.nom));
-
-            let caracteristiques = JSON.parse(response.caracteristiques);
-
-            let energie = getCharacteristic(caracteristiques, "Energie, Règlement UE N° 1169/2011 (kcal/100 g)");
-            let lipides = getCharacteristic(caracteristiques, "Lipides (g/100 g)");
-            let glucose = getCharacteristic(caracteristiques, "Glucose (g/100 g)");
-            let sucres = getCharacteristic(caracteristiques, "Sucres (g/100 g)");
-            let proteines = getCharacteristic(caracteristiques, "Protéines, N x 6.25 (g/100 g)");
-
-            $ligne.append($('<td></td>').text(energie || "N/A"));
-            $ligne.append($('<td></td>').text(lipides || "N/A"));
-            $ligne.append($('<td></td>').text(glucose || "N/A"));
-            $ligne.append($('<td></td>').text(sucres || "N/A"));
-            $ligne.append($('<td></td>').text(proteines || "N/A"));
-
-            $('#tableAliments').append($ligne);
-            }
-
-            function getCharacteristic(caracteristiques, nomCarac) {
-                    let carac = caracteristiques.find(item => item.caracteristique === nomCarac);
-                    return carac ? carac.quantite : null;
-                    }
-    
         fetchAliments();
     });
 
 
-
-
 //REQUETE POST : créer un aliment dans la base
+
 function onFormSubmit() {
         event.preventDefault();
         let nomAliment = $("#inputNomAliment").val();
@@ -152,7 +157,7 @@ function onFormSubmit() {
         if(nomAliment){ // ne pas créer un aliment déjà existant : se fait dans le back
 
             $.ajax({
-                    url: `${prefix_api}API.php`, //A MODIFIER
+                url: `${prefix_api}Aliments.php`, 
 
                     type: 'POST',
                     data: {
@@ -160,13 +165,14 @@ function onFormSubmit() {
                     },
                     success: function(response) { 
 
-                        let repRequete = JSON.parse(response);
-                        let alimentId = repRequete.id;
+                        console.log(response);
 
-                        //mettre ici l'autre/les autres requetes ajax, qui permettent de rajouter au back les différents caractéristiques de sante
+                        let alimentId = response[0].ID_ALIMENT;
+
+                        console.log(alimentId);
 
 //ne pas afficher les boutons si pas admin
-                        $("#tableAliments").append(`
+                        $("#tableAliments").prepend(`
                             <tr>
                                 <td>${nomAliment}</td>
                                 <td>${energie}</td>
@@ -174,10 +180,6 @@ function onFormSubmit() {
                                 <td>${glucose}</td>
                                 <td>${sucre}</td>
                                 <td>${proteines}</td>
-                                <td>
-                                    <button class="edit" data-id="${response.id}" onclick="editUser(this)">Edit</button>
-                                    <button class="delete" data-id="${response.id}" onclick="deleteUser(${response.id}, this)">Delete</button>
-                                </td>
                             </tr>
                         `);
                     },
@@ -186,7 +188,7 @@ function onFormSubmit() {
                     }
                 });
             
-//edituser et delete user à faire
+// //edituser et delete user à faire
 
             }else{
                 alert("Le nom de l'aliment est obligatoire");
@@ -195,3 +197,11 @@ function onFormSubmit() {
 
 
 </script>
+
+
+<!-- boutons pour les admins -->
+<!-- 
+                                <td>
+                                    <button class="edit" data-id="${response.id}" onclick="editUser(this)">Edit</button>
+                                    <button class="delete" data-id="${response.id}" onclick="deleteUser(${response.id}, this)">Delete</button>
+                                </td> -->

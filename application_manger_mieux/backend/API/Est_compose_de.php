@@ -25,10 +25,27 @@
         $res = $exe->fetchAll(PDO::FETCH_OBJ);
         return $res;
     }
-/*
+
+    function requete_post($db, $post) {
+        $requete = "INSERT INTO `Contient` (`id_repas`,`id_aliment`,`quantite`) VALUES (".$post['id_repas'].",".$post['id_aliment'].",".$post['quantite'].")";
+        try{
+            $reponse = $db->query($requete);
+        }
+        catch(e){
+            http_response_code(500);
+            setHeaders();
+            exit(json_encode("There has been an issue with the request"));
+        }
+        
+        $requete = $db->query("SELECT * FROM `Contient` WHERE `id_repas`=\"".$post['id_repas']."\" AND `id_aliment`=\"".$post['id_aliment']."\"");
+        $res = $requete->fetchAll(PDO::FETCH_OBJ);
+        http_response_code(201);
+        return $res;
+    }
+
     function requete_post($db, $post, $login) {//post contient date, et midi/soir/matin
         
-        $requete = "INSERT INTO `Est_compose_de` (`id_aliment`,`pourcentage`) VALUES ('".$post['id_aliment'].",".$post['pourcentage'].")";
+        $requete = "INSERT INTO `Est_compose_de` (`id_aliment`,`pourcentage`) VALUES (".$post['id_aliment'].",".$post['pourcentage'].")";
         try{
             $reponse = $db->query($requete);
         }   
@@ -38,7 +55,7 @@
             exit(json_encode("There has been an issue with the request"));
         }
         
-        $requete = $db->query("SELECT * FROM `Est_compose_de` WHERE `ali_id_aliment`=$post['id_aliment']");
+        $requete = $db->query("SELECT * FROM `Est_compose_de` WHERE `ali_id_aliment`=\"".$post['id_aliment']."\"");
         $res = $requete->fetchAll(PDO::FETCH_OBJ);
         http_response_code(201);
         return $res;

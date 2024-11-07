@@ -13,24 +13,20 @@
         $res = $exe->fetchAll(PDO::FETCH_OBJ);
         return $res;
     }
-/*
-    function requete_post($db, $post) {
-        $safePost = htmlspecialchars($post['name']);
-        if(distance($safePost)<2){
-            http_response_code(208);
-            setHeaders();
-        }
-        $requete = "INSERT INTO `Personne` (`login`, `id_tranche_d_age`,`id_sexe`,`id_pratique`,`email`,`age`) VALUES ('".$post['name']."')";
+
+    function requete_post($db, $post) {//post contient date, et midi/soir/matin
+        
+        $requete = "INSERT INTO `Personne` (`login`,`id_tranche_d_age`,`id_sexe`,`id_pratique`,`email`,`date_de_naissance`,`nom`,`admin`) VALUES (".$post['login'].",".$post['id_tranche_d_age'].$post['id_sexe'].",".$post['id_pratique'].$post['email'].",".$post['date_de_naissance'].$post['nom'].",0)";
         try{
             $reponse = $db->query($requete);
-        }
+        }   
         catch(e){
             http_response_code(500);
             setHeaders();
             exit(json_encode("There has been an issue with the request"));
         }
         
-        $requete = $db->query("SELECT * FROM `Personne` WHERE `login`='".$post['login']."'");
+        $requete = $db->query("SELECT * FROM `Est_compose_de` WHERE `ali_id_aliment`=\"".$post['id_aliment']."\"");
         $res = $requete->fetchAll(PDO::FETCH_OBJ);
         http_response_code(201);
         return $res;

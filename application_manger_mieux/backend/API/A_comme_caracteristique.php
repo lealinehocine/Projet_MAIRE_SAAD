@@ -25,10 +25,9 @@
         $res = $exe->fetchAll(PDO::FETCH_OBJ);
         return $res;
     }
-/*
-    function requete_post($db, $post, $login) {//post contient date, et midi/soir/matin
-        
-        $requete = "INSERT INTO `A_comme_caracteristiques` (`id_aliment`,`id_caracteristique`,`pourcentage`) VALUES ('".$post['id_aliment']."','".$post['id_caracteristique']."','"$post['pourcentage']")";
+
+    function requete_post($db, $post) {
+        $requete = "INSERT INTO `A_comme_caracteristiques` (`id_aliment`,`id_caracteristique`,`pourcentage`) VALUES (".$post['id_aliment'].",".$post['id_caracteristique'].",\"".$post['pourcentage']."\")";
         try{
             $reponse = $db->query($requete);
         }
@@ -38,12 +37,12 @@
             exit(json_encode("There has been an issue with the request"));
         }
         
-        $requete = $db->query("SELECT * FROM `A_comme_caracteristiques` WHERE `id_caracteristique`=$post['id_caracteristique'] AND `id_aliment`=$post['id_aliment']");
+        $requete = $db->query("SELECT * FROM `A_comme_caracteristiques` WHERE `id_caracteristique`=\"".$post['id_caracteristique']."\" AND `id_aliment`=\"".$post['id_aliment']."\"");
         $res = $requete->fetchAll(PDO::FETCH_OBJ);
         http_response_code(201);
         return $res;
     }
-*/
+
 
     /* Requetes put et delete pas encore fonctionnelles 
     function requete_put($db, $params) {
@@ -107,17 +106,11 @@
             exit(json_encode($reponse));
             
         case 'POST':
-            if(!isset($_POST['table'])){
-                setHeaders();
-                http_response_code(400);
-                exit(json_encode("Table non précisée"));
-            }
-            else{
-                $reponse = requete_post($pdo, $_POST);
-                setHeaders();
-                http_response_code(201);
-                exit(json_encode($reponse));
-            }
+            $reponse = requete_post($pdo, $_POST);
+            setHeaders();
+            http_response_code(201);
+            exit(json_encode($reponse));
+            
         case 'PUT':
             $parameters = json_decode(file_get_contents('php://input'),true);
             if(!isset($parameters['table'])){

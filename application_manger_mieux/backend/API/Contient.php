@@ -25,10 +25,9 @@
         $res = $exe->fetchAll(PDO::FETCH_OBJ);
         return $res;
     }
-/*
+
     function requete_post($db, $post) {
-        
-        $requete = "INSERT INTO `Contient` (`id_repas`,`id_aliment`,`quantite`) VALUES ('".$post['id_repas']."','".$post['id_aliment']."','"$post['quantite']")";
+        $requete = "INSERT INTO `Contient` (`id_repas`,`id_aliment`,`quantite`) VALUES (".$post['id_repas'].",".$post['id_aliment'].",".$post['quantite'].")";
         try{
             $reponse = $db->query($requete);
         }
@@ -38,7 +37,7 @@
             exit(json_encode("There has been an issue with the request"));
         }
         
-        $requete = $db->query("SELECT * FROM `Contient` WHERE `id_repas`=$post['id_repas'] AND `id_aliment`=$post['id_aliment'] AND `quantite`=$post['quantite']");
+        $requete = $db->query("SELECT * FROM `Contient` WHERE `id_repas`=\"".$post['id_repas']."\" AND `id_aliment`=\"".$post['id_aliment']."\"");
         $res = $requete->fetchAll(PDO::FETCH_OBJ);
         http_response_code(201);
         return $res;
@@ -107,31 +106,17 @@
             exit(json_encode($reponse));
             
         case 'POST':
-            if(!isset($_POST['table'])){
-                setHeaders();
-                http_response_code(400);
-                exit(json_encode("Table non précisée"));
-            }
-            else{
                 $reponse = requete_post($pdo, $_POST);
                 setHeaders();
                 http_response_code(201);
                 exit(json_encode($reponse));
-            }
+            
         case 'PUT':
             $parameters = json_decode(file_get_contents('php://input'),true);
-            if(!isset($parameters['table'])){
-                setHeaders();
-                http_response_code(400);
-                exit(json_encode("Table non précisée"));
-            }
+            
         case 'DELETE':
             $parameters = json_decode(file_get_contents('php://input'),true);
-            if(!isset($parameters['table'])){
-                setHeaders();
-                http_response_code(400);
-                exit(json_encode("Table non précisée"));
-            }
+            
         default:
             http_response_code(501);
             exit(-1);

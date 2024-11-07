@@ -20,15 +20,14 @@
         if(count($params) == 0){
             $stringParams = "1";
         }
-        $sql = "SELECT * FROM `A_comme_caracteristiques` WHERE $stringParams ORDER BY `id_caracteristique`";
+        $sql = "SELECT * FROM `Caracteristiques_de_sante` WHERE $stringParams ORDER BY `id_caracteristique`";
         $exe = $db->query($sql);
         $res = $exe->fetchAll(PDO::FETCH_OBJ);
         return $res;
     }
-/*
-    function requete_post($db, $post, $login) {//post contient date, et midi/soir/matin
-        
-        $requete = "INSERT INTO `caracteristiques_de_sante` (`designation`) VALUES ('".$post['designation'].")";
+
+    function requete_post($db, $post) {
+        $requete = "INSERT INTO `Caracteristiques_de_sante` (`designation`) VALUES (".$post['designation'].")";
         try{
             $reponse = $db->query($requete);
         }
@@ -38,7 +37,7 @@
             exit(json_encode("There has been an issue with the request"));
         }
         
-        $requete = $db->query("SELECT * FROM `caracteristiques_de_sante` WHERE `designation`=$post['designation']");
+        $requete = $db->query("SELECT * FROM `Caracteristiques_de_sante` WHERE `designation`=\"".$post['designation']."\"");
         $res = $requete->fetchAll(PDO::FETCH_OBJ);
         http_response_code(201);
         return $res;

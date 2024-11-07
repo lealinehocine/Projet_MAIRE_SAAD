@@ -39,39 +39,48 @@
         ORDER BY a.nom;";
         $exe = $db->query($sql);
         $res = $exe->fetchAll(PDO::FETCH_OBJ);
-        return json_encode($res);
+        return $res;
     }
 
     function requete_get($db,$params) {
         $stringParams = "";
-        foreach($params as $key => $value) {
-            if($stringParams == ""){
-                $stringParams = $key."=".$value;
+        if(isset($params)){
+            foreach($params as $key => $value) {
+                if($stringParams == ""){
+                    $stringParams = $key."=".$value;
+                }
+                else {
+                    $stringParams = $stringParams." AND ".$key."=".$value;
+                }
             }
-            else {
-                $stringParams = $stringParams." AND ".$key."=".$value;
+        
+            if(count($params) == 0){
+                $stringParams = "1";
             }
         }
-        if(count($params) == 0){
+        else {
             $stringParams = "1";
         }
         $sql = "SELECT * FROM `Aliment` WHERE $stringParams ORDER BY `id_aliment`";
         $exe = $db->query($sql);
         $res = $exe->fetchAll(PDO::FETCH_OBJ);
-        return json_encode($res);
+        return $res;
     }
 
-    function distance() {
+    function distance($nouveau_nom, $nomExistant) {
         //renvoie la distance de levenshtein la plus petite entre le nouveau nom d'aliment et les noms déjà existants
+        return levenshtein($nouveau_nom,$nomExistant);
     }
 
     function requete_post($db, $post) {
         $safePost = htmlspecialchars($post['name']);
-        /*if(distance($safePost)<2){
-            http_response_code(208);
-            setHeaders();
-            exit(json_encode("The aliment already exists in database. Please check again or try to modify the aliment instead"));
-        }*/
+        $tableau_tous_aliments = requete_get($db,null);
+        foreach($tableau_tous_aliments as $key => $value){
+            if(distance($value->NOM,$safePost)<2){
+                http_response_code(208);
+                exit(json_encode("L'aliment existe déjà dans la base. Veuillez essayer de le modifier."));
+            }
+        }
         $requete = "INSERT INTO `Aliment` (`nom`) VALUES ('".$post['name']."')";
         try{
             $reponse = $db->query($requete);
@@ -149,7 +158,7 @@
             }
             setHeaders();
             http_response_code(200);
-            exit($reponse);
+            exit(json_encode($reponse));
 
         case 'POST':
             $reponse = requete_post($pdo, $_POST);

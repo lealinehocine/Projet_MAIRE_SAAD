@@ -94,11 +94,43 @@ $admin = false; //En attendant que ce soit fait dans le back
 
 <script>
 
-//GET est testable normalement
+//GET 
 
-// $(document).ready( function () {
-//     $('#tableAliments').DataTable();
-// } );
+$(document).ready( function () {
+    // $('#tableAliment').DataTable();
+
+    //POUR GET : A FAIRE
+    // Exécuter ce script après le chargement de la page
+
+        // Fonction pour récupérer les aliments et les ajouter à la liste déroulante
+        function fetchAliments() {
+            $.ajax({
+                url: `${prefix_api}Aliments.php?caracteristiques=true`, 
+                type: 'GET',
+                success: function(response) {
+                    // Vérifier que la réponse est un tableau d'aliments
+
+                    let select = document.getElementById('inputNomAliment');
+                    
+                    // CETTE FOIS CI ON VEUT PAS DES OPTIONS ON VEUT UN TABLEAU : cf la reponse de la requete pour prendre les bons elements dans la bonne colonne
+                    response.forEach(aliment => {
+                        let option = document.createElement('option');
+                        option.value = aliment["NOM"]; 
+                        option.textContent = aliment["NOM"]; // Affiche le nom dans l'option
+                        select.appendChild(option);
+                    });
+                },
+                error: function(xhr, status, error) {
+                    console.error("Erreur lors du chargement des aliments : ", error);
+                }
+            });
+        }
+
+        // Appeler la fonction pour charger les aliments au démarrage
+        fetchAliments();
+    });
+
+
 
 
 //REQUETE POST : créer un aliment dans la base

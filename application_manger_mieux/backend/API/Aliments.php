@@ -96,16 +96,16 @@
         http_response_code(201);
         return $res;
     }
-/*
+
     function requete_put($db, $params) {
-        if(!isset($params['id'])||!isset($params['name'])||$params['name'] === "") {
+        if(!isset($params['id_aliment'])||!isset($params['name'])||$params['name'] === "") {
             http_response_code(400);
             setHeaders();
             exit(json_encode("id or name not defined"));
         }
         else {
             //$safeName = htmlspecialchars($params['name']);
-            $requete = "UPDATE `Aliments` SET `Aliments.name`=\"$params['name']\" WHERE `Aliments.id`=$params['id']";
+            $requete = "UPDATE `Aliment` SET `nom`=\"".$params['name']."\" WHERE `id_aliment`=\"".$params['id_aliment']."\"";
             try{
                 $reponse = $db->query($requete);
             }
@@ -115,23 +115,22 @@
                 exit(json_encode("There has been an issue with the request"));
             }
             
-            $requete = $db->query("SELECT * FROM `Aliments` WHERE `nom`='".$params['name']."'");
+            $requete = $db->query("SELECT * FROM `Aliment` WHERE `nom`='".$params['name']."'");
             $res = $requete->fetchAll(PDO::FETCH_OBJ);
             http_response_code(201);
-        return $res;
+            return $res;
         }
     }
     
 
     function requete_delete($db, $params){
-        if(!isset($params['id'])) {
+        if(!isset($params['id_aliment'])) {
             http_response_code(400);
             setHeaders();
-            exit(json_encode("id or name not defined"));
+            exit(json_encode("Tried to delete without id"));
         }
         else {
-            $safeName = htmlspecialchars($params['name']);
-            $requete = "DELETE `Aliments` WHERE `Aliments.id`=$params['id']";
+            $requete = "DELETE FROM `Aliment` WHERE `id_aliment`=\"".$params['id_aliment']."\"";
             try{
                 $reponse = $db->query($requete);
             }
@@ -144,7 +143,7 @@
             return true;
         }
     }
-*/
+
     // ==============
     // Responses
     // ==============
@@ -168,6 +167,14 @@
         
         case 'PUT':
             $parameters = json_decode(file_get_contents('php://input'),true);
+            if(!isset($parameters["id_aliment"])||!isset($parameters["name"])){
+                http_response_code(400);
+                exit("missing argument");
+            }
+            else {
+                $reponse = requete_put($pdo, $parameters);
+                exit(json_encode($reponse));
+            }
             
         case 'DELETE':
             $parameters = json_decode(file_get_contents('php://input'),true);

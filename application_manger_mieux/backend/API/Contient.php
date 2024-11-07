@@ -44,42 +44,34 @@
     }
 
 
-    /* Requetes put et delete pas encore fonctionnelles
+    // Requetes put et delete pas encore fonctionnelles
     function requete_put($db, $params) {
-        if(!isset($params['id'])||!isset($params['name'])||$params['name'] === "") {
-            http_response_code(400);
+        //$safeName = htmlspecialchars($params['name']);
+        $requete = "UPDATE `Contient` SET `quantite`=\"".$params['quantite']."\",`id_aliment`=\"".$params['id_aliment']."\" WHERE `id_repas`=\"".$params['id_repas']."\"";
+        try{
+            $reponse = $db->query($requete);
+        }
+        catch(e){
+            http_response_code(500);
             setHeaders();
-            exit(json_encode("id or name not defined"));
+            exit(json_encode("There has been an issue with the request"));
         }
-        else {
-            $safeName = htmlspecialchars($params['name']);
-            $requete = "UPDATE `Aliments` SET `Aliments.name`=\"$safeName\" WHERE `Aliments.id`=$params['id']";
-            try{
-                $reponse = $db->query($requete);
-            }
-            catch(e){
-                http_response_code(500);
-                setHeaders();
-                exit(json_encode("There has been an issue with the request"));
-            }
-            
-            $requete = $db->query("SELECT * FROM `Aliments` WHERE `nom`='".$params['name']."'");
-            $res = $requete->fetchAll(PDO::FETCH_OBJ);
-            http_response_code(201);
-        return $res;
-        }
+        
+        $requete = $db->query("SELECT * FROM `Contient` WHERE `id_repas`='".$params['id_repas']."'");
+        $res = $requete->fetchAll(PDO::FETCH_OBJ);
+        http_response_code(201);
+        return $res;   
     }
     
 
     function requete_delete($db, $params){
-        if(!isset($params['id'])) {
+        if(!isset($params['id_repas'])) {
             http_response_code(400);
             setHeaders();
-            exit(json_encode("id or name not defined"));
+            exit(json_encode("Tried to delete without id"));
         }
         else {
-            $safeName = htmlspecialchars($params['name']);
-            $requete = "DELETE `Aliments` WHERE `Aliments.id`=$params['id']";
+            $requete = "DELETE FROM `Contient` WHERE `id_repas`=\"".$params['id_repas']."\"";
             try{
                 $reponse = $db->query($requete);
             }
@@ -93,7 +85,7 @@
         }
     }
     
-    */
+    
 
     // ==============
     // Responses
@@ -113,10 +105,20 @@
             
         case 'PUT':
             $parameters = json_decode(file_get_contents('php://input'),true);
+            if(!isset($parameters["id_repas"])||!isset($parameters["quantite"])||!isset($parameters["id_aliment"])){
+                http_response_code(400);
+                exit("missing argument");
+            }
+            else {
+                $reponse = requete_put($pdo, $parameters);
+                exit(json_encode($reponse));
+            }
             
         case 'DELETE':
             $parameters = json_decode(file_get_contents('php://input'),true);
-            
+            if(requete_delete($pdo, $parameters)){
+                exit(json_encode("Contient has been successfully deleted"));
+            }
         default:
             http_response_code(501);
             exit(-1);

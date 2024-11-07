@@ -26,24 +26,7 @@
         return $res;
     }
 
-    function requete_post($db, $post) {
-        $requete = "INSERT INTO `Contient` (`id_repas`,`id_aliment`,`quantite`) VALUES (".$post['id_repas'].",".$post['id_aliment'].",".$post['quantite'].")";
-        try{
-            $reponse = $db->query($requete);
-        }
-        catch(e){
-            http_response_code(500);
-            setHeaders();
-            exit(json_encode("There has been an issue with the request"));
-        }
-        
-        $requete = $db->query("SELECT * FROM `Contient` WHERE `id_repas`=\"".$post['id_repas']."\" AND `id_aliment`=\"".$post['id_aliment']."\"");
-        $res = $requete->fetchAll(PDO::FETCH_OBJ);
-        http_response_code(201);
-        return $res;
-    }
-
-    function requete_post($db, $post, $login) {//post contient date, et midi/soir/matin
+    function requete_post($db, $post) {//post contient date, et midi/soir/matin
         
         $requete = "INSERT INTO `Est_compose_de` (`id_aliment`,`pourcentage`) VALUES (".$post['id_aliment'].",".$post['pourcentage'].")";
         try{
@@ -62,42 +45,40 @@
     }
 
 
-    /* Requetes put et delete pas encore fonctionnelles 
+    // Requetes put et delete pas encore fonctionnelles 
     function requete_put($db, $params) {
-        if(!isset($params['id'])||!isset($params['name'])||$params['name'] === "") {
-            http_response_code(400);
+        //$safeName = htmlspecialchars($params['name']);
+        $requete = "UPDATE `Est_compose_de` SET `quantite`=\"".$params['quantite']."\" WHERE `ali_id_aliment`=\"".$params['id_aliment_principal']."\" AND `id_aliment`=\"".$params['id_aliment_secondaire']."\"";
+        try{
+            $reponse = $db->query($requete);
+        }
+        catch(e){
+            http_response_code(500);
             setHeaders();
-            exit(json_encode("id or name not defined"));
+            exit(json_encode("There has been an issue with the request"));
         }
-        else {
-            $safeName = htmlspecialchars($params['name']);
-            $requete = "UPDATE `Aliments` SET `Aliments.name`=\"$safeName\" WHERE `Aliments.id`=$params['id']";
-            try{
-                $reponse = $db->query($requete);
-            }
-            catch(e){
-                http_response_code(500);
-                setHeaders();
-                exit(json_encode("There has been an issue with the request"));
-            }
-            
-            $requete = $db->query("SELECT * FROM `Aliments` WHERE `nom`='".$params['name']."'");
-            $res = $requete->fetchAll(PDO::FETCH_OBJ);
-            http_response_code(201);
-        return $res;
-        }
+        
+        $requete = $db->query("SELECT * FROM `Est_compose_de` WHERE `ali_id_aliment`='".$params['id_aliment_principal']."'");
+        $res = $requete->fetchAll(PDO::FETCH_OBJ);
+        http_response_code(201);
+        return $res;   
     }
     
 
     function requete_delete($db, $params){
-        if(!isset($params['id'])) {
+        if(!isset($params['id_aliment_principal'])) {
             http_response_code(400);
             setHeaders();
-            exit(json_encode("id or name not defined"));
+            exit(json_encode("Tried to delete without id"));
         }
         else {
-            $safeName = htmlspecialchars($params['name']);
-            $requete = "DELETE `Aliments` WHERE `Aliments.id`=$params['id']";
+            if(isset($params['id_aliment_secondaire'])){
+                $string = " AND `id_aliment`=\"".$params['id_aliment_secondaire']."\"";
+            }
+            else{
+                $string = "";
+            }
+            $requete = "DELETE FROM `Est_compose_de` WHERE `ali_id_aliment`=\"".$params['id_aliment_principal']."\"".$string;
             try{
                 $reponse = $db->query($requete);
             }
@@ -111,7 +92,6 @@
         }
     }
     
-    */
 
     // ==============
     // Responses
@@ -124,31 +104,27 @@
             exit(json_encode($reponse));
             
         case 'POST':
-            if(!isset($_POST['table'])){
-                setHeaders();
-                http_response_code(400);
-                exit(json_encode("Table non précisée"));
-            }
-            else{
                 $reponse = requete_post($pdo, $_POST);
                 setHeaders();
                 http_response_code(201);
                 exit(json_encode($reponse));
-            }
-        case 'PUT':
-            $parameters = json_decode(file_get_contents('php://input'),true);
-            if(!isset($parameters['table'])){
-                setHeaders();
-                http_response_code(400);
-                exit(json_encode("Table non précisée"));
-            }
-        case 'DELETE':
-            $parameters = json_decode(file_get_contents('php://input'),true);
-            if(!isset($parameters['table'])){
-                setHeaders();
-                http_response_code(400);
-                exit(json_encode("Table non précisée"));
-            }
+
+    case 'PUT':
+        $parameters = json_decode(file_get_contents('php://input'),true);
+        if(!isset($parameters["id_aliment_principal"])||!isset($parameters["id_aliment_secondaire"])||!isset($parameters['quantite'])){
+            http_response_code(400);
+            exit("missing argument");
+        }
+        else {
+            $reponse = requete_put($pdo, $parameters);
+            exit(json_encode($reponse));
+        }
+        
+    case 'DELETE':
+        $parameters = json_decode(file_get_contents('php://input'),true);
+        if(requete_delete($pdo, $parameters)){
+            exit(json_encode("est_compose_de has been successfully deleted"));
+        }
         default:
             http_response_code(501);
             exit(-1);

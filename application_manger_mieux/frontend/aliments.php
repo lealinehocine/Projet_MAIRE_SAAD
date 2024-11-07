@@ -121,7 +121,7 @@ function getCharacteristic(caracteristiques, nomCarac) {
 //GET 
 
 $(document).ready( function () {
-    // $('#tableAliment').DataTable();
+
 
         function fetchAliments() {
             $.ajax({
@@ -130,7 +130,7 @@ $(document).ready( function () {
                 dataType: 'json',
                 success: function(response) {
                     response.forEach(aliment => addRowToTable(aliment));
-
+                    $('#tableAliments').DataTable();
                 },
                 error: function(xhr, status, error) {
                     console.error("Erreur lors du chargement des aliments : ", error);
@@ -138,6 +138,7 @@ $(document).ready( function () {
             });
         }
         fetchAliments();
+
     });
 
 

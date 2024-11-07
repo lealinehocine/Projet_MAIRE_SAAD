@@ -106,7 +106,7 @@
             
         case 'PUT':
             $parameters = json_decode(file_get_contents('php://input'),true);
-            if(!isset($parameters["id_aliment"])||!isset($parameters["pourcentage"]||!isset($parameters["id_caracteristique"]))){
+            if(!isset($parameters["id_aliment"])||!isset($parameters["pourcentage"])||!isset($parameters["id_caracteristique"])){
                 http_response_code(400);
                 exit("missing argument");
             }

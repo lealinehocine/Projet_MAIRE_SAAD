@@ -1,6 +1,3 @@
-<!-- page affichant les aliments de la base avec la possibilité d’en ajouter, d’en supprimer, de les modifier : 
-CRUD + datatables (avec pagination car bcp d'aliments dans la base)-->
-
 <?php
 $admin = false; //En attendant que ce soit fait dans le back
 ?>
@@ -162,23 +159,16 @@ function onFormSubmit() {
         if(nomAliment){ // ne pas créer un aliment déjà existant : se fait dans le back
             let caracteristiquesId;
             let alimentId;
-
             $.ajax({
-                url: `${prefix_api}Aliments.php`, 
-
+                    url: `${prefix_api}Aliments.php`, 
                     type: 'POST',
                     data: {
                         name: nomAliment,
                     },
                     success: function(response) { 
-
-                        //console.log(response);
-
                         alimentId = response[0].ID_ALIMENT;
 
-                        //console.log(alimentId);
 
-//ne pas afficher les boutons si pas admin
                         $("#tableAliments").prepend(`
                             <tr>
                                 <td>${nomAliment}</td>
@@ -189,58 +179,58 @@ function onFormSubmit() {
                                 <td>${proteines}</td>
                             </tr>
                         `);
-                    },
-                    error: function(xhr, status, error) {
-                        alert("Erreur lors de l'ajout de l'aliment : " + error);
-                    }
-                });
-            
 
-        // GET : dans carac de sante pour recup les id carac
-        function getIdByDesignation(designation) {
-            const result = response.find(item => item.DESIGNATION === designation);
-            return result ? result.ID_CARACTERISTIQUE : null;  
-        }
-
-        let test = getIdByDesignation("Energie, Règlement UE N° 1169/2011 (kcal/100 g)");
-        console.log(test);
-
-            $.ajax({
-                url: `${prefix_api}Caracteristiques_de_sante.php`, 
-                type: 'GET',
-                dataType: 'json',
-                success: function(response) {
-                    // caracteristiquesId = [getIdByDesignation("Energie, Règlement UE N° 1169/2011 (kcal/100 g)"),
-                    // getIdByDesignation("Lipides (g/100 g)"),getIdByDesignation("Glucose (g/100 g)"),
-                    // getIdByDesignation("Sucres (g/100 g)"),getIdByDesignation("Protéines, N x 6.25 (g/100 g)")];
-
-                },
-                error: function(xhr, status, error) {
-                    console.error("Erreur lors du chargement des caractéristiques : ", error);
+        // Appel à Caracteristiques_de_sante pour récupérer les IDs des caractéristiques
+        $.ajax({
+            url: `${prefix_api}Caracteristiques_de_sante.php`, 
+            type: 'GET',
+            dataType: 'json',
+            success: function(response) {
+                function getIdByDesignation(designation) {
+                    const result = response.find(item => item.DESIGNATION === designation);
+                    return result ? result.ID_CARACTERISTIQUE : null;  
                 }
-            });
+                
+                caracteristiquesId = [
+                    getIdByDesignation("Energie, Règlement UE N° 1169/2011 (kcal/100 g)"),
+                    getIdByDesignation("Lipides (g/100 g)"),
+                    getIdByDesignation("Glucose (g/100 g)"),
+                    getIdByDesignation("Sucres (g/100 g)"),
+                    getIdByDesignation("Protéines, N x 6.25 (g/100 g)")
+                ];
 
-           // console.log(caracteristiquesId);
+                // Maintenant que `alimentId` et `caracteristiquesId` sont définis, on exécute la boucle
+                for (let i = 0; i < 5; i++) {
+                    $.ajax({
+                        url: `${prefix_api}A_comme_caracteristique.php`, 
+                        type: 'POST',
+                        data: {
+                            id_aliment: alimentId,
+                            id_caracteristique: caracteristiquesId[i],
+                            pourcentage: listeCaracteristiques[i],
+                        },
+                        success: function(response) { 
+                            console.log("ID de l'aliment :", alimentId);
+                            console.log("liste ID carac :", caracteristiquesId);
+                        },
+                        error: function(xhr, status, error) {
+                            alert("Erreur lors de l'ajout de l'aliment : " + error);
+                        }
+                    });
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error("Erreur lors du chargement des caractéristiques : ", error);
+            }
+        });
+    },
+    error: function(xhr, status, error) {
+        alert("Erreur lors de l'ajout de l'aliment : " + error);
+    }
+});
 
-                // for(let i=0;i<5;i++){
-                //     $.ajax({
-                //     url: `${prefix_api}A_comme_caracteristique.php`, 
 
-                //         type: 'POST',
-                //         data: {
-                //             id_aliment : alimentId,
-                //             id_caracteristique : caracteristiquesId[i],
-                //             pourcentage : listeCaracteristiques[i] ,
-                //         },
-                //         success: function(response) { 
 
-                //         },
-                //         error: function(xhr, status, error) {
-                //             alert("Erreur lors de l'ajout de l'aliment : " + error);
-                //         }
-                //     });
-
-                // }   
 
 
 // //edituser et delete user à faire

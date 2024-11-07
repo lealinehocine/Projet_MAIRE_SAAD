@@ -8,16 +8,20 @@
     }
 
     function requete_get($db, $login) {
-        $sql = "SELECT * FROM `Personne` WHERE `login`=$login";
-        $exe = $db->query($sql);
-        $res = $exe->fetchAll(PDO::FETCH_OBJ);
+
+        $sql = "SELECT * FROM `Personne` WHERE `login` = :login";
+        $stmt = $db->prepare($sql);
+        $stmt->bindParam(':login', $login, PDO::PARAM_STR);
+        $stmt->execute();
+        $res = $stmt->fetchAll(PDO::FETCH_OBJ);
+        
         return $res;
     }
 
     function requete_post($db, $post) {//post contient date, et midi/soir/matin
         
-        $requete = "INSERT INTO `Personne` (`login`, `id_tranche_d_age`, `id_sexe`, `id_pratique`, `email`, `date_naissance`, `nom`, `admin`, `prenom`) 
-VALUES ('" . $post['login'] . "', " . $post['id_tranche_d_age'] . ", " . $post['id_sexe'] . ", " . $post['id_pratique'] . ", '" . $post['email'] . "', '" . $post['date_naissance'] . "', '" . $post['nom'] . "', 0, '" . $post['prenom'] . "')";
+        $requete = "INSERT INTO `Personne` (`login`, `id_tranche_d_age`, `id_sexe`, `id_pratique`, `email`, `date_naissance`, `nom`, `admin`, `prenom`, `password`) 
+VALUES ('" . $post['login'] . "', " . $post['id_tranche_d_age'] . ", " . $post['id_sexe'] . ", " . $post['id_pratique'] . ", '" . $post['email'] . "', '" . $post['date_naissance'] . "', '" . $post['nom'] . "', 0, '" . $post['prenom'] . "', '" . $post['password'] . "')";
         try{
             $reponse = $db->query($requete);
         }   

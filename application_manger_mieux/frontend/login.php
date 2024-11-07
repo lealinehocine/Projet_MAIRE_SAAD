@@ -7,7 +7,7 @@ journal. Par contre, la liste des aliments sera partagée. -->
 
 <div class="contentLogin">
 
-<form id="login_form" action="" method="POST"> 
+<form id="login_form" action="../backend/connected.php" method="POST"> 
 <!-- action à compléter fichier.php : dans le back -->
     <table>
         <tr>
@@ -129,6 +129,7 @@ journal. Par contre, la liste des aliments sera partagée. -->
                         date_naissance : dateUser,
                         nom: nomUser,
                         prenom :prenomUser,
+                        password :motDePasseUser,
                     },
                     success: function(response) { 
                         console.log(response);
@@ -142,5 +143,10 @@ journal. Par contre, la liste des aliments sera partagée. -->
 //console.log ("login :", login, "motDePasse :", motDePasse, "mail :",mail, "nom :", nom, "prenom :", prenom, "sexe :", sexe, "date :", date, "pratique :", pratique)
             }
         }
+
+
+
+
+
 
 </script>

@@ -104,166 +104,193 @@ $(document).ready( function () {
 
 
     $(document).ready(async function (){
-        await $.ajax({
-            url:`${prefix_api}Repas.php?login=guigui605`,//A MODIFIER POUR OBTENIR LE LOGIN DE LA PERSONNE CONNECTEE PLUS TARD
+        let login = "";
+        $.ajax({
+            url:`${prefix_api}session.php`,
             type:'GET'
         })
-        .done(function (response) {
-            let parsedResponse = response;//JSON.parse(response);
-            console.log("parsedResponse : ",parsedResponse);
-            let id_repas = [];
-            let date = [];
-            let matin_midi_soir = [];
-            let matin_midi_soir_string = [];
-            parsedResponse.forEach( function (element, index, array){
-                console.log("element : ",element," ; index : ",index," ; array : ",array);
-                id_repas[index]=element["ID_REPAS"];
-                date[index]=element["DATE"];
-                matin_midi_soir[index]=element["MATIN_MIDI_SOIR"];
-                console.log("matin_midi_soir : ",matin_midi_soir[index]);
-                if(matin_midi_soir[index]==1){
-                    matin_midi_soir_string[index]="Matin";
-                }
-                else if(matin_midi_soir[index] == 2){
-                    matin_midi_soir_string[index]="Midi";
-                }
-                else if(matin_midi_soir[index] == 3){
-                    matin_midi_soir_string[index]="Soir";
-                }
-                console.log("matinmidisoirstring : ",matin_midi_soir_string);
-            });
+        .done(async function (reponse){
+            login = reponse["user"];
+    
+            await $.ajax({
+                url:`${prefix_api}Repas.php?login=${login}`,//A MODIFIER POUR OBTENIR LE LOGIN DE LA PERSONNE CONNECTEE PLUS TARD
+                type:'GET'
+            })
+            .done(function (response) {
+                let parsedResponse = response;//JSON.parse(response);
+                console.log("parsedResponse : ",parsedResponse);
+                let id_repas = [];
+                let date = [];
+                let matin_midi_soir = [];
+                let matin_midi_soir_string = [];
+                parsedResponse.forEach( function (element, index, array){
+                    console.log("element : ",element," ; index : ",index," ; array : ",array);
+                    id_repas[index]=element["ID_REPAS"];
+                    date[index]=element["DATE"];
+                    matin_midi_soir[index]=element["MATIN_MIDI_SOIR"];
+                    console.log("matin_midi_soir : ",matin_midi_soir[index]);
+                    if(matin_midi_soir[index]==1){
+                        matin_midi_soir_string[index]="Matin";
+                    }
+                    else if(matin_midi_soir[index] == 2){
+                        matin_midi_soir_string[index]="Midi";
+                    }
+                    else if(matin_midi_soir[index] == 3){
+                        matin_midi_soir_string[index]="Soir";
+                    }
+                    console.log("matinmidisoirstring : ",matin_midi_soir_string);
+                });
 
-            id_repas.forEach(async function (element, index, array){
-                await $.ajax({
-                    url:`${prefix_api}Contient.php?id_repas=${element}`,
-                    type:'GET'
-                })
-                .done(function (reponse) {
-                    let parsedReponse = reponse;//JSON.parse(reponse);
-                    let nomsAliments = new Array();
-                    console.log("reponse = ",reponse);
-                    parsedReponse.forEach(async function(contient, indice, tbaleau){
-                        console.log("#################  ID aliment  :  ",contient["ID_ALIMENT"]);
-                        await $.ajax({
-                            url:`${prefix_api}Aliments.php?id_aliment=${contient["ID_ALIMENT"]}`,
-                            type:'GET'
-                        })
-                        .done(function (response) {
-                            let tableau_reponse = response;//JSON.parse(response);
-                            nomsAliments.push(tableau_reponse[0]["NOM"]);//tableau_reponse[0]["NOM"] ???
-                            console.log("nomsAliments censé être avant le console log nomsAliments at 0 : ",nomsAliments);
-                            parsedReponse.forEach(function(contient, indice, tableau){
-                                console.log(nomsAliments[0]);
-                                console.log(nomsAliments);
-                                console.log(typeof(nomsAliments));
-                                $("#tableJournal tbody").prepend(`<tr><td>${nomsAliments.at(indice)}</td><td>${contient["QUANTITE"]}</td><td>${date[indice]}</td><td>${matin_midi_soir_string[indice]}</td><td><button id="edit" onclick="editRepas(this)">Modifier</button></td><td><button id="edit" onclick="deleteRepas(this)">Supprimer</button></td></tr>`);
+                id_repas.forEach(async function (element, index, array){
+                    await $.ajax({
+                        url:`${prefix_api}Contient.php?id_repas=${element}`,
+                        type:'GET'
+                    })
+                    .done(function (reponse) {
+                        let parsedReponse = reponse;//JSON.parse(reponse);
+                        let nomsAliments = new Array();
+                        console.log("reponse = ",reponse);
+                        parsedReponse.forEach(async function(contient, indice, tbaleau){
+                            console.log("#################  ID aliment  :  ",contient["ID_ALIMENT"]);
+                            await $.ajax({
+                                url:`${prefix_api}Aliments.php?id_aliment=${contient["ID_ALIMENT"]}`,
+                                type:'GET'
+                            })
+                            .done(function (response) {
+                                let tableau_reponse = response;//JSON.parse(response);
+                                nomsAliments.push(tableau_reponse[0]["NOM"]);//tableau_reponse[0]["NOM"] ???
+                                console.log("nomsAliments censé être avant le console log nomsAliments at 0 : ",nomsAliments);
+                                parsedReponse.forEach(function(contient, indice, tableau){
+                                    console.log(nomsAliments[0]);
+                                    console.log(nomsAliments);
+                                    console.log(typeof(nomsAliments));
+                                    $("#tableJournal tbody").prepend(`<tr><td>${nomsAliments.at(indice)}</td><td>${contient["QUANTITE"]}</td><td>${date[indice]}</td><td>${matin_midi_soir_string[indice]}</td><td><button id="edit" onclick="editRepas(this)">Modifier</button></td><td><button id="edit" onclick="deleteRepas(this)">Supprimer</button></td></tr>`);
+                                });
                             });
                         });
                     });
                 });
+            })
+            .fail(function(xhr,status,error) {
+                console.error("Erreur lors du chargement des repas : ", error);
             });
-        })
-        .fail(function(xhr,status,error) {
-            console.error("Erreur lors du chargement des repas : ", error);
         });
     })
             
 
     function deleteRepas(button){
-        let row = $(button).closest("tr");
-        let cells = row.find("td");
-
-        let nomAliment = cells.eq(0).text();
-        let quantite = cells.eq(1).text();
-        let date = cells.eq(2).text();
-        let matin_midi_soir = cells.eq(3).text();
-        let matin_midi_soir_nombre=0;
-        if(matin_midi_soir == "Matin"){
-            matin_midi_soir_nombre=1;
-        }
-        else if(matin_midi_soir == "Midi"){
-            matin_midi_soir_nombre=2;
-        }
-        else if(matin_midi_soir == "Soir"){
-            matin_midi_soir_nombre=3;
-        }
-        
-
-        //On veut supprimer d'abord la ligne dans contient : il faut pour ça id_aliment et id_repas
-        let id_aliment = 0;
+        let login = "";
         $.ajax({
-            url:`${prefix_api}Aliments.php?nom=${nomAliment}`,
+            url:`${prefix_api}session.php`,
             type:'GET'
         })
-        .done(function(reponse){
-            console.log("reponse aliment get",reponse);
-            id_aliment = reponse[0]["ID_ALIMENT"];
-            let id_repas = 0;
+        .done(function (reponse){
+            login = reponse["user"];
+        
+            let row = $(button).closest("tr");
+            let cells = row.find("td");
+
+            let nomAliment = cells.eq(0).text();
+            let quantite = cells.eq(1).text();
+            let date = cells.eq(2).text();
+            let matin_midi_soir = cells.eq(3).text();
+            let matin_midi_soir_nombre=0;
+            if(matin_midi_soir == "Matin"){
+                matin_midi_soir_nombre=1;
+            }
+            else if(matin_midi_soir == "Midi"){
+                matin_midi_soir_nombre=2;
+            }
+            else if(matin_midi_soir == "Soir"){
+                matin_midi_soir_nombre=3;
+            }
+            
+
+            //On veut supprimer d'abord la ligne dans contient : il faut pour ça id_aliment et id_repas
+            let id_aliment = 0;
             $.ajax({
-                url:`${prefix_api}Repas.php?login=guigui605&date=${date}&matin_midi_soir=${matin_midi_soir_nombre}`,
+                url:`${prefix_api}Aliments.php?nom=${nomAliment}`,
                 type:'GET'
             })
-            .done(function (response){
-                id_repas = response[0]["ID_REPAS"];
-                
-
-                console.log("id_repas",id_repas);
-                console.log("id_aliment",id_aliment);
-
+            .done(function(reponse){
+                console.log("reponse aliment get",reponse);
+                id_aliment = reponse[0]["ID_ALIMENT"];
+                let id_repas = 0;
                 $.ajax({
-                    url:`${prefix_api}Contient.php`,
-                    type:'DELETE',
-                    dataType:"json",
-                    data: `{\"id_repas\":\"${id_repas}\", "id_aliment":\"${id_aliment}\"}`
-                });
+                    url:`${prefix_api}Repas.php?login=${login}&date=${date}&matin_midi_soir=${matin_midi_soir_nombre}`,
+                    type:'GET'
+                })
+                .done(function (response){
+                    id_repas = response[0]["ID_REPAS"];
+                    
 
-                $.ajax({
-                    url:`${prefix_api}Repas.php`,
-                    type:'DELETE',
-                    dataType:'json',
-                    data: `{"id_repas":\"${id_repas}\"}`
+                    console.log("id_repas",id_repas);
+                    console.log("id_aliment",id_aliment);
+
+                    $.ajax({
+                        url:`${prefix_api}Contient.php`,
+                        type:'DELETE',
+                        dataType:"json",
+                        data: `{\"id_repas\":\"${id_repas}\", "id_aliment":\"${id_aliment}\"}`
+                    });
+
+                    $.ajax({
+                        url:`${prefix_api}Repas.php`,
+                        type:'DELETE',
+                        dataType:'json',
+                        data: `{"id_repas":\"${id_repas}\"}`
+                    });
                 });
             });
-        });
 
-        $(button).closest('tr').remove();
+            $(button).closest('tr').remove();
+        });
     }
 
     function editRepas(button) {
-        let row = $(button).closest('tr');
-        let cells = row.find('td');
-
-        let id_repas = 0;
-        let matin_midi_soir = cells.eq(3).text();
-        let matin_midi_soir_nombre=0;
-        if(matin_midi_soir == "Matin"){
-            matin_midi_soir_nombre=1;
-        }
-        else if(matin_midi_soir == "Midi"){
-            matin_midi_soir_nombre=2;
-        }
-        else if(matin_midi_soir == "Soir"){
-            matin_midi_soir_nombre=3;
-        }
-
+        let login = "";
         $.ajax({
-            url:`${prefix_api}Repas.php?login=guigui605&date=${cells.eq(2).text()}&matin_midi_soir=${matin_midi_soir_nombre}`,
+            url:`${prefix_api}session.php`,
             type:'GET'
         })
-        .done(function(response){
-            id_repas = response[0]["ID_REPAS"];
+        .done(function (reponse){
+            login = reponse["user"];
         
+            let row = $(button).closest('tr');
+            let cells = row.find('td');
 
-            // Remplace chaque cellule par un champ input contenant la valeur actuelle
-            cells.eq(0).html(`<input type='text' value='${cells.eq(0).text()}' />`);//nom
-            cells.eq(1).html(`<input type='text' value='${cells.eq(1).text()}' />`);//qté
-            cells.eq(2).html(`<input type='text' value='${cells.eq(2).text()}' />`);//date
-            cells.eq(3).html(`<input type='text' value='${cells.eq(3).text()}' />`);//matin_midi_soir
+            let id_repas = 0;
+            let matin_midi_soir = cells.eq(3).text();
+            let matin_midi_soir_nombre=0;
+            if(matin_midi_soir == "Matin"){
+                matin_midi_soir_nombre=1;
+            }
+            else if(matin_midi_soir == "Midi"){
+                matin_midi_soir_nombre=2;
+            }
+            else if(matin_midi_soir == "Soir"){
+                matin_midi_soir_nombre=3;
+            }
+
+            $.ajax({
+                url:`${prefix_api}Repas.php?login=${login}&date=${cells.eq(2).text()}&matin_midi_soir=${matin_midi_soir_nombre}`,
+                type:'GET'
+            })
+            .done(function(response){
+                id_repas = response[0]["ID_REPAS"];
+            
+
+                // Remplace chaque cellule par un champ input contenant la valeur actuelle
+                cells.eq(0).html(`<input type='text' value='${cells.eq(0).text()}' />`);//nom
+                cells.eq(1).html(`<input type='text' value='${cells.eq(1).text()}' />`);//qté
+                cells.eq(2).html(`<input type='text' value='${cells.eq(2).text()}' />`);//date
+                cells.eq(3).html(`<input type='text' value='${cells.eq(3).text()}' />`);//matin_midi_soir
 
 
-            row.append(`<input type="hidden" id="id_repas" value="${id_repas}"/>`);
-            // Remplace le bouton "Edit" par "Save"
-            $(button).replaceWith(`<button onclick="saveRepas(this)">Save</button>`);
+                row.append(`<input type="hidden" id="id_repas" value="${id_repas}"/>`);
+                // Remplace le bouton "Edit" par "Save"
+                $(button).replaceWith(`<button onclick="saveRepas(this)">Save</button>`);
+            });
         });
     }
 
@@ -333,6 +360,15 @@ $(document).ready( function () {
 
     //POST: à faire
     function onFormSubmit(event) {
+        let login = "";
+        $.ajax({
+            url:`${prefix_api}session.php`,
+            type:'GET'
+        })
+        .done(function (reponse){
+            login = reponse["user"];
+        });
+
         event.preventDefault();
         let nomAliment = $("#inputNomAliment").val();
         let quantite = $("#inputQuantite").val();
@@ -357,7 +393,7 @@ $(document).ready( function () {
 
             type: 'POST',
             data: {
-                "login": "guigui605",
+                "login": login,
                 "date":date,
                 "matin_midi_soir":numeroRepas
             }
@@ -393,9 +429,8 @@ $(document).ready( function () {
                 <td>${date}</td>
                 <td>${repas}</td>
                 <td>
-                    <button>Edit</button>
-                    <button>Delete</button>
-
+                    <button onclick="editRepas(this)">Edit</button>
+                    <button onclick="deleteRepas(this)">Delete</button>
                 </td>
             </tr>
         `);

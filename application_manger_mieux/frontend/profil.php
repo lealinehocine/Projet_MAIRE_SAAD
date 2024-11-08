@@ -103,6 +103,7 @@
                 const input = document.createElement('input');
                 input.type = 'text';
                 input.value = element.textContent;
+                input.id = `new${element.id}`;
                 element.parentNode.replaceChild(input, element);
             }
         });
@@ -117,18 +118,67 @@
         })
         .done(function (reponse){
             login = reponse["user"];
-        });
+        
 
+            let newNom = $("#newnom").val();
+            let newPrenom =$("#newprenom").val();
+            let newSexe =$("#newsexe").val();
+            let newAge = $("#newage").val();
+            let newPratique = $("#newsport").val();
 
-        let rows = $("#profil").find("tr");
-        let cells = [];
-        rows.forEach(function(row, indice, array){
-            cells.concat(row.find("input"));
-        });
-        cells.forEach(function(cell, index, tableau){
-            
-        });
+            let newSexe_number = 0;
 
+            console.log(newPratique);
+
+            if(newSexe == "Homme"){
+                newSexe_number=1;
+            }
+            else if(newSexe == "Femme"){
+                newSexe_number=2;
+            }
+
+            let newPratique_number = 0;
+
+            if(newPratique == "Faible"){
+                newPratique_number=1;
+            }
+            else if(newPratique == "Modéré"){
+                newPratique_number=2;
+            }
+            else if(newPratique == "Elevé"){
+                newPratique_number=3;
+            }
+
+            $.ajax({
+                url:`${prefix_api}Personne.php`,
+                type:'PUT',
+                contentType:'application/json',
+                dataType:'json',
+                processData: false,
+                data: `{
+                        "login":"${login}",
+                        "nom":"${newNom}",
+                        "prenom":"${newPrenom}",
+                        "id_sexe":"${newSexe_number}",
+                        "id_pratique":"${newPratique_number}",
+                        "email":"test.email@gmail.com",
+                        "id_tranche_d_age":"1"
+                    }`
+            })
+            .done(function(reponse){
+                const inputs = $("#profil").find('input');
+                inputs.each(function() {
+                    const newSpan = document.createElement('span');
+                    newSpan.classList.add('info');
+                    newSpan.id = this.id.replace('new', ''); // Remove the 'new' prefix
+                    newSpan.textContent = this.value;
+                    this.parentNode.replaceChild(newSpan, this);
+                });
+
+                // Replace the "Save" button with the original "Edit" button
+                $(button).replaceWith('<button onclick="editProfile(this)">Edit</button>');
+            });
+        });
     }
 
 

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : mer. 06 nov. 2024 à 16:27
+-- Généré le : ven. 08 nov. 2024 à 02:26
 -- Version du serveur : 8.3.0
 -- Version de PHP : 8.2.18
 
@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS `aliment` (
   `ID_ALIMENT` int NOT NULL AUTO_INCREMENT,
   `NOM` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   PRIMARY KEY (`ID_ALIMENT`)
-) ENGINE=InnoDB AUTO_INCREMENT=11178 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11180 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Déchargement des données de la table `aliment`
@@ -25515,7 +25515,14 @@ CREATE TABLE IF NOT EXISTS `contient` (
   `QUANTITE` smallint NOT NULL,
   PRIMARY KEY (`ID_ALIMENT`,`ID_REPAS`),
   KEY `FK_CONTIENT2` (`ID_REPAS`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10335 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Déchargement des données de la table `contient`
+--
+
+INSERT INTO `contient` (`ID_ALIMENT`, `ID_REPAS`, `QUANTITE`) VALUES
+(8006, 21, 300);
 
 -- --------------------------------------------------------
 
@@ -25548,11 +25555,20 @@ CREATE TABLE IF NOT EXISTS `personne` (
   `DATE_NAISSANCE` date NOT NULL,
   `NOM` varchar(150) NOT NULL,
   `ADMIN` tinyint(1) NOT NULL,
+  `PRENOM` varchar(150) NOT NULL,
+  `PASSWORD` varchar(150) NOT NULL,
   PRIMARY KEY (`LOGIN`),
   KEY `FK_EST_DANS` (`ID_TRANCHE_D_AGE`),
   KEY `FK_EST_DE_SEXE` (`ID_SEXE`),
   KEY `FK_PRATIQUE` (`ID_PRATIQUE`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Déchargement des données de la table `personne`
+--
+
+INSERT INTO `personne` (`LOGIN`, `ID_TRANCHE_D_AGE`, `ID_SEXE`, `ID_PRATIQUE`, `EMAIL`, `DATE_NAISSANCE`, `NOM`, `ADMIN`, `PRENOM`, `PASSWORD`) VALUES
+('guigui605', 1, 1, 3, 'test.email@gmail.com', '2003-11-30', 'MAIRE', 0, 'Guilhem', '');
 
 -- --------------------------------------------------------
 
@@ -25565,7 +25581,16 @@ CREATE TABLE IF NOT EXISTS `pratique_sportive` (
   `ID_PRATIQUE` int NOT NULL AUTO_INCREMENT,
   `DESIGNATION` varchar(20) NOT NULL,
   PRIMARY KEY (`ID_PRATIQUE`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Déchargement des données de la table `pratique_sportive`
+--
+
+INSERT INTO `pratique_sportive` (`ID_PRATIQUE`, `DESIGNATION`) VALUES
+(1, 'faible'),
+(2, 'modérée'),
+(3, 'élevée');
 
 -- --------------------------------------------------------
 
@@ -25581,7 +25606,14 @@ CREATE TABLE IF NOT EXISTS `repas` (
   `MATIN_MIDI_SOIR` int NOT NULL,
   PRIMARY KEY (`ID_REPAS`),
   KEY `FK_PERSONNE` (`LOGIN`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Déchargement des données de la table `repas`
+--
+
+INSERT INTO `repas` (`ID_REPAS`, `LOGIN`, `DATE`, `MATIN_MIDI_SOIR`) VALUES
+(21, 'guigui605', '2024-11-30', 1);
 
 -- --------------------------------------------------------
 
@@ -25601,8 +25633,8 @@ CREATE TABLE IF NOT EXISTS `sexe` (
 --
 
 INSERT INTO `sexe` (`ID_SEXE`, `DESIGNATION`) VALUES
-(3, 'Homme'),
-(4, 'Femme');
+(1, 'Homme'),
+(2, 'Femme');
 
 -- --------------------------------------------------------
 
@@ -25616,7 +25648,14 @@ CREATE TABLE IF NOT EXISTS `tranche_d_age` (
   `AGE_DEBUT` smallint NOT NULL,
   `AGE_FIN` smallint NOT NULL,
   PRIMARY KEY (`ID_TRANCHE_D_AGE`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Déchargement des données de la table `tranche_d_age`
+--
+
+INSERT INTO `tranche_d_age` (`ID_TRANCHE_D_AGE`, `AGE_DEBUT`, `AGE_FIN`) VALUES
+(1, 0, 100);
 
 --
 -- Contraintes pour les tables déchargées

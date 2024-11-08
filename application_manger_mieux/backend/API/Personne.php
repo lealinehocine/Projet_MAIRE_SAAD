@@ -1,5 +1,6 @@
 <?php
     require_once("../init_pdo.php");
+    session_start();
     
     function setHeaders() {
         // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Origin

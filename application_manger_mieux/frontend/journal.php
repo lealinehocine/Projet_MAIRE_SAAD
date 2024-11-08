@@ -175,6 +175,7 @@ $(document).ready( function () {
                 console.error("Erreur lors du chargement des repas : ", error);
             });
         });
+        $('#tableJournal').DataTable();
     })
             
 
@@ -436,7 +437,7 @@ $(document).ready( function () {
                 </tr>
             `);
 
-            $('#tableJournal').DataTable();
+            
 
     // <button class="edit" data-id="${response.id}" onclick="editUser(this)">Edit</button>
     // <button class="delete" data-id="${response.id}" onclick="deleteUser(${response.id}, this)">Delete</button>
@@ -452,6 +453,7 @@ $(document).ready( function () {
                 alert("Toutes les informations sont obligatoires");
             }
         });
+        $('#tableJournal').DataTable();
     } 
 
 

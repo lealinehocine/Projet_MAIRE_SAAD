@@ -15,7 +15,7 @@
             $stmt->execute();
             $user = $stmt->fetch(PDO::FETCH_OBJ); // Récupère l'utilisateur si trouvé
             // Vérifier si l'utilisateur existe et si le mot de passe est correct
-            if ($tryPwd == $user->PASSWORD) { // password_verify pour vérifier le mot de passe haché
+            if ($tryPwd == $user->PASSWORD && $user != null) { // password_verify pour vérifier le mot de passe haché
                 // Connexion réussie
                 $_SESSION['user'] = $tryLogin; // Stocker le login dans la session
                 return 200; // Assurer qu'on arrête l'exécution du script après la redirection

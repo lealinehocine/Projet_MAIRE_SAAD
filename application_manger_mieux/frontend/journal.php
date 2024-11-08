@@ -361,95 +361,97 @@ $(document).ready( function () {
     //POST: à faire
     function onFormSubmit(event) {
         let login = "";
+        event.preventDefault();
         $.ajax({
             url:`${prefix_api}session.php`,
             type:'GET'
         })
         .done(function (reponse){
             login = reponse["user"];
-        });
+        
 
-        event.preventDefault();
-        let nomAliment = $("#inputNomAliment").val();
-        let quantite = $("#inputQuantite").val();
-        let date = $("#inputDate").val();
-        let repas = $("#inputNomRepas").val();
-        let numeroRepas = 0;
-        if(repas ==="Matin"){
-            numeroRepas = 1;
-        }
-        else if(repas ==="Midi"){
-            numeroRepas = 2;
-        }
-        else if(repas === "Soir"){
-            numeroRepas = 3;
-        }
-        // console.log(nomAliment,quantite,date,repas);
-
-        if(nomAliment && quantite && date &&repas){ 
-
-        $.ajax({
-            url: `${prefix_api}Repas.php`, 
-
-            type: 'POST',
-            data: {
-                "login": login,
-                "date":date,
-                "matin_midi_soir":numeroRepas
+            
+            let nomAliment = $("#inputNomAliment").val();
+            let quantite = $("#inputQuantite").val();
+            let date = $("#inputDate").val();
+            let repas = $("#inputNomRepas").val();
+            let numeroRepas = 0;
+            if(repas ==="Matin"){
+                numeroRepas = 1;
             }
-        })
-        .done(function (reponse_post_repas) {
-            console.log("reponse post repas : ",reponse_post_repas);
-            let id_repas = reponse_post_repas[0]["ID_REPAS"];
-            console.log("id_repas : ",id_repas);
+            else if(repas ==="Midi"){
+                numeroRepas = 2;
+            }
+            else if(repas === "Soir"){
+                numeroRepas = 3;
+            }
+            // console.log(nomAliment,quantite,date,repas);
+
+            if(nomAliment && quantite && date &&repas){ 
+
             $.ajax({
-                url: `${prefix_api}Aliments.php?nom=${nomAliment}`,
-                type:'GET'
+                url: `${prefix_api}Repas.php`, 
+
+                type: 'POST',
+                data: {
+                    "login": login,
+                    "date":date,
+                    "matin_midi_soir":numeroRepas
+                }
             })
-            .done(function (reponse_get_aliment){
-                console.log("reponse get aliment : ",reponse_get_aliment);
-                let id_aliment = reponse_get_aliment[0]["ID_ALIMENT"];
-                console.log("id_aliment : ",id_aliment," ; id_repas : ",id_repas," ; quantité : ",quantite);
+            .done(function (reponse_post_repas) {
+                console.log("reponse post repas : ",reponse_post_repas);
+                let id_repas = reponse_post_repas[0]["ID_REPAS"];
+                console.log("id_repas : ",id_repas);
                 $.ajax({
-                    url:`${prefix_api}Contient.php`,
-                    type:'POST',
-                    data: {
-                        "id_aliment": id_aliment,
-                        "id_repas": id_repas,
-                        "quantite": quantite
-                    }
+                    url: `${prefix_api}Aliments.php?nom=${nomAliment}`,
+                    type:'GET'
+                })
+                .done(function (reponse_get_aliment){
+                    console.log("reponse get aliment : ",reponse_get_aliment);
+                    let id_aliment = reponse_get_aliment[0]["ID_ALIMENT"];
+                    console.log("id_aliment : ",id_aliment," ; id_repas : ",id_repas," ; quantité : ",quantite);
+                    $.ajax({
+                        url:`${prefix_api}Contient.php`,
+                        type:'POST',
+                        data: {
+                            "id_aliment": id_aliment,
+                            "id_repas": id_repas,
+                            "quantite": quantite
+                        }
+                    });
                 });
             });
+
+            $("#tableJournal").append(`
+                <tr>
+                    <td>${nomAliment}</td>
+                    <td>${quantite}</td>
+                    <td>${date}</td>
+                    <td>${repas}</td>
+                    <td>
+                        <button onclick="editRepas(this)">Edit</button>
+                        <button onclick="deleteRepas(this)">Delete</button>
+                    </td>
+                </tr>
+            `);
+
+            $('#tableJournal').DataTable();
+
+    // <button class="edit" data-id="${response.id}" onclick="editUser(this)">Edit</button>
+    // <button class="delete" data-id="${response.id}" onclick="deleteUser(${response.id}, this)">Delete</button>
+    //                     },
+    //                     error: function(xhr, status, error) {
+    //                         alert("Erreur lors de l'ajout de l'aliment : " + error);
+    //                     }
+    //                 });
+                
+    // //edituser et delete user à faire
+
+            } else {
+                alert("Toutes les informations sont obligatoires");
+            }
         });
-
-        $("#tableJournal").append(`
-            <tr>
-                <td>${nomAliment}</td>
-                <td>${quantite}</td>
-                <td>${date}</td>
-                <td>${repas}</td>
-                <td>
-                    <button onclick="editRepas(this)">Edit</button>
-                    <button onclick="deleteRepas(this)">Delete</button>
-                </td>
-            </tr>
-        `);
-
-        $('#tableJournal').DataTable();
-
-// <button class="edit" data-id="${response.id}" onclick="editUser(this)">Edit</button>
-// <button class="delete" data-id="${response.id}" onclick="deleteUser(${response.id}, this)">Delete</button>
-//                     },
-//                     error: function(xhr, status, error) {
-//                         alert("Erreur lors de l'ajout de l'aliment : " + error);
-//                     }
-//                 });
-            
-// //edituser et delete user à faire
-
-        } else {
-            alert("Toutes les informations sont obligatoires");
-        } 
     } 
 
 

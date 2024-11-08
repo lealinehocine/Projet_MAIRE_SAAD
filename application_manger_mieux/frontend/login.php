@@ -1,15 +1,15 @@
 <div class="contentLogin">
 
-<form id="login_form" action="../backend/connected.php" method="POST"> 
+<form id="login_form" action="../backend/API/connected.php" method="POST" onsubmit="onLogSubmit();"> 
 <!-- action à compléter fichier.php : dans le back -->
     <table>
         <tr>
             <th>Login :</th>
-            <td><input type="text" name="login"></td>
+            <td><input type="text" name="login" id="loginConnection"></td>
         </tr>
         <tr>
             <th>Mot de passe :</th>
-            <td><input type="password" name="password"></td>
+            <td><input type="password" name="password" id="passwordConnection"></td>
         </tr>
         <tr>
             <th></th>
@@ -138,7 +138,28 @@
         }
 
 
+function onLogSubmit(){
+    event.preventDefault();
+    let loginUser = $("#loginConnection").val();
+    let motDePasseUser = $("#passwordConnection").val();
 
+    $.ajax({
+                    url: `${prefix_api}connected.php`, 
+                    type: 'POST',
+                    data: {
+
+                        login: loginUser,
+                        password :motDePasseUser,
+                    },
+                    success: function(response) { 
+                        window.location.href = './index.php';
+        },
+            error: function(xhr, status, error) {
+                console.error("Erreur lors de la connection : ", error);
+            }
+        });
+
+}
 
 
 

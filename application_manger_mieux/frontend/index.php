@@ -3,8 +3,7 @@
     require_once("template_menu.php");
 
 
-
-    // session_start(); 
+session_start(); 
 
 
     // if (!isset($_SESSION['user'])) {
@@ -12,9 +11,9 @@
     //     exit();
     // }
 
-$succesfullyLogged = true; //A DEFINIR AVEC SESSION DANS LE BACK
 
-if($succesfullyLogged){
+
+if(isset($_SESSION['user'])){
     $currentPageId = 'dashboard';
     if(isset($_GET['page'])) {
         $currentPageId = $_GET['page'];

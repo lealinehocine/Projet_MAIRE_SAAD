@@ -27,7 +27,7 @@ switch($_SERVER["REQUEST_METHOD"]) {
         setHeaders();
         http_response_code(200);
         exit(json_encode($reponse));
-     
+    
     default:
         http_response_code(501);
         exit(-1);

@@ -23,7 +23,7 @@ function requete_get($db,$params) {
 
 switch($_SERVER["REQUEST_METHOD"]) {
     case 'GET':
-
+        $_SESSION['user']="guigui605";
         $reponse = requete_get($pdo, $_SESSION);
         setHeaders();
         http_response_code(200);

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : ven. 08 nov. 2024 à 02:42
+-- Généré le : mer. 06 nov. 2024 à 16:27
 -- Version du serveur : 8.3.0
 -- Version de PHP : 8.2.18
 
@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS `aliment` (
   `ID_ALIMENT` int NOT NULL AUTO_INCREMENT,
   `NOM` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   PRIMARY KEY (`ID_ALIMENT`)
-) ENGINE=InnoDB AUTO_INCREMENT=11201 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11178 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Déchargement des données de la table `aliment`
@@ -25520,7 +25520,14 @@ CREATE TABLE IF NOT EXISTS `contient` (
   `QUANTITE` smallint NOT NULL,
   PRIMARY KEY (`ID_ALIMENT`,`ID_REPAS`),
   KEY `FK_CONTIENT2` (`ID_REPAS`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10335 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Déchargement des données de la table `contient`
+--
+
+INSERT INTO `contient` (`ID_ALIMENT`, `ID_REPAS`, `QUANTITE`) VALUES
+(8006, 21, 300);
 
 -- --------------------------------------------------------
 
@@ -25553,25 +25560,11 @@ CREATE TABLE IF NOT EXISTS `personne` (
   `DATE_NAISSANCE` date NOT NULL,
   `NOM` varchar(150) NOT NULL,
   `ADMIN` tinyint(1) NOT NULL,
-  `PRENOM` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `PASSWORD` varchar(150) NOT NULL,
   PRIMARY KEY (`LOGIN`),
   KEY `FK_EST_DANS` (`ID_TRANCHE_D_AGE`),
   KEY `FK_EST_DE_SEXE` (`ID_SEXE`),
   KEY `FK_PRATIQUE` (`ID_PRATIQUE`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Déchargement des données de la table `personne`
---
-
-INSERT INTO `personne` (`LOGIN`, `ID_TRANCHE_D_AGE`, `ID_SEXE`, `ID_PRATIQUE`, `EMAIL`, `DATE_NAISSANCE`, `NOM`, `ADMIN`, `PRENOM`, `PASSWORD`) VALUES
-('fifi', 1, 1, 1, 'test', '2024-11-07', 'test', 0, 'test', 'test2'),
-('JETESTE', 1, 1, 2, 'test', '2024-11-21', 'test', 0, 'test', '1234'),
-('loulou', 1, 1, 1, 'loulou@test.fr', '2024-11-09', 'lou', 0, 'lou', 'louloute'),
-('riri', 1, 1, 1, 'test@rir.fr', '2024-11-07', 'riri', 0, 'fifi', '0'),
-('testuser', 1, 1, 1, 'test', '2024-11-07', 'test', 0, 'test', '0'),
-('utilisTest2', 1, 1, 2, 'testt', '2024-11-14', 'qqquelqun', 0, 'test', '12345');
 
 -- --------------------------------------------------------
 
@@ -25584,16 +25577,7 @@ CREATE TABLE IF NOT EXISTS `pratique_sportive` (
   `ID_PRATIQUE` int NOT NULL AUTO_INCREMENT,
   `DESIGNATION` varchar(20) NOT NULL,
   PRIMARY KEY (`ID_PRATIQUE`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Déchargement des données de la table `pratique_sportive`
---
-
-INSERT INTO `pratique_sportive` (`ID_PRATIQUE`, `DESIGNATION`) VALUES
-(1, 'Faible'),
-(2, 'Modéré'),
-(3, 'Elevé');
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
@@ -25609,7 +25593,14 @@ CREATE TABLE IF NOT EXISTS `repas` (
   `MATIN_MIDI_SOIR` int NOT NULL,
   PRIMARY KEY (`ID_REPAS`),
   KEY `FK_PERSONNE` (`LOGIN`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Déchargement des données de la table `repas`
+--
+
+INSERT INTO `repas` (`ID_REPAS`, `LOGIN`, `DATE`, `MATIN_MIDI_SOIR`) VALUES
+(21, 'guigui605', '2024-11-30', 1);
 
 -- --------------------------------------------------------
 
@@ -25644,14 +25635,7 @@ CREATE TABLE IF NOT EXISTS `tranche_d_age` (
   `AGE_DEBUT` smallint NOT NULL,
   `AGE_FIN` smallint NOT NULL,
   PRIMARY KEY (`ID_TRANCHE_D_AGE`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Déchargement des données de la table `tranche_d_age`
---
-
-INSERT INTO `tranche_d_age` (`ID_TRANCHE_D_AGE`, `AGE_DEBUT`, `AGE_FIN`) VALUES
-(1, 0, 100);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Contraintes pour les tables déchargées

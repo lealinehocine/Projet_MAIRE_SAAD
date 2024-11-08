@@ -1,4 +1,7 @@
+<p class="textBienvenue">Bienvenue sur le site iMieuxManger! <br>Veuillez vous connecter ou créer un compte pour accéder aux fonctionnalités du site.</p>
 <div class="contentLogin">
+
+
 
 <form id="login_form" action="../backend/API/connected.php" method="POST" onsubmit="onLogSubmit();"> 
 <!-- action à compléter fichier.php : dans le back -->

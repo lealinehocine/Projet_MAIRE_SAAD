@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : mer. 06 nov. 2024 à 16:27
+-- Généré le : ven. 08 nov. 2024 à 02:42
 -- Version du serveur : 8.3.0
 -- Version de PHP : 8.2.18
 
@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS `aliment` (
   `ID_ALIMENT` int NOT NULL AUTO_INCREMENT,
   `NOM` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   PRIMARY KEY (`ID_ALIMENT`)
-) ENGINE=InnoDB AUTO_INCREMENT=11178 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11201 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Déchargement des données de la table `aliment`
@@ -3228,7 +3228,7 @@ INSERT INTO `aliment` (`ID_ALIMENT`, `NOM`) VALUES
 (11174, 'Céréales instantanées, poudre à reconstituer, dès 6 mois'),
 (11175, 'Biscuit pour bébé'),
 (11176, 'Poudre cacaotée pour bébé'),
-(11177, 'testAliment');
+(11200, 'TestPost');
 
 -- --------------------------------------------------------
 
@@ -9590,6 +9590,7 @@ INSERT INTO `a_comme_caracteristiques` (`ID_CARACTERISTIQUE`, `ID_ALIMENT`, `POU
 (1717, 11174, 391),
 (1717, 11175, 439),
 (1717, 11176, 396),
+(1717, 11200, 50),
 (1718, 7991, 4),
 (1718, 7992, 9),
 (1718, 7993, 8),
@@ -12351,9 +12352,9 @@ INSERT INTO `a_comme_caracteristiques` (`ID_CARACTERISTIQUE`, `ID_ALIMENT`, `POU
 (1718, 10749, 4),
 (1718, 10750, 6),
 (1718, 10751, 5),
-(1718, 10752, 5),
-(1718, 10753, 5);
+(1718, 10752, 5);
 INSERT INTO `a_comme_caracteristiques` (`ID_CARACTERISTIQUE`, `ID_ALIMENT`, `POURCENTAGE`) VALUES
+(1718, 10753, 5),
 (1718, 10754, 5),
 (1718, 10755, 5),
 (1718, 10756, 5),
@@ -12776,6 +12777,7 @@ INSERT INTO `a_comme_caracteristiques` (`ID_CARACTERISTIQUE`, `ID_ALIMENT`, `POU
 (1718, 11174, 10),
 (1718, 11175, 7),
 (1718, 11176, 8),
+(1718, 11200, 0),
 (1719, 7991, 36),
 (1719, 7992, 7),
 (1719, 7993, 6),
@@ -15526,10 +15528,10 @@ INSERT INTO `a_comme_caracteristiques` (`ID_CARACTERISTIQUE`, `ID_ALIMENT`, `POU
 (1719, 10738, 53),
 (1719, 10739, 26),
 (1719, 10740, 34),
-(1719, 10741, 31),
-(1719, 10742, 39),
-(1719, 10743, 26);
+(1719, 10741, 31);
 INSERT INTO `a_comme_caracteristiques` (`ID_CARACTERISTIQUE`, `ID_ALIMENT`, `POURCENTAGE`) VALUES
+(1719, 10742, 39),
+(1719, 10743, 26),
 (1719, 10744, 36),
 (1719, 10745, 59),
 (1719, 10746, 49),
@@ -18706,10 +18708,10 @@ INSERT INTO `a_comme_caracteristiques` (`ID_CARACTERISTIQUE`, `ID_ALIMENT`, `POU
 (1720, 10732, 11),
 (1720, 10733, 14),
 (1720, 10734, 7),
-(1720, 10735, 18),
-(1720, 10736, 11),
-(1720, 10737, 3);
+(1720, 10735, 18);
 INSERT INTO `a_comme_caracteristiques` (`ID_CARACTERISTIQUE`, `ID_ALIMENT`, `POURCENTAGE`) VALUES
+(1720, 10736, 11),
+(1720, 10737, 3),
 (1720, 10738, 17),
 (1720, 10739, 24),
 (1720, 10740, 19),
@@ -19148,6 +19150,7 @@ INSERT INTO `a_comme_caracteristiques` (`ID_CARACTERISTIQUE`, `ID_ALIMENT`, `POU
 (1720, 11174, 2),
 (1720, 11175, 12),
 (1720, 11176, 1),
+(1720, 11200, 40),
 (1721, 7991, 23),
 (1721, 7992, 3),
 (1721, 7993, 1),
@@ -21904,11 +21907,11 @@ INSERT INTO `a_comme_caracteristiques` (`ID_CARACTERISTIQUE`, `ID_ALIMENT`, `POU
 (1721, 10752, 26),
 (1721, 10753, 26),
 (1721, 10754, 0),
-(1721, 10755, 21),
+(1721, 10755, 21);
+INSERT INTO `a_comme_caracteristiques` (`ID_CARACTERISTIQUE`, `ID_ALIMENT`, `POURCENTAGE`) VALUES
 (1721, 10756, 20),
 (1721, 10757, 38),
-(1721, 10758, 44);
-INSERT INTO `a_comme_caracteristiques` (`ID_CARACTERISTIQUE`, `ID_ALIMENT`, `POURCENTAGE`) VALUES
+(1721, 10758, 44),
 (1721, 10759, 39),
 (1721, 10760, 32),
 (1721, 10761, 16),
@@ -22326,6 +22329,7 @@ INSERT INTO `a_comme_caracteristiques` (`ID_CARACTERISTIQUE`, `ID_ALIMENT`, `POU
 (1721, 11174, 32),
 (1721, 11175, 24),
 (1721, 11176, 44),
+(1721, 11200, 10),
 (1722, 7991, 2),
 (1722, 7992, 0),
 (1722, 7993, 0),
@@ -25136,12 +25140,12 @@ INSERT INTO `a_comme_caracteristiques` (`ID_CARACTERISTIQUE`, `ID_ALIMENT`, `POU
 (1722, 10831, 3),
 (1722, 10832, 1),
 (1722, 10833, 0),
-(1722, 10834, 0),
+(1722, 10834, 0);
+INSERT INTO `a_comme_caracteristiques` (`ID_CARACTERISTIQUE`, `ID_ALIMENT`, `POURCENTAGE`) VALUES
 (1722, 10835, 0),
 (1722, 10836, 0),
 (1722, 10837, 2),
-(1722, 10838, 0);
-INSERT INTO `a_comme_caracteristiques` (`ID_CARACTERISTIQUE`, `ID_ALIMENT`, `POURCENTAGE`) VALUES
+(1722, 10838, 0),
 (1722, 10839, 0),
 (1722, 10840, 0),
 (1722, 10841, 3),
@@ -25474,7 +25478,8 @@ INSERT INTO `a_comme_caracteristiques` (`ID_CARACTERISTIQUE`, `ID_ALIMENT`, `POU
 (1722, 11173, 4),
 (1722, 11174, 8),
 (1722, 11175, 0),
-(1722, 11176, 11);
+(1722, 11176, 11),
+(1722, 11200, 30);
 
 -- --------------------------------------------------------
 
@@ -25548,11 +25553,25 @@ CREATE TABLE IF NOT EXISTS `personne` (
   `DATE_NAISSANCE` date NOT NULL,
   `NOM` varchar(150) NOT NULL,
   `ADMIN` tinyint(1) NOT NULL,
+  `PRENOM` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `PASSWORD` varchar(150) NOT NULL,
   PRIMARY KEY (`LOGIN`),
   KEY `FK_EST_DANS` (`ID_TRANCHE_D_AGE`),
   KEY `FK_EST_DE_SEXE` (`ID_SEXE`),
   KEY `FK_PRATIQUE` (`ID_PRATIQUE`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Déchargement des données de la table `personne`
+--
+
+INSERT INTO `personne` (`LOGIN`, `ID_TRANCHE_D_AGE`, `ID_SEXE`, `ID_PRATIQUE`, `EMAIL`, `DATE_NAISSANCE`, `NOM`, `ADMIN`, `PRENOM`, `PASSWORD`) VALUES
+('fifi', 1, 1, 1, 'test', '2024-11-07', 'test', 0, 'test', 'test2'),
+('JETESTE', 1, 1, 2, 'test', '2024-11-21', 'test', 0, 'test', '1234'),
+('loulou', 1, 1, 1, 'loulou@test.fr', '2024-11-09', 'lou', 0, 'lou', 'louloute'),
+('riri', 1, 1, 1, 'test@rir.fr', '2024-11-07', 'riri', 0, 'fifi', '0'),
+('testuser', 1, 1, 1, 'test', '2024-11-07', 'test', 0, 'test', '0'),
+('utilisTest2', 1, 1, 2, 'testt', '2024-11-14', 'qqquelqun', 0, 'test', '12345');
 
 -- --------------------------------------------------------
 
@@ -25565,7 +25584,16 @@ CREATE TABLE IF NOT EXISTS `pratique_sportive` (
   `ID_PRATIQUE` int NOT NULL AUTO_INCREMENT,
   `DESIGNATION` varchar(20) NOT NULL,
   PRIMARY KEY (`ID_PRATIQUE`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Déchargement des données de la table `pratique_sportive`
+--
+
+INSERT INTO `pratique_sportive` (`ID_PRATIQUE`, `DESIGNATION`) VALUES
+(1, 'Faible'),
+(2, 'Modéré'),
+(3, 'Elevé');
 
 -- --------------------------------------------------------
 
@@ -25601,8 +25629,8 @@ CREATE TABLE IF NOT EXISTS `sexe` (
 --
 
 INSERT INTO `sexe` (`ID_SEXE`, `DESIGNATION`) VALUES
-(3, 'Homme'),
-(4, 'Femme');
+(1, 'Homme'),
+(2, 'Femme');
 
 -- --------------------------------------------------------
 
@@ -25616,7 +25644,14 @@ CREATE TABLE IF NOT EXISTS `tranche_d_age` (
   `AGE_DEBUT` smallint NOT NULL,
   `AGE_FIN` smallint NOT NULL,
   PRIMARY KEY (`ID_TRANCHE_D_AGE`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Déchargement des données de la table `tranche_d_age`
+--
+
+INSERT INTO `tranche_d_age` (`ID_TRANCHE_D_AGE`, `AGE_DEBUT`, `AGE_FIN`) VALUES
+(1, 0, 100);
 
 --
 -- Contraintes pour les tables déchargées

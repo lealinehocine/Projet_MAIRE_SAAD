@@ -16,7 +16,7 @@ body{
 }
 
 /* rajouter .contentJournal */
-.contentLogin, .contentAliments, .contentProfil, .contentJournal{
+.contentLogin, .contentAliments, .contentProfil, .contentJournal,.contentStats{
     display:flex;
     min-height: 100vh; /* Hauteur totale de la fenêtre */
     justify-content: center; 
@@ -117,4 +117,9 @@ button, .bouton{
 
 #addStudentForm{
     margin: 30px;
+}
+
+.textBienvenue{
+    text-align: center;
+    font-size: 20px;
 }

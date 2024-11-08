@@ -36,7 +36,7 @@ $admin = false; //En attendant que ce soit fait dans le back
     </div>
 
     <div class="form-group row">
-    <label for="inputSucre" class="col-sm-2 col-form-label">Sucre</label>
+    <label for="inputSucre" class="col-sm-2 col-form-label">Sucres</label>
         <div class="col-sm-2">
         <input type="text" class="form-control" id="inputSucre" >
         </div>
@@ -64,11 +64,11 @@ $admin = false; //En attendant que ce soit fait dans le back
     <thead>
         <tr>
             <th scope="col">Aliment</th>
-            <th scope="col">Energie</th>
-            <th scope="col">Lipides</th>
-            <th scope="col">Glucose</th>
-            <th scope="col">Sucre</th>
-            <th scope="col">Protéines</th>
+            <th scope="col">Energie (kJ/100g)</th>
+            <th scope="col">Lipides (g/100g)</th>
+            <th scope="col">Glucose (g/100g)</th>
+            <th scope="col">Sucre (g/100g)</th>
+            <th scope="col">Protéines (g/100g)</th>
             <?php
                 if($admin){
                     echo '<th scope="col">Edit</th>',

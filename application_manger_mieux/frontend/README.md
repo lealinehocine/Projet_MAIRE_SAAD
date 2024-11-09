@@ -6,7 +6,8 @@ Il permet aux utilisateurs de se créer un compte sur le site puis de se connect
 - Création de compte et authentification en tant qu'utilisateur standard.
 - Consultation des statistiques.
 - Consultation et modification des informations du profil.
-- Consultation de la base commune d'aliments et ajout potentiel d'aliment à la base.
+- Consultation de la base commune d'aliments et ajout potentiel d'aliment à la base. Seuls les administrateurs peuvent modifier ou supprimer des aliments de la base.
+NB : la connexion en tant qu'administrateur n'est pas encore possible sur notre site.
 - Consultation et modification du journal contenant les repas trackés.
 
 ## Technologies Utilisées
@@ -24,10 +25,6 @@ Pour tester l'application, utilisez les identifiants suivants :
 | Utilisateur  | loulou          | louloute     |
 | Utilisateur  | lealine         | test         |
 | Utilisateur  | fifi            | test2        |
-
-## Lancer le Projet
-
-git clone https://github.com/lealinehocine/Projet_MAIRE_SAAD.git
 
 
 

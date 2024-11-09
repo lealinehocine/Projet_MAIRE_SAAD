@@ -161,7 +161,7 @@ $(document).ready( function () {
                                     console.log(nomsAliments[0]);
                                     console.log(nomsAliments);
                                     console.log(typeof(nomsAliments));
-                                    $("#tableJournal tbody").prepend(`<tr><td>${nomsAliments.at(indice)}</td><td>${contient["QUANTITE"]}</td><td>${date[indice]}</td><td>${matin_midi_soir_string[indice]}</td><td><button id="edit" onclick="editRepas(this)">Modifier</button></td><td><button id="edit" onclick="deleteRepas(this)">Supprimer</button></td></tr>`);
+                                    $("#tableJournal tbody").append(`<tr><td>${nomsAliments.at(indice)}</td><td>${contient["QUANTITE"]}</td><td>${date[indice]}</td><td>${matin_midi_soir_string[indice]}</td><td><button id="edit" onclick="editRepas(this)">Modifier</button></td><td><button id="edit" onclick="deleteRepas(this)">Supprimer</button></td></tr>`);
                                 });
                             });
                         });
@@ -428,8 +428,10 @@ $(document).ready( function () {
                     <td>${date}</td>
                     <td>${repas}</td>
                     <td>
-                        <button onclick="editRepas(this)">Edit</button>
-                        <button onclick="deleteRepas(this)">Delete</button>
+                        <button onclick="editRepas(this)">Modifier</button>
+                    </td>
+                    <td>
+                        <button onclick="deleteRepas(this)">Supprimer</button>
                     </td>
                 </tr>
             `);
@@ -446,11 +448,13 @@ $(document).ready( function () {
                 
     // //edituser et delete user à faire
 
+
             } else {
                 alert("Toutes les informations sont obligatoires");
             }
         });
-        $('#tableJournal').DataTable();
+        // $('#tableJournal').DataTable().clear().destroy();
+        // $('#tableJournal').DataTable();
     } 
 
 

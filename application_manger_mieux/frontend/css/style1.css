@@ -157,3 +157,41 @@ input:not(.bouton):focus {
     color: #ae515f;
     font-weight: bold;
 }
+
+
+
+
+
+#profil {
+    border: 2px solid #4CAF50;
+    padding: 10px;
+    border-radius: 8px;
+    min-width: 500px;
+    background-color: #f9f9f9;
+}
+
+#profil tr {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 0;
+    border-bottom: 1px solid #ddd; 
+}
+
+#profil tr:last-child {
+    border-bottom: none; 
+}
+
+#profil th {
+    flex: 1;
+    font-weight: bold;
+    text-align: left;
+    padding-right: 15px; 
+    border-right: 1px solid #ccc; 
+}
+
+
+#profil td {
+    flex: 1;
+    text-align: right;
+    padding-left: 15px;
+}

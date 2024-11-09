@@ -123,3 +123,18 @@ button, .bouton{
     text-align: center;
     font-size: 20px;
 }
+
+th{
+    text-align: left;
+}
+
+input:not(.bouton), #inputSport, #inputSexe {
+    border: 2px solid #4CAF50;
+    border-radius: 10px;
+    padding: 5px;
+}
+
+input:not(.bouton):focus {
+    border-color: #ae515f;
+}
+

@@ -78,16 +78,10 @@ a:visited {
 }
 
 
-#addStudentForm {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 15px;
-
-}
-
 .form-group {
     display: flex;
     align-items: center;
+    flex-wrap: nowrap; 
 }
 
 
@@ -117,6 +111,10 @@ button, .bouton{
 
 #addStudentForm{
     margin: 30px;
+    display: flex;
+    flex-wrap: nowrap; 
+    gap: 15px; 
+    justify-content: flex-start; 
 }
 
 .textBienvenue, #date_du_jour{
@@ -157,9 +155,6 @@ input:not(.bouton):focus {
     color: #ae515f;
     font-weight: bold;
 }
-
-
-
 
 
 #profil {

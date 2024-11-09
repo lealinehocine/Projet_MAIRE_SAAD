@@ -4,56 +4,56 @@ $admin = false; //En attendant que ce soit fait dans le back
 
 <div class="contentAliments">
 
-<!-- Enlever les classes inutiles -->
+
 <form id="addStudentForm" action="" onsubmit="onFormSubmit();">
 
     <div class="form-group row">
-        <label for="inputNomAliment" class="col-sm-2 col-form-label">Aliment*</label>
-        <div class="col-sm-3">
-            <input type="text" class="form-control" id="inputNomAliment" >
+        <label for="inputNomAliment">Aliment*</label>
+        <div>
+            <input type="text" id="inputNomAliment" >
         </div>
     </div>
 
     <div class="form-group row">
-        <label for="inputEnergie" class="col-sm-2 col-form-label">Energie</label>
-        <div class="col-sm-3">
-            <input type="text" class="form-control" id="inputEnergie" >
+        <label for="inputEnergie">Energie</label>
+        <div>
+            <input type="text" id="inputEnergie" >
         </div>
     </div>
 
     <div class="form-group row">
-        <label for="inputLipides" class="col-sm-2 col-form-label">Lipides</label>
-        <div class="col-sm-3">
-            <input type="text" class="form-control" id="inputLipides" >
+        <label for="inputLipides">Lipides</label>
+        <div>
+            <input type="text" id="inputLipides" >
         </div>
     </div>
 
     <div class="form-group row">
-    <label for="inputGlucose" class="col-sm-2 col-form-label">Glucose</label>
-        <div class="col-sm-2">
-        <input type="text" class="form-control" id="inputGlucose" >
+    <label for="inputGlucose" >Glucose</label>
+        <div>
+        <input type="text" id="inputGlucose" >
         </div>
     </div>
 
     <div class="form-group row">
-    <label for="inputSucre" class="col-sm-2 col-form-label">Sucres</label>
-        <div class="col-sm-2">
+    <label for="inputSucre">Sucres</label>
+        <div>
         <input type="text" class="form-control" id="inputSucre" >
         </div>
     </div>
 
     <div class="form-group row">
-    <label for="inputProtéines" class="col-sm-2 col-form-label">Protéines</label>
-        <div class="col-sm-2">
-        <input type="text" class="form-control" id="inputProtéines" >
+    <label for="inputProtéines">Protéines</label>
+        <div>
+        <input type="text" id="inputProtéines" >
         </div>
     </div>
 
 
     <div class="form-group row">
-        <span class="col-sm-2"></span>
-        <div class="col-sm-2">
-            <button type="submit" class="btn btn-primary form-control">Enregistrer</button>
+        <span"></span>
+        <div >
+            <button type="submit" >Enregistrer</button>
         </div>
     </div>
 
@@ -232,9 +232,7 @@ function onFormSubmit() {
 
 
 
-
-
-// //edituser et delete user à faire
+//edituser et delete user à faire
 
             }else{
                 alert("Le nom de l'aliment est obligatoire");

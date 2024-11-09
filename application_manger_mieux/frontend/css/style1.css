@@ -15,8 +15,8 @@ body{
     padding:5px 0;
 }
 
-/* rajouter .contentJournal */
-.contentLogin, .contentAliments, .contentProfil, .contentJournal,.contentStats{
+
+.contentLogin, .contentAliments, .contentProfil, .contentJournal,.contentStats, .deconnexion{
     display:flex;
     min-height: 100vh; /* Hauteur totale de la fenêtre */
     justify-content: center; 
@@ -109,7 +109,16 @@ button, .bouton{
     text-align: center;
 }
 
-#addStudentForm{
+
+#addRepasForm{
+    margin: 30px;
+    display: flex;
+    flex-wrap: wrap; 
+    gap: 15px; 
+    justify-content: flex-start; 
+}
+
+#addAlimentForm{
     margin: 30px;
     display: flex;
     flex-wrap: nowrap; 

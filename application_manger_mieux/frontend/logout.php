@@ -1,5 +1,6 @@
+<div class="deconnexion">
 <p>Vous êtes déconnecté.</p>
-
+</div>
 <script>
 
 $.ajax({

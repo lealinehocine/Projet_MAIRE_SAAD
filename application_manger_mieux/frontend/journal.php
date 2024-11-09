@@ -1,22 +1,7 @@
 <div class="contentJournal">
 
-<table id="tableJournal">
-    <thead>
-        <tr>
-            <th scope="col">Aliment</th>
-            <th scope="col">Quantité</th>
-            <th scope="col">Date</th>
-            <th scope="col">Repas</th>
-            <th scope="col">Edit</th>
-            <th scope="col">Delete</th>
-        </tr>
-    </thead>
-    <tbody>
-    </tbody>
-</table>
 
-<!-- enlever classe inutiles -->
-<form id="addStudentForm" action="" onsubmit="onFormSubmit(event);">
+<form id="addRepasForm" action="" onsubmit="onFormSubmit(event);">
 
     <div class="form-group row">
         <label for="inputNomAliment" class="col-sm-2 col-form-label">Aliment*</label>
@@ -47,7 +32,6 @@
         <div class="col-sm-2">
             <select class="form-control" id="inputNomRepas">
                     <option value="">Sélectionner un repas</option> 
-                    <!-- laisser la premiere option? -->
                     <option value="Matin">Matin</option>
                     <option value="Midi">Midi</option>
                     <option value="Soir">Soir</option>
@@ -64,15 +48,28 @@
 
 </form>
 
+
+<table id="tableJournal">
+    <thead>
+        <tr>
+            <th scope="col">Aliment</th>
+            <th scope="col">Quantité</th>
+            <th scope="col">Date</th>
+            <th scope="col">Repas</th>
+            <th scope="col">Modifier</th>
+            <th scope="col">Supprimer</th>
+        </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
+
+
 </div>
 
 <script>
 
 $(document).ready( function () {
-    // $('#tableJournal').DataTable();
-
-    //POUR GET 
-    // Exécuter ce script après le chargement de la page
 
         // Fonction pour récupérer les aliments et les ajouter à la liste déroulante
         function fetchAliments() {
@@ -113,11 +110,11 @@ $(document).ready( function () {
             login = reponse["user"];
     
             await $.ajax({
-                url:`${prefix_api}Repas.php?login=${login}`,//A MODIFIER POUR OBTENIR LE LOGIN DE LA PERSONNE CONNECTEE PLUS TARD
+                url:`${prefix_api}Repas.php?login=${login}`,
                 type:'GET'
             })
             .done(function (response) {
-                let parsedResponse = response;//JSON.parse(response);
+                let parsedResponse = response;
                 console.log("parsedResponse : ",parsedResponse);
                 let id_repas = [];
                 let date = [];
@@ -147,7 +144,7 @@ $(document).ready( function () {
                         type:'GET'
                     })
                     .done(function (reponse) {
-                        let parsedReponse = reponse;//JSON.parse(reponse);
+                        let parsedReponse = reponse;
                         let nomsAliments = new Array();
                         console.log("reponse = ",reponse);
                         parsedReponse.forEach(async function(contient, indice, tbaleau){
@@ -157,8 +154,8 @@ $(document).ready( function () {
                                 type:'GET'
                             })
                             .done(function (response) {
-                                let tableau_reponse = response;//JSON.parse(response);
-                                nomsAliments.push(tableau_reponse[0]["NOM"]);//tableau_reponse[0]["NOM"] ???
+                                let tableau_reponse = response;
+                                nomsAliments.push(tableau_reponse[0]["NOM"]);
                                 console.log("nomsAliments censé être avant le console log nomsAliments at 0 : ",nomsAliments);
                                 parsedReponse.forEach(function(contient, indice, tableau){
                                     console.log(nomsAliments[0]);
@@ -290,7 +287,7 @@ $(document).ready( function () {
 
                 row.append(`<input type="hidden" id="id_repas" value="${id_repas}"/>`);
                 // Remplace le bouton "Edit" par "Save"
-                $(button).replaceWith(`<button onclick="saveRepas(this)">Save</button>`);
+                $(button).replaceWith(`<button onclick="saveRepas(this)">Sauvegarder</button>`);
             });
         });
     }
@@ -354,7 +351,7 @@ $(document).ready( function () {
                     cells.eq(i).replaceWith(`${cells.eq(i).val()}`);
                 }
                 cells.eq(5).remove();
-                $(button).replaceWith(`<button onclick="editRepas(this)">Edit</button>`);
+                $(button).replaceWith(`<button onclick="editRepas(this)">Modifier</button>`);
             });
         });
     }

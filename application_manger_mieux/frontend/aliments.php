@@ -5,7 +5,7 @@ $admin = false; //En attendant que ce soit fait dans le back
 <div class="contentAliments">
 
 
-<form id="addStudentForm" action="" onsubmit="onFormSubmit();">
+<form id="addAlimentForm" action="" onsubmit="onFormSubmit();">
 
     <div class="form-group row">
         <label for="inputNomAliment">Aliment*</label>
@@ -64,7 +64,7 @@ $admin = false; //En attendant que ce soit fait dans le back
     <thead>
         <tr>
             <th scope="col">Aliment</th>
-            <th scope="col">Energie (kJ/100g)</th>
+            <th scope="col">Energie (kcal/100g)</th>
             <th scope="col">Lipides (g/100g)</th>
             <th scope="col">Glucose (g/100g)</th>
             <th scope="col">Sucre (g/100g)</th>

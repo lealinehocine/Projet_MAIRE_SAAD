@@ -84,13 +84,10 @@ a:visited {
     flex-wrap: nowrap; 
 }
 
-
-/* Alignement des labels et des champs */
 .form-group label {
     margin-right: 5px;
 }
 
-/* Largeur des inputs */
 .form-group input {
     width: 120px;
 }

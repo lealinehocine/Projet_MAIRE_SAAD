@@ -151,7 +151,7 @@
                 });
 
                 // Remplace enregistrer par éditer
-                $(button).replaceWith('<button onclick="editProfile(this)">Edit</button>');
+                $(button).replaceWith('<button onclick="editProfile(this)">Modifier</button>');
             });
         });
     }

@@ -14,7 +14,7 @@
 
         foreach($mymenu as $pageId => $pageParameters) {
 
-            $url = "index.php?page=" . $pageId ; //garder cette forme d'url?
+            $url = "index.php?page=" . $pageId ;
 
             if($pageId == $currentPageId){
             echo ("<li class=\"li_menu\" id=\"currentpage\"><a href=\"$url\">$pageParameters[0]</a></li>");}

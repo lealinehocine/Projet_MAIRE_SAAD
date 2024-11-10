@@ -141,20 +141,20 @@ $(document).ready( function () {
                     })
                     .done(function (reponse) {
                         let parsedReponse = reponse;
-                        let nomsAliments = new Array();
-                        parsedReponse.forEach(async function(contient, indice, tbaleau){
-                            await $.ajax({
-                                url:`${prefix_api}Aliments.php?id_aliment=${contient["ID_ALIMENT"]}`,
-                                type:'GET'
-                            })
-                            .done(function (response) {
-                                let tableau_reponse = response;
-                                nomsAliments.push(tableau_reponse[0]["NOM"]);
-                                parsedReponse.forEach(function(contient, indice, tableau){
-                                    $("#tableJournal tbody").append(`<tr><td>${nomsAliments.at(indice)}</td><td>${contient["QUANTITE"]}</td><td>${date[indice]}</td><td>${matin_midi_soir_string[indice]}</td><td><button id="edit" onclick="editRepas(this)">Modifier</button></td><td><button id="edit" onclick="deleteRepas(this)">Supprimer</button></td></tr>`);
-                                });
+                        let nomsAliments = "";
+                        
+                        $.ajax({
+                            url:`${prefix_api}Aliments.php?id_aliment=${parsedReponse[0]["ID_ALIMENT"]}`,
+                            type:'GET'
+                        })
+                        .done(function (response) {
+                            let tableau_reponse = response;
+                            nomsAliments = tableau_reponse[0]["NOM"];
+                            parsedReponse.forEach(function(contient, indices, tableau){
+                                $("#tableJournal tbody").append(`<tr><td>${nomsAliments}</td><td>${parsedReponse[0]["QUANTITE"]}</td><td>${date[index]}</td><td>${matin_midi_soir_string[index]}</td><td><button id="edit" onclick="editRepas(this)">Modifier</button></td><td><button id="edit" onclick="deleteRepas(this)">Supprimer</button></td></tr>`);
                             });
                         });
+                        
                     });
                 });
             })

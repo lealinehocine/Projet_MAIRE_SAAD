@@ -111,11 +111,23 @@
 
             // Calculer les valeurs nutritionnelles totales
             aliments_repas_avec_caracteristiques.forEach(function(aliment_total,index) {
-                energie_totale += JSON.parse(aliment_total[0]["caracteristiques"])[1]["quantite"]*quantites_repas[index]/100;
-                proteines_totale += JSON.parse(aliment_total[0]["caracteristiques"])[2]["quantite"]*quantites_repas[index]/100;
-                glucides_totales += JSON.parse(aliment_total[0]["caracteristiques"])[3]["quantite"]*quantites_repas[index]/100;
-                lipides_total += JSON.parse(aliment_total[0]["caracteristiques"])[4]["quantite"]*quantites_repas[index]/100;
-                sucre_total += JSON.parse(aliment_total[0]["caracteristiques"])[5]["quantite"]*quantites_repas[index]/100;
+                JSON.parse(aliment_total[0]["caracteristiques"]).forEach(function (caracteristique,indice, table){
+                    if(caracteristique["caracteristique"]=="Energie, Règlement UE N° 1169/2011 (kcal/100 g)"){
+                        energie_totale += caracteristique["quantite"]*quantites_repas[index]/100;
+                    }
+                    else if(caracteristique["caracteristique"]=="Protéines, N x 6.25 (g/100 g)"){
+                        proteines_totale += caracteristique["quantite"]*quantites_repas[index]/100;
+                    }
+                    else if(caracteristique["caracteristique"]=="Glucides (g/100 g)"){
+                        glucides_totales += caracteristique["quantite"]*quantites_repas[index]/100;
+                    }
+                    else if(caracteristique["caracteristique"]=="Lipides (g/100 g)"){
+                        lipides_total += caracteristique["quantite"]*quantites_repas[index]/100;
+                    }
+                    else if(caracteristique["caracteristique"]=="Sucres (g/100 g)"){
+                        sucre_total += caracteristique["quantite"]*quantites_repas[index]/100;
+                    }
+                });
             });
 
 

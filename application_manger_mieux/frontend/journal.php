@@ -434,7 +434,7 @@ $(document).ready( function () {
             }
         });
         // $('#tableJournal').DataTable().clear().destroy();
-        // $('#tableJournal').DataTable();
+        //$('#tableJournal').DataTable();
     } 
 
 

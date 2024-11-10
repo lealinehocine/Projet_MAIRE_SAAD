@@ -3,24 +3,22 @@
     include('../config.php'); 
     require_once('../init_pdo.php');
     session_start();
-    // Vérifier si le formulaire a été soumis
+
     function connectUser($pdo,$tryLogin,$tryPwd) {
         $tryLogin = $_POST['login'];
         $tryPwd = $_POST['password'];
         
         try {
-            // Préparer la requête pour rechercher l'utilisateur dans la base de données
             $stmt = $pdo->prepare("SELECT * FROM personne WHERE login = :login");
             $stmt->bindParam(':login', $tryLogin);
             $stmt->execute();
-            $user = $stmt->fetch(PDO::FETCH_OBJ); // Récupère l'utilisateur si trouvé
+            $user = $stmt->fetch(PDO::FETCH_OBJ);
             // Vérifier si l'utilisateur existe et si le mot de passe est correct
-            if ($tryPwd == $user->PASSWORD && $user != null) { // password_verify pour vérifier le mot de passe haché
+            if ($tryPwd == $user->PASSWORD && $user != null) {
                 // Connexion réussie
                 $_SESSION['user'] = $tryLogin; // Stocker le login dans la session
-                return 200; // Assurer qu'on arrête l'exécution du script après la redirection
+                return 200; 
             } else {
-                // Mot de passe incorrect ou utilisateur introuvable
                 echo "Erreur de login/mot de passe";
             }
         } catch (PDOException $e) {

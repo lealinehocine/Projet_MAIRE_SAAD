@@ -15,21 +15,40 @@ body{
     padding:5px 0;
 }
 
+img{
+    height:200px;
+    width: auto;
+}
 
-.contentLogin, .contentAliments, .contentProfil, .contentJournal,.contentStats, .deconnexion{
+.imageCentrale{
+    height:300px;
+    width: auto;
+    margin-left:30px ;
+}
+
+.banderole{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.contentLogin, .contentAliments, .contentProfil, .contentJournal,.contentStats, .deconnexion, .accueilContent{
     display:flex;
     min-height: 100vh; /* Hauteur totale de la fenêtre */
     justify-content: center; 
     align-items: center; 
+}
 
+.accueilContent{
+    justify-content: space-between;
 }
 
 .contentLogin{
     justify-content: space-evenly;
 }
 
-.contentAliments, .contentProfil, .contentJournal{
-flex-direction: column;
+.contentAliments, .contentProfil, .contentJournal,.accueilContent{
+    flex-direction: column;
 }
 
 
@@ -84,13 +103,10 @@ a:visited {
     flex-wrap: nowrap; 
 }
 
-
-/* Alignement des labels et des champs */
 .form-group label {
     margin-right: 5px;
 }
 
-/* Largeur des inputs */
 .form-group input {
     width: 120px;
 }

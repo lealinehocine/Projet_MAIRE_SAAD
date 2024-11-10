@@ -4,8 +4,8 @@
 <form id="addRepasForm" action="" onsubmit="onFormSubmit(event);">
 
     <div class="form-group row">
-        <label for="inputNomAliment" class="col-sm-2 col-form-label">Aliment*</label>
-        <div class="col-sm-3">
+        <label for="inputNomAliment">Aliment*</label>
+        <div>
             <select class="form-control" id="inputNomAliment">
                     <option value="">Sélectionner un aliment</option>
                     <!-- Les options des aliments seront insérées ici -->
@@ -14,22 +14,22 @@
     </div>
 
     <div class="form-group row">
-    <label for="inputQuantite" class="col-sm-2 col-form-label">Quantité(g)</label>
-        <div class="col-sm-2">
+    <label for="inputQuantite">Quantité(g)</label>
+        <div>
         <input type="text" class="form-control" id="inputQuantite" >
         </div>
     </div>
 
     <div class="form-group row">
-    <label for="inputDate" class="col-sm-2 col-form-label">Date</label>
-        <div class="col-sm-2">
+    <label for="inputDate">Date</label>
+        <div>
         <input type="date" class="form-control" id="inputDate" >
         </div>
     </div>
 
     <div class="form-group row">
-    <label for="inputNomRepas" class="col-sm-2 col-form-label">Repas</label>
-        <div class="col-sm-2">
+    <label for="inputNomRepas">Repas</label>
+        <div>
             <select class="form-control" id="inputNomRepas">
                     <option value="">Sélectionner un repas</option> 
                     <option value="Matin">Matin</option>
@@ -40,9 +40,9 @@
     </div>
 
     <div class="form-group row">
-        <span class="col-sm-2"></span>
-        <div class="col-sm-2">
-            <button type="submit" class="btn btn-primary form-control">Enregistrer</button>
+        <span></span>
+        <div>
+            <button type="submit">Enregistrer</button>
         </div>
     </div>
 

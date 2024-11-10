@@ -25,4 +25,28 @@
         echo ("</ul>
         </nav>");
         }
+
+    function renderMenuToHomePage($currentPageId) {
+
+    $mymenu = array(
+
+        'accueil' => array('Accueil'), 
+        'login' => array('Se connecter/ S\'inscrire'),
+        );
+        
+        echo ("<nav class=\"menu\"><ul>");
+
+        foreach($mymenu as $pageId => $pageParameters) {
+
+            $url = "index.php?page=" . $pageId ;
+
+            if($pageId == $currentPageId){
+            echo ("<li class=\"li_menu\" id=\"currentpage\"><a href=\"$url\">$pageParameters[0]</a></li>");}
+            else{
+                echo ("<li class=\"li_menu\"><a href=\"$url\">$pageParameters[0]</a></li>");
+            }
+        }
+        echo ("</ul>
+        </nav>");
+        }
 ?>

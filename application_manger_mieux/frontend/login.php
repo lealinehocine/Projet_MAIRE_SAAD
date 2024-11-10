@@ -133,9 +133,11 @@
                     },
                     success: function(response) { 
                         console.log(response);
+                        alert("Vous êtes bien inscrit!");
         },
             error: function(xhr, status, error) {
                 console.error("Erreur lors de l'inscription : ", error);
+                alert("Erreur lors de l'inscription");
             }
         });
 
@@ -163,11 +165,10 @@ function onLogSubmit(){
         },
             error: function(xhr, status, error) {
                 console.error("Erreur lors de la connection : ", error);
+                alert("Votre identifiant ou votre mot de passe est incorrect")
             }
         });
 
 }
-
-
 
 </script>

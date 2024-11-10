@@ -5,31 +5,30 @@
 
 session_start(); 
 
+$currentPageId = 'accueil';
 
-    // if (!isset($_SESSION['user'])) {
-    //     header("Location: login.php"); 
-    //     exit();
-    // }
+// Si l'utilisateur n'est pas connecté et qu'on demande la page `login`, on l'affiche
+if (!isset($_SESSION['user']) && isset($_GET['page']) && $_GET['page'] === 'login') {
+    $currentPageId = 'login';
+}
 
-
-
-if(isset($_SESSION['user'])){
-    $currentPageId = 'dashboard';
-    if(isset($_GET['page'])) {
+// Si l'utilisateur est connecté, on vérifie s'il y a une page demandée
+if (isset($_SESSION['user'])) {
+    if (isset($_GET['page'])) {
         $currentPageId = $_GET['page'];
-        }
-    }else{
-        $currentPageId = 'login';
+    } else {
+        $currentPageId = 'dashboard';
     }
+}
 
 
 echo('<h1 class="header">iMieuxManger</h1>');
 
-if($currentPageId!= 'login'){
-renderMenuToHTML($currentPageId);
-}else{
-    echo('<h2 class="titre">Se connecter/S\'inscrire</h2>');
-}
+if($currentPageId!= 'login' && $currentPageId!= 'accueil'){
+    renderMenuToHTML($currentPageId);
+    }else{
+            renderMenuToHomePage($currentPageId);
+    }
 
 
 

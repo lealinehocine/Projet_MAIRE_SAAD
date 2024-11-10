@@ -1,36 +1,10 @@
-<!-- Faire une autre option d affichage quand déconnecté -->
 <div class="contentProfil">
     <table id="profil">
-        <!--
-            <tr>
-                <th>Login</th>
-                <td><span class="info" id="login">userdefault</span></td>
-            </tr>
-            <tr>
-                <th>Nom</th>
-                <td><span class="info" id="nom">Nomdefaut</span></td>
-            </tr>
-            <tr>
-                <th>Prénom</th>
-                <td><span class="info" id="prenom">Prenomdefaut</span></td>
-            </tr>
-            <tr>
-                <th>Sexe</th>
-                <td><span class="info" id="sexe">homme, femme</span></td>
-            </tr>
-            <tr>
-                <th>Tranche d'âge</th>
-                <td><span class="info" id="age"> -40, -60, 60+ ans</span></td>
-            </tr>
-            <tr>
-                <th>Pratique sportive</th>
-                <td><span class="info" id="sport">bas, moyen, élevé</span></td>
-            </tr>
-            -->
+
     </table>
 
-    <!-- Lorsqu'on appuie sur Edit, les champs deviennent des input (sauf login (et noms?)) et le bouton devient Save -->
-    <button id="edit" onclick="editProfile(this)">Edit</button>
+
+    <button id="edit" onclick="editProfile(this)">Modifier</button>
 </div>
 <script>
     $(document).ready(createTable());
@@ -79,7 +53,12 @@
                     sport_string = "Elevé";
                 }
 
-                $("#profil").append(`<tr><th>Login</th><td><span class="info" id="login">${login}</span></td></tr><tr><th>Nom</th><td><span class="info" id="nom">${nom}</span></td></tr><tr><th>Prénom</th><td><span class="info" id="prenom">${prenom}</span></td></tr><tr><th>Sexe</th><td><span class="info" id="sexe">${sexe_string}</span></td></tr><tr><th>Âge</th><td><span class="info" id="age">${age_nombre}</span></td></tr><tr><th>Pratique sportive</th><td><span class="info" id="sport">${sport_string}</span></td></tr>`);
+                $("#profil").append(`<tr><th>Identifiant</th><td><span class="info" id="login">${login}</span></td></tr>
+                                        <tr><th>Nom</th><td><span class="info" id="nom">${nom}</span></td></tr>
+                                        <tr><th>Prénom</th><td><span class="info" id="prenom">${prenom}</span></td></tr>
+                                        <tr><th>Sexe</th><td><span class="info" id="sexe">${sexe_string}</span></td></tr>
+                                        <tr><th>Âge</th><td><span class="info" id="age">${age_nombre}</span></td></tr>
+                                        <tr><th>Sportif (Faible/Modéré/Elevé)</th><td><span class="info" id="sport">${sport_string}</span></td></tr>`);
             });
         });
     }
@@ -94,7 +73,7 @@
         .done(function (reponse){
             login = reponse["user"];
         });
-        // Sélectionne tous les éléments <span> avec la classe "info"
+
         const elements = document.querySelectorAll('.info');
 
         // Pour chaque élément, crée un input, copie la valeur et remplace l'élément
@@ -107,7 +86,7 @@
                 element.parentNode.replaceChild(input, element);
             }
         });
-        $(button).replaceWith(`<button onclick="saveProfile(this)">Save</button>`);
+        $(button).replaceWith(`<button onclick="saveProfile(this)">Enregistrer</button>`);
     }
 
     function saveProfile(button) {
@@ -170,12 +149,12 @@
                 inputs.each(function() {
                     const newSpan = document.createElement('span');
                     newSpan.classList.add('info');
-                    newSpan.id = this.id.replace('new', ''); // Remove the 'new' prefix
+                    newSpan.id = this.id.replace('new', '');
                     newSpan.textContent = this.value;
                     this.parentNode.replaceChild(newSpan, this);
                 });
 
-                // Replace the "Save" button with the original "Edit" button
+                // Remplace enregistrer par éditer
                 $(button).replaceWith('<button onclick="editProfile(this)">Edit</button>');
             });
         });
@@ -183,13 +162,5 @@
 
 
 </script>
-
-
-<!-- DANS UN 1ER TEMPS : les infos par defaut doivent venir d'un GET sur une BDD de users (ou voir avec sessions) -->
-<!-- La requete POST se trouvera dans le login si il y a une option "s'inscrire"-->
-<!-- DANS UN 2ND TPS : faire un JS pour que Edit transforme les td en input comme dans TD5 exo2 -->
-<!-- Save doit envoyer un PUT pour modifier user meme dans la base de données : jQuery/ajax?-->
-
-
 
 <!-- Faire un bouton "supprimer mon compte" à l'avenir? (DELETE)-->

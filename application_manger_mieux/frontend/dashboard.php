@@ -1,15 +1,14 @@
-<p  class="textBienvenue">Aujourd'hui</p>
+<p id="date_du_jour">Aujourd'hui</p>
+
 <div class="contentStats">
 
-
-<!-- 2 200 kcal/jour,  50 à 70 g/jour protéines, 225 à 325 g/jour glucides, dont sucres moins de 25 à 50 g/jour, 44 à 78 g/jour lipides  -->
 
 <table id="tableStats">
     <thead>
         <tr>
             <th scope="col">Caractéristique</th>
             <th scope="col">Vous</th>
-            <th scope="col">Valeur moyenne</th>
+            <th scope="col">Valeur moyenne pour un adulte</th>
         </tr>
     </thead>
     <tbody>
@@ -138,4 +137,12 @@
     }
 </script>
 
+
 </div>
+
+
+<script>
+    const dateElement = document.getElementById('date_du_jour');
+    const today = new Date().toLocaleDateString(); 
+    dateElement.textContent = today;
+</script>

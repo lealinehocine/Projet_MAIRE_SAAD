@@ -1,13 +1,12 @@
 <p class="textBienvenue">Bienvenue sur le site iMieuxManger! <br>Veuillez vous connecter ou créer un compte pour accéder aux fonctionnalités du site.</p>
+
 <div class="contentLogin">
 
-
-
 <form id="login_form" action="../backend/API/connected.php" method="POST" onsubmit="onLogSubmit();"> 
-<!-- action à compléter fichier.php : dans le back -->
+
     <table>
         <tr>
-            <th>Login :</th>
+            <th>Identifiant :</th>
             <td><input type="text" name="login" id="loginConnection"></td>
         </tr>
         <tr>
@@ -24,10 +23,10 @@
 <p>OU</p>
 
 <form id="subscription_form" action="" method="POST" onsubmit="onFormSubmit();"> 
-<!-- action à compléter fichier.php -->
+
     <table>
         <tr>
-            <th>Login* :</th>
+            <th>Identifiant* :</th>
             <td><input type="text" name="login" id="inputLogin"></td>
         </tr>
         <tr>
@@ -35,11 +34,11 @@
             <td><input type="password" name="password" id="inputPass"></td>
         </tr>
         <tr>
-            <th>Mail :</th>
+            <th>Adresse mail :</th>
             <td><input type="text" name="mail" id="inputMail"></td>
         </tr>
         <tr>
-            <th>Nom *:</th>
+            <th>Nom* :</th>
             <td><input type="text" name="nom" id="inputNom"></td>
         </tr>
         <tr>
@@ -70,10 +69,15 @@
             <th></th>
             <td><input class="bouton" type="submit" value="S'inscrire" /></td>
         </tr>
+        <tr>
+            <th><p> * : Champ obligatoire</p></th>
+            <td></td>
+        </tr>
     </table>
 </form>
 
 </div>
+
 
 
 <script>

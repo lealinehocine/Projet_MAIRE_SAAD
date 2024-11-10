@@ -23,7 +23,7 @@
             <td>60 g</td>
         </tr>
         <tr>
-            <td>Glucides (g)</td>
+            <td>Glucose (g)</td>
             <td id="glucide"></td>
             <td>275 g</td>
         </tr>
@@ -118,7 +118,7 @@
                     else if(caracteristique["caracteristique"]=="Protéines, N x 6.25 (g/100 g)"){
                         proteines_totale += caracteristique["quantite"]*quantites_repas[index]/100;
                     }
-                    else if(caracteristique["caracteristique"]=="Glucides (g/100 g)"){
+                    else if(caracteristique["caracteristique"]=="Glucose (g/100 g)"){
                         glucides_totales += caracteristique["quantite"]*quantites_repas[index]/100;
                     }
                     else if(caracteristique["caracteristique"]=="Lipides (g/100 g)"){

@@ -109,7 +109,7 @@
         paramètres facultatifs : id_repas, matin_midi_soir (1 pour matin, 2 pour midi, 3 pour soir), date (AAAA-MM-DD)
 
         réponse :
-        {"ID_REPAS":, "DATE", "MATIN_MIDI_SOIR"}
+        {"ID_REPAS":, "DATE":, "MATIN_MIDI_SOIR":}
     
     endpoint : POST
         type des données de la requête : form-data
@@ -117,7 +117,7 @@
         paramètres facultatifs : 
 
         réponse :
-        {"ID_REPAS":, "DATE", "MATIN_MIDI_SOIR"}
+        {"ID_REPAS":, "DATE":, "MATIN_MIDI_SOIR":}
         (du repas qui vient d'être créé)
 
     endpoint : PUT
@@ -126,7 +126,7 @@
         paramètres facultatifs : 
 
         réponse :
-        {"ID_REPAS":, "DATE", "MATIN_MIDI_SOIR"}
+        {"ID_REPAS":, "DATE":, "MATIN_MIDI_SOIR":}
         (du repas qui vient d'être modifié)
 
     endpoint : DELETE
@@ -143,41 +143,155 @@
     
     endpoint : GET
         paramètres obligatoires : 
-        paramètres facultatifs : id_repas, matin_midi_soir (1 pour matin, 2 pour midi, 3 pour soir), date (AAAA-MM-DD)
+        paramètres facultatifs : id_caracteristique, designation
 
         réponse :
-        {"ID_REPAS":, "DATE", "MATIN_MIDI_SOIR"}
+        {"ID_CARACTERISTIQUE":, "DESIGNATION":}
     
     endpoint : POST
         type des données de la requête : form-data
-        paramètres obligatoires : id_repas, matin_midi_soir (1 pour matin, 2 pour midi, 3 pour soir), date (AAAA-MM-DD)
+        paramètres obligatoires : designation
         paramètres facultatifs : 
 
         réponse :
-        {"ID_REPAS":, "DATE", "MATIN_MIDI_SOIR"}
-        (du repas qui vient d'être créé)
+        {"ID_CARACTERISTIQUE":, "DESIGNATION"}
+        (de la caractéristique qui vient d'être créé)
 
     endpoint : PUT
     type des données de la requête : json
-        paramètres obligatoires : id_repas, matin_midi_soir (1 pour matin, 2 pour midi, 3 pour soir), date (AAAA-MM-DD)
+        paramètres obligatoires : id_caracteristique, designation
         paramètres facultatifs : 
 
         réponse :
-        {"ID_REPAS":, "DATE", "MATIN_MIDI_SOIR"}
-        (du repas qui vient d'être modifié)
+        {"ID_CARACTERISTIQUE":, "DESIGNATION"}
+        (de la caractéristique qui vient d'être modifiée)
 
     endpoint : DELETE
     type des données de la requête : json
-        paramètres obligatoires : id_repas
+        paramètres obligatoires : id_caracteristique
         paramètres facultatifs : 
 
         réponse :
-        "repas bien supprimé"
+        "caracteristique bien supprimé"
 
 5) a_comme_caracteristique
 
+    Url des requêtes : `${prefix_api}A_comme_caracteristique.php`
+    
+    endpoint : GET
+        paramètres obligatoires : 
+        paramètres facultatifs : id_caracteristique, id_aliment, pourcentage
+
+        réponse :
+        {"ID_CARACTERISTIQUE":, "ID_ALIMENT":,"POURCENTAGE"}
+    
+    endpoint : POST
+        type des données de la requête : form-data
+        paramètres obligatoires : id_caracteristique, id_aliment, pourcentage
+        paramètres facultatifs : 
+
+        réponse :
+        {"ID_CARACTERISTIQUE":, "ID_ALIMENT":,"POURCENTAGE"}
+        (de la relation caractéristique-aliment qui vient d'être créé)
+
+    endpoint : PUT
+    type des données de la requête : json
+        paramètres obligatoires : id_caracteristique, id_aliment, pourcentage
+        paramètres facultatifs : 
+
+        réponse :
+        {"ID_CARACTERISTIQUE":, "ID_ALIMENT":,"POURCENTAGE"}
+        (de la relation caractéristique-aliment qui vient d'être modifiée)
+
+    endpoint : DELETE
+    type des données de la requête : json
+        paramètres obligatoires : id_caracteristique, id_aliment
+        paramètres facultatifs : 
+
+        réponse :
+        "a_comme_caracteristique bien supprimé"
 
 
 6) contient
+
+    Url des requêtes : `${prefix_api}Contient.php`
+    
+    endpoint : GET
+        paramètres obligatoires : 
+        paramètres facultatifs : id_repas, id_aliment, quantite
+
+        réponse :
+        {"ID_REPAS":, "ID_ALIMENT":,"QUANTITE"}
+    
+    endpoint : POST
+        type des données de la requête : form-data
+        paramètres obligatoires : id_repas, id_aliment, quantite
+        paramètres facultatifs : 
+
+        réponse :
+        {"ID_REPAS":, "ID_ALIMENT":,"QUANTITE"}
+        (de la relation repas_aliment qui vient d'être créé)
+
+    endpoint : PUT
+    type des données de la requête : json
+        paramètres obligatoires : id_repas, id_aliment, quantite
+        paramètres facultatifs : 
+
+        réponse :
+        {"ID_REPAS":, "ID_ALIMENT":,"QUANTITE"}
+        (de la relation repas_aliment qui vient d'être modifiée)
+
+    endpoint : DELETE
+    type des données de la requête : json
+        paramètres obligatoires : id_repas, id_aliment
+        paramètres facultatifs : 
+
+        réponse :
+        "contient bien supprimé"
+
 7) est_compose_de
+
+    Url des requêtes : `${prefix_api}est_compose_de.php`
+    
+    endpoint : GET
+        paramètres obligatoires : 
+        paramètres facultatifs : id_aliment, ali_id_aliment, pourcentage
+
+        réponse :
+        {"ALI_ID_ALIMENT":, "ID_ALIMENT":,"POURCENTAGE"}
+    
+    endpoint : POST
+        type des données de la requête : form-data
+        paramètres obligatoires : id_aliment, ali_id_aliment, pourcentage
+        paramètres facultatifs : 
+
+        réponse :
+        {"ALI_ID_ALIMENT":, "ID_ALIMENT":,"POURCENTAGE"}
+        (de la relation aliment-aliment qui vient d'être créé)
+
+    endpoint : PUT
+    type des données de la requête : json
+        paramètres obligatoires :id_aliment, ali_id_aliment, pourcentage
+        paramètres facultatifs : 
+
+        réponse :
+        {"ALI_ID_ALIMENT":, "ID_ALIMENT":,"POURCENTAGE"}
+        (de la relation aliment-aliment qui vient d'être modifiée)
+
+    endpoint : DELETE
+    type des données de la requête : json
+        paramètres obligatoires : id_aliment, ali_id_aliment
+        paramètres facultatifs : 
+
+        réponse :
+        "relation aliment-aliment bien supprimée"
+
+
 8) session
+
+    endpoint : GET
+        paramètres obligatoires : 
+        paramètres facultatifs : 
+
+        réponse :
+        {"LOGIN":}

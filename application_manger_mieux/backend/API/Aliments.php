@@ -14,10 +14,10 @@
             if($key!="caracteristiques"){
                 $a_un_parametre_de_filtrage = true;
                 if($stringParams == ""){
-                    $stringParams = $key."=".$value;
+                    $stringParams = "a.".$key."=\"".$value."\"";
                 }
                 else {
-                    $stringParams = $stringParams." AND ".$key."=".$value;
+                    $stringParams = $stringParams." AND a.".$key."=\"".$value."\"";
                 }
             }
         }

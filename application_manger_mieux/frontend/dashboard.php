@@ -85,6 +85,8 @@
                     type: 'GET'
                 });
 
+                console.log("reponse get contient : ",reponse_get_contient);
+
                 // Stocker les quantités et les aliments associés
                 quantites_repas.push(reponse_get_contient[0]["QUANTITE"]);
                 aliments_repas.push(reponse_get_contient[0]["ID_ALIMENT"]);

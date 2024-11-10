@@ -207,17 +207,17 @@ $(document).ready( function () {
                     url:`${prefix_api}Repas.php?login=${login}&date=${date}&matin_midi_soir=${matin_midi_soir_nombre}`,
                     type:'GET'
                 })
-                .done(function (response){
+                .done(async function (response){
                     id_repas = response[0]["ID_REPAS"];
 
-                    $.ajax({
+                    await $.ajax({
                         url:`${prefix_api}Contient.php`,
                         type:'DELETE',
                         dataType:"json",
                         data: `{\"id_repas\":\"${id_repas}\", "id_aliment":\"${id_aliment}\"}`
                     });
 
-                    $.ajax({
+                    await $.ajax({
                         url:`${prefix_api}Repas.php`,
                         type:'DELETE',
                         dataType:'json',

@@ -16,7 +16,6 @@
             type:'GET'
             })
             .done(function (reponse){
-                console.log(reponse);
                 login = reponse["user"];
 
             let nom = "";
@@ -30,7 +29,6 @@
                 type:'GET'
             })
             .done(function (reponse){
-                console.log("reponse : ",reponse);
                 nom = reponse[0]["NOM"];
                 prenom = reponse[0]["PRENOM"];
                 sexe = reponse[0]["ID_SEXE"];
@@ -56,7 +54,7 @@
                 $("#profil").append(`<tr><th>Identifiant</th><td><span class="info" id="login">${login}</span></td></tr>
                                         <tr><th>Nom</th><td><span class="info" id="nom">${nom}</span></td></tr>
                                         <tr><th>Prénom</th><td><span class="info" id="prenom">${prenom}</span></td></tr>
-                                        <tr><th>Sexe</th><td><span class="info" id="sexe">${sexe_string}</span></td></tr>
+                                        <tr><th>Sexe (Homme/Femme)</th><td><span class="info" id="sexe">${sexe_string}</span></td></tr>
                                         <tr><th>Âge</th><td><span class="info" id="age">${age_nombre}</span></td></tr>
                                         <tr><th>Sportif (Faible/Modéré/Elevé)</th><td><span class="info" id="sport">${sport_string}</span></td></tr>`);
             });
@@ -106,8 +104,6 @@
             let newPratique = $("#newsport").val();
 
             let newSexe_number = 0;
-
-            console.log(newPratique);
 
             if(newSexe == "Homme"){
                 newSexe_number=1;

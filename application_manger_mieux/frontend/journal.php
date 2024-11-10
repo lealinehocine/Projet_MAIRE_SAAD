@@ -115,17 +115,14 @@ $(document).ready( function () {
             })
             .done(function (response) {
                 let parsedResponse = response;
-                console.log("parsedResponse : ",parsedResponse);
                 let id_repas = [];
                 let date = [];
                 let matin_midi_soir = [];
                 let matin_midi_soir_string = [];
                 parsedResponse.forEach( function (element, index, array){
-                    console.log("element : ",element," ; index : ",index," ; array : ",array);
                     id_repas[index]=element["ID_REPAS"];
                     date[index]=element["DATE"];
                     matin_midi_soir[index]=element["MATIN_MIDI_SOIR"];
-                    console.log("matin_midi_soir : ",matin_midi_soir[index]);
                     if(matin_midi_soir[index]==1){
                         matin_midi_soir_string[index]="Matin";
                     }
@@ -135,7 +132,6 @@ $(document).ready( function () {
                     else if(matin_midi_soir[index] == 3){
                         matin_midi_soir_string[index]="Soir";
                     }
-                    console.log("matinmidisoirstring : ",matin_midi_soir_string);
                 });
 
                 id_repas.forEach(async function (element, index, array){
@@ -146,9 +142,7 @@ $(document).ready( function () {
                     .done(function (reponse) {
                         let parsedReponse = reponse;
                         let nomsAliments = new Array();
-                        console.log("reponse = ",reponse);
                         parsedReponse.forEach(async function(contient, indice, tbaleau){
-                            console.log("#################  ID aliment  :  ",contient["ID_ALIMENT"]);
                             await $.ajax({
                                 url:`${prefix_api}Aliments.php?id_aliment=${contient["ID_ALIMENT"]}`,
                                 type:'GET'
@@ -156,11 +150,7 @@ $(document).ready( function () {
                             .done(function (response) {
                                 let tableau_reponse = response;
                                 nomsAliments.push(tableau_reponse[0]["NOM"]);
-                                console.log("nomsAliments censé être avant le console log nomsAliments at 0 : ",nomsAliments);
                                 parsedReponse.forEach(function(contient, indice, tableau){
-                                    console.log(nomsAliments[0]);
-                                    console.log(nomsAliments);
-                                    console.log(typeof(nomsAliments));
                                     $("#tableJournal tbody").append(`<tr><td>${nomsAliments.at(indice)}</td><td>${contient["QUANTITE"]}</td><td>${date[indice]}</td><td>${matin_midi_soir_string[indice]}</td><td><button id="edit" onclick="editRepas(this)">Modifier</button></td><td><button id="edit" onclick="deleteRepas(this)">Supprimer</button></td></tr>`);
                                 });
                             });
@@ -211,7 +201,6 @@ $(document).ready( function () {
                 type:'GET'
             })
             .done(function(reponse){
-                console.log("reponse aliment get",reponse);
                 id_aliment = reponse[0]["ID_ALIMENT"];
                 let id_repas = 0;
                 $.ajax({
@@ -220,10 +209,6 @@ $(document).ready( function () {
                 })
                 .done(function (response){
                     id_repas = response[0]["ID_REPAS"];
-                    
-
-                    console.log("id_repas",id_repas);
-                    console.log("id_aliment",id_aliment);
 
                     $.ajax({
                         url:`${prefix_api}Contient.php`,
@@ -383,7 +368,6 @@ $(document).ready( function () {
             else if(repas === "Soir"){
                 numeroRepas = 3;
             }
-            // console.log(nomAliment,quantite,date,repas);
 
             if(nomAliment && quantite && date &&repas){ 
 
@@ -398,17 +382,13 @@ $(document).ready( function () {
                 }
             })
             .done(function (reponse_post_repas) {
-                console.log("reponse post repas : ",reponse_post_repas);
                 let id_repas = reponse_post_repas[0]["ID_REPAS"];
-                console.log("id_repas : ",id_repas);
                 $.ajax({
                     url: `${prefix_api}Aliments.php?nom=${nomAliment}`,
                     type:'GET'
                 })
                 .done(function (reponse_get_aliment){
-                    console.log("reponse get aliment : ",reponse_get_aliment);
                     let id_aliment = reponse_get_aliment[0]["ID_ALIMENT"];
-                    console.log("id_aliment : ",id_aliment," ; id_repas : ",id_repas," ; quantité : ",quantite);
                     $.ajax({
                         url:`${prefix_api}Contient.php`,
                         type:'POST',

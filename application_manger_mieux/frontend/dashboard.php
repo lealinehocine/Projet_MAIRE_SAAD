@@ -63,14 +63,12 @@
             });
 
             login = reponse_get_login["user"];
-            console.log("login : ", login);
 
             let now = new Date();
             let year = now.getFullYear();
             let month = now.getMonth() + 1;
             let day = now.getUTCDate();
             let today = `${year}-${month}-${day}`;
-            console.log("today :", today);
 
             // Récupérer les repas pour aujourd'hui
             let reponse_get_repas = await $.ajax({
@@ -79,7 +77,6 @@
             });
 
             repas = reponse_get_repas;
-            console.log("reponse_get_repas : ", repas);
 
             // Récupérer les détails de chaque repas
             let contientPromises = repas.map(async (un_repas) => {
@@ -87,7 +84,6 @@
                     url: `${prefix_api}Contient.php?id_repas=${un_repas["ID_REPAS"]}`,
                     type: 'GET'
                 });
-                console.log("reponse_get_contient : ", reponse_get_contient);
 
                 // Stocker les quantités et les aliments associés
                 quantites_repas.push(reponse_get_contient[0]["QUANTITE"]);
@@ -103,7 +99,6 @@
                     url: `${prefix_api}Aliments.php?caracteristiques=true&id_aliment=${idAliment}`,
                     type: 'GET'
                 });
-                console.log("reponse_get_aliments : ", reponse_get_aliments);
 
                 // Ajouter les caractéristiques de chaque aliment
                 aliments_repas_avec_caracteristiques.push(reponse_get_aliments);
@@ -112,7 +107,6 @@
             // Attendre que toutes les requêtes `Aliments` soient terminées
             await Promise.all(alimentsPromises);
 
-            console.log("aliments_repas_avec_caracteristiques : ",aliments_repas_avec_caracteristiques);
             // Calculer les valeurs nutritionnelles totales
             aliments_repas_avec_caracteristiques.forEach(function(aliment_total,index) {
                 energie_totale += JSON.parse(aliment_total[0]["caracteristiques"])[1]["quantite"]*quantites_repas[index]/100;
@@ -121,8 +115,6 @@
                 lipides_total += JSON.parse(aliment_total[0]["caracteristiques"])[4]["quantite"]*quantites_repas[index]/100;
                 sucre_total += JSON.parse(aliment_total[0]["caracteristiques"])[5]["quantite"]*quantites_repas[index]/100;
             });
-
-            console.log("Energie :", energie_totale, " ; Proteines :", proteines_totale, " ; Glucides :", glucides_totales, " ; Sucre :", sucre_total, " ; Lipides :", lipides_total);
 
 
             $("#energie").text(energie_totale);
